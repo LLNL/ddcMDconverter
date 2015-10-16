@@ -7,6 +7,12 @@ class Coor:
         self.y=y
         self.z=z
 
+    def dist2(self, coor):
+        dx=self.x-coor.x
+        dy=self.y-coor.y
+        dz=self.z-coor.z
+        return (dx*dx+dy*dx+dz*dx)
+
 class AtomPDB:
     def __init__(self):
         self.name=""
