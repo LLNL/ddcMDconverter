@@ -5,6 +5,7 @@ import argparse
 import Charmm
 import Pdb
 import Obj
+import Specie
 
 
 def getArgs():
@@ -24,14 +25,19 @@ if __name__ == '__main__':
     args=getArgs()
     print "Default inputs: ",args.topfile, args.pdbfile, args.objfile, args.spefile, args.splfile
 
+    print "Reading in CHARMM topology file ", args.topfile
     charmmTop=Charmm.CharmmTop()
     charmmTop.parse(args.topfile)
 
+    print "Reading in pdb file ", args.pdbfile
     comPDB=Pdb.ComPDB()
     comPDB.parse(args.pdbfile)
     comPDB.assignGid(charmmTop)
 
+    print "Generating ddcMD object file ", args.objfile
     obj=Obj.Obj()
     obj.toObj(args.objfile, comPDB)
 
-
+    print "Generating species file ", args.splfile
+    specie=Specie.Specie(charmmTop, comPDB)
+    specie.toSpeData(args.splfile)
