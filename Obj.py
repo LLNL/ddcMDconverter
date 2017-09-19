@@ -1,5 +1,6 @@
 __author__ = 'zhang30'
 
+import Charmm
 from Pdb import Coor
 
 class Obj:
@@ -19,16 +20,19 @@ class Obj:
             lastResID=len(molPDB.resList)-1
             for resID, resPDB in enumerate(molPDB.resList):
                 lastGrpID=len(resPDB.grpList)-1
+                isStdAA=Charmm.ResTop.isStdAA(resPDB.resName)
                 for grpID, grpPDB in enumerate(resPDB.grpList):
                     for atmPDB in grpPDB.atmGrpList:
                         coor=atmPDB.coor
-                        if resID==0 and grpID==0:
-                            speciename=resPDB.resName+"n"+atmPDB.name
-                        elif resID==lastResID and grpID==lastGrpID:
-                            speciename=resPDB.resName+"c"+atmPDB.name
+                        if isStdAA == 1:
+                            if resID==0 and grpID==0:
+                                speciename=resPDB.resName+"n"+atmPDB.name
+                            elif resID==lastResID and grpID==lastGrpID:
+                                speciename=resPDB.resName+"c"+atmPDB.name
+                            else:
+                                speciename=resPDB.resName+"x"+atmPDB.name
                         else:
                             speciename=resPDB.resName+"x"+atmPDB.name
-
                         outLine="%14d ATOM %11s group %21.13e %21.13e %21.13e %21.13e %21.13e %21.13e\n" \
                                  %(atmPDB.gid, speciename, coor.x, coor.y, coor.z, zeroV, zeroV, zeroV)
                         outFh.write(outLine)
@@ -54,27 +58,35 @@ class Obj:
         first=0
         fileID=0
 
+        # index for fields
+        fieldSize=0
+        gidIndex=0
+        typeIndex=0
+        rxIndex=0
+        ryIndex=0
+        rzIndex=0
+
         outFh=open(args.pdbfile, "w")
 
         with open(args.objfile, "r") as f:
             for line in f:
                 if prtflg==1:
                     strs=line.split()
-                    if len(strs)>10:
-                        gid=int(strs[1])
+                    if len(strs)>=fieldSize:
+                        gid=int(strs[gidIndex])
                         resid=(gid&resMask)>>16
                         resid=resid+1
 
-                        names=strs[3].replace('x', ' ').replace('n', ' ').replace('c', ' ').split()
+                        names=strs[typeIndex].replace('x', ' ').replace('n', ' ').replace('c', ' ').split()
                         if len(names) !=2:
                             print "Specie name ", strs[3], " dosen't split properly"
                         else:
                             resName=names[0]
                             atmName=names[1]
 
-                        x=float(strs[5])
-                        y=float(strs[6])
-                        z=float(strs[7])
+                        x=float(strs[rxIndex])
+                        y=float(strs[ryIndex])
+                        z=float(strs[rzIndex])
 
                         coor=Coor(x,y,z)
                         newcoor=coor
@@ -102,6 +114,20 @@ class Obj:
                 if line[0]=='}':
                     prtflg=1
 
+                if line[0:11]=='field_names':
+                    fstrs=line.split('=')
+                    fnameLine=fstrs[1]
+                    strs=fnameLine.split()
+                    # id class type group rx ry rz vx vy vz
+                    gidIndex=strs.index("id")
+                    typeIndex = strs.index("type")
+                    rxIndex = strs.index("rx")
+                    ryIndex = strs.index("ry")
+                    rzIndex = strs.index("rz")
+                    fieldSize=len(strs)
+
+
+
     @staticmethod
     def reduceImage(args, coor, oldcoor):
         cutoff2=args.cutoff*args.cutoff
@@ -113,9 +139,9 @@ class Obj:
         dy=args.y
         dz=args.z
 
-        for i in range(-1, 1, 1):
-            for j in range(-1, 1, 1):
-                for k in range(-1, 1, 1):
+        for i in range(-2, 1, 2):
+            for j in range(-2, 1, 2):
+                for k in range(-2, 1, 2):
                     xnew=coor.x+i*dx
                     ynew=coor.y+i*dy
                     znew=coor.z+i*dz

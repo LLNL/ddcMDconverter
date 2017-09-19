@@ -165,6 +165,7 @@ class ResTop:
                 atmTop.parse(line, atmCount, atmTypeTopList)
                 atmCount=atmCount+1
                 self.atomList.append(atmTop)
+                #print atmTop.atmID, atmTop.atmName, self.resName
                 grpTop.grpAtoms.append(atmTop)
             elif lt=="BOND":
                 ncline=LineTop.removeComment(line)
