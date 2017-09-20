@@ -89,6 +89,7 @@ class Obj:
                         z=float(strs[rzIndex])
 
                         coor=Coor(x,y,z)
+                        coor=Obj.image(args, coor)
                         newcoor=coor
                         if first !=0:
                             newcoor=Obj.reduceImage(args, coor, oldcoor)
@@ -139,16 +140,28 @@ class Obj:
         dy=args.y
         dz=args.z
 
-        for i in range(-2, 1, 2):
-            for j in range(-2, 1, 2):
-                for k in range(-2, 1, 2):
+        # search for -1, 0, 1
+        for i in range(-1, 2, 1):
+            for j in range(-1, 2, 1):
+                for k in range(-1, 2, 1):
                     xnew=coor.x+i*dx
-                    ynew=coor.y+i*dy
-                    znew=coor.z+i*dz
+                    ynew=coor.y+j*dy
+                    znew=coor.z+k*dz
                     newcoor=Coor(xnew, ynew, znew)
 
                     d2=newcoor.dist2(oldcoor)
                     if d2<cutoff2:
-                        return coor
+                        return newcoor
 
         return -1
+
+    @staticmethod
+    def image(args, coor):
+        coor.x = coor.x % args.x
+        coor.y = coor.y % args.y
+        coor.z = coor.z % args.z
+
+        return coor
+
+
+

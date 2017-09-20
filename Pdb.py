@@ -11,7 +11,7 @@ class Coor:
         dx=self.x-coor.x
         dy=self.y-coor.y
         dz=self.z-coor.z
-        return (dx*dx+dy*dx+dz*dx)
+        return (dx*dx+dy*dy+dz*dz)
 
 class AtomPDB:
     def __init__(self):
