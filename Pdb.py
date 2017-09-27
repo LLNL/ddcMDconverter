@@ -33,6 +33,10 @@ class ResPDB:
         self.grpList=[]
         self.atmList=[]
 
+    def isStdAA(self):
+        stdAAList=["ALA", "ARG", "ASN", "ASP", "CYS", "GLN", "GLU", "GLY", "HSD", "HSE", "HSP", "ILE", "LEU", "LYS", "MET", "PHE", "PRO", "SER", "THR", "TRP", "TYR", "VAL"]
+        return self.resName in stdAAList
+
 class MolPDB:
     def __init__(self):
         self.molID=0
@@ -76,9 +80,12 @@ class ComPDB:
         #self.totalAtm=0
         self.molList=[]
 
-    def parse(self, filename):
+    def parse(self, args):
         molsList=[]
         aMol=[]
+
+        filename=args.pdbfile
+        hasBox=False
         with open(filename, "r") as f:
             for line in f:
                 if line[:3]=="TER" or line[:3]=="END" :
@@ -87,6 +94,13 @@ class ComPDB:
                     aMol=[]
                 elif line[:4]=="ATOM" or line[:6]=="HETATM" :
                     aMol.append(line)
+                elif line[:6]=="CRYST1":
+                    hasBox=self.getBoxSize(args, line)
+
+        if hasBox:
+            print "The box size is: ", args.x, args.y, args.z
+        else:
+            print "Dosen't have box size info in pdb, use default box size."
 
         for aMol in molsList:
             mol=MolPDB()
@@ -101,16 +115,25 @@ class ComPDB:
 
         return totalAtm
 
+    def getBoxSize(self, args, line):
+        strs=line.split()
+        if len(strs)>4:
+            args.x = float(strs[1])
+            args.y = float(strs[2])
+            args.z = float(strs[3])
+            return True
+        return False
+
     def assignGid(self, charmmTop):
         #for aMol in self.molList:
         for molID, molPDB in enumerate(self.molList):
             lastResID=len(molPDB.resList)-1
             for resID, resPDB in enumerate(molPDB.resList):
                 nTER=0
-                if resID==0:
+                if resID==0 and resPDB.isStdAA():
                     nTER=charmmTop.findResiParm("NTER")
                 cTER=0
-                if resID==lastResID:
+                if resID==lastResID and resPDB.isStdAA():
                     cTER=charmmTop.findResiParm("CTER")
 
                 curResiParm=charmmTop.findResiParm(resPDB.resName)

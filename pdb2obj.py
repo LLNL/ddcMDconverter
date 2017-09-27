@@ -16,6 +16,9 @@ def getArgs():
     parser.add_argument('-o', '--obj', action='store', dest='objfile', default='atom#.data', help='ddcMD object output file (default=atom#.data).')
     parser.add_argument('-s', '--spe', action='store', dest='spefile', default='species.data', help='ddcMD species all output file (default=species.data).')
     parser.add_argument('-l', '--spl', action='store', dest='splfile', default='speless.data', help='ddcMD species less output file (default=speless.data).')
+    parser.add_argument('-x', '--bx', action='store', dest='x', type=float, default=64, help='Boundary x.')
+    parser.add_argument('-y', '--by', action='store', dest='y', type=float, default=64, help='Boundary y.')
+    parser.add_argument('-z', '--bz', action='store', dest='z', type=float, default=64, help='Boundary z.')
     args = parser.parse_args()
 
     return args
@@ -31,12 +34,12 @@ if __name__ == '__main__':
 
     print "Reading in pdb file ", args.pdbfile
     comPDB=Pdb.ComPDB()
-    comPDB.parse(args.pdbfile)
+    comPDB.parse(args)
     comPDB.assignGid(charmmTop)
 
     print "Generating ddcMD object file ", args.objfile
     obj=Obj.Obj()
-    obj.toObj(args.objfile, comPDB)
+    obj.toObj(args, comPDB)
 
     print "Generating species file ", args.splfile
     specie=Specie.Specie(charmmTop, comPDB)

@@ -7,11 +7,12 @@ class Obj:
     def __init__(self):
         self.header=""
 
-    def toObj(self, filename, comPDB):
+    def toObj(self, args, comPDB):
         totAtmNum=comPDB.getTotAtmNum()
 
+        filename=args.objfile
         outFh=open(filename, "w")
-        self.getHeader(totAtmNum)
+        self.getHeader(totAtmNum, args)
         outFh.write(self.header)
 
         zeroV=0.0
@@ -37,15 +38,15 @@ class Obj:
                                  %(atmPDB.gid, speciename, coor.x, coor.y, coor.z, zeroV, zeroV, zeroV)
                         outFh.write(outLine)
 
-    def getHeader(self, totAtmNum):
+    def getHeader(self, totAtmNum, args):
         self.header=self.header+"particle FILEHEADER {type=MULTILINE; datatype=VARRECORDASCII; checksum=NONE;\n"
         self.header=self.header+"loop=0; time=0.000000;\n"
         self.header=self.header+"nfiles=1; nrecord="+str(totAtmNum)+"; nfields=10;\n"
         self.header=self.header+"field_names=id class type group rx ry rz vx vy vz;\n"
         self.header=self.header+"field_types=u s s s f f f f f f;\n"
-        self.header=self.header+"h=    64.00000000000000      0.00000000000000      0.00000000000000\n"
-        self.header=self.header+"       0.00000000000000     64.00000000000000      0.00000000000000\n"
-        self.header=self.header+"       0.00000000000000      0.00000000000000     64.00000000000000;\n"
+        self.header=self.header+"h=     "+ str(args.x)+"      0.00000000000000      0.00000000000000\n"
+        self.header=self.header+"       0.00000000000000     "+ str(args.x)+"       0.00000000000000\n"
+        self.header=self.header+"       0.00000000000000      0.00000000000000     "+ str(args.x)+" ;\n"
         self.header=self.header+"groups = group ;\n"
         self.header=self.header+"types = ATOM ;\n"
         self.header=self.header+"} \n\n"
