@@ -56,6 +56,8 @@ class Obj:
         resMask=(65535<<16)
 
         prtflg=0
+        boxflg=0
+        boxCount=0
         first=0
         fileID=0
 
@@ -90,19 +92,19 @@ class Obj:
                         z=float(strs[rzIndex])
 
                         coor=Coor(x,y,z)
-                        coor=Obj.image(args, coor)
+                        #coor=Obj.image(args, coor)
                         newcoor=coor
-                        if first !=0:
-                            newcoor=Obj.reduceImage(args, coor, oldcoor)
-                            if newcoor==-1:
-                                print "Fail to shift the atom coordinates"
-                                print line
-                                print "Use the original coordinates"
-                                newcoor=coor
+                        #if first !=0:
+                        #    newcoor=Obj.reduceImage(args, coor, oldcoor)
+                        #    if newcoor==-1:
+                        #        print "Fail to shift the atom coordinates"
+                        #        print line
+                        #        print "Use the original coordinates"
+                        #        newcoor=coor
 
-                        first=1
+                        #first=1
                         fileID=fileID+1
-                        oldcoor=newcoor
+                        #oldcoor=newcoor
 
                         if len(atmName)==4:
                             outLine="ATOM%7d %-4s%4s %5d    %8.3f%8.3f%8.3f\n" \
@@ -128,6 +130,22 @@ class Obj:
                     rzIndex = strs.index("rz")
                     fieldSize=len(strs)
 
+                if line[0:2]=='h=':
+                    boxflg=1
+
+                if boxflg==1:
+                    strs = line.split()
+                    if boxCount==0:
+                        args.x=float(strs[1])
+                    elif boxCount==1:
+                        args.y=float(strs[boxCount])
+                    elif boxCount==2:
+                        endstr=strs[boxCount]
+                        estrs=endstr.split(";")
+                        args.z=float(estrs[0])
+                        boxflg = 0
+
+                    boxCount=boxCount+1
 
 
     @staticmethod

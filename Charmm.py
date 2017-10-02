@@ -166,6 +166,11 @@ class ResTop:
                 atmCount=atmCount+1
                 self.atomList.append(atmTop)
                 #print atmTop.atmID, atmTop.atmName, self.resName
+                if 'grpTop' not in locals():  # If there is no group before ATOM
+                    grpTop = GroupTop()
+                    grpTop.grpID = grpCount
+                    grpCount=grpCount+1
+                    atmCount=0
                 grpTop.grpAtoms.append(atmTop)
             elif lt=="BOND":
                 ncline=LineTop.removeComment(line)
@@ -253,6 +258,8 @@ class CharmmTop:
         for count, aResiList in enumerate(resiLists):
             resTop=ResTop()
             resTop.parse(aResiList, count, self.atmTypeTopList)
+            #if resTop.resName == 'GLUP':
+            #    print resTop.resName
             self.resTopList.append(resTop)
 
     def findResiParm(self, resName):
