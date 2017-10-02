@@ -26,9 +26,9 @@ class Obj:
                     for atmPDB in grpPDB.atmGrpList:
                         coor=atmPDB.coor
                         if isStdAA == 1:
-                            if resID==0 and grpID==0:
+                            if resID==0:
                                 speciename=resPDB.resName+"n"+atmPDB.name
-                            elif resID==lastResID and grpID==lastGrpID:
+                            elif resID==lastResID:
                                 speciename=resPDB.resName+"c"+atmPDB.name
                             else:
                                 speciename=resPDB.resName+"x"+atmPDB.name
