@@ -29,6 +29,16 @@ class Specie:
         sysOutLine=""
         defOutLine=""
 
+        nTerTop=None;
+        cTerTop=None;
+
+        for resTop in self.charmmTop.resTopList:
+            resname=resTop.resName
+            if resname == 'NTER':
+                nTerTop=resTop
+            if resname == 'CTER':
+                cTerTop=resTop
+
         for resTop in self.charmmTop.resTopList:
             resname=resTop.resName
 
@@ -42,22 +52,45 @@ class Specie:
                     defOutLine=defOutLine+defStr
 
             if resname in nterKeys:
-                for atmTop in resTop.atomList:
+                # Use the NTER for the first group
+                for atmTop in nTerTop.atomList:
                     speciename=resname+"n"+atmTop.atmName
                     sysStr="   %11s \n" % speciename
                     sysOutLine=sysOutLine+sysStr
                     defStr="%11s SPECIES { type = ATOM ; charge = %f ; mass = %f M_p ; }\n"\
                            % (speciename, atmTop.charge, atmTop.atmTpyeTop.mass)
                     defOutLine=defOutLine+defStr
+                # Skip the first group
+                iterGrps=iter(resTop.groupList)
+                next(iterGrps)
+                for grpTop in iterGrps:
+                    for atmTop in grpTop.grpAtoms:
+                        speciename=resname+"n"+atmTop.atmName
+                        sysStr="   %11s \n" % speciename
+                        sysOutLine=sysOutLine+sysStr
+                        defStr="%11s SPECIES { type = ATOM ; charge = %f ; mass = %f M_p ; }\n"\
+                               % (speciename, atmTop.charge, atmTop.atmTpyeTop.mass)
+                        defOutLine=defOutLine+defStr
 
             if resname in cterKeys:
-                for atmTop in resTop.atomList:
+                # Skip the last group
+                for grpTop in resTop.groupList[:-1]:
+                    for atmTop in grpTop.grpAtoms:
+                        speciename=resname+"c"+atmTop.atmName
+                        sysStr="   %11s \n" % speciename
+                        sysOutLine=sysOutLine+sysStr
+                        defStr="%11s SPECIES { type = ATOM ; charge = %f ; mass = %f M_p ; }\n"\
+                               % (speciename, atmTop.charge, atmTop.atmTpyeTop.mass)
+                        defOutLine=defOutLine+defStr
+                # use the CTER for the last group
+                for atmTop in cTerTop.atomList:
                     speciename=resname+"c"+atmTop.atmName
                     sysStr="   %11s \n" % speciename
                     sysOutLine=sysOutLine+sysStr
                     defStr="%11s SPECIES { type = ATOM ; charge = %f ; mass = %f M_p ; }\n"\
                            % (speciename, atmTop.charge, atmTop.atmTpyeTop.mass)
                     defOutLine=defOutLine+defStr
+
 
         outFh=open(filename, "w")
 
