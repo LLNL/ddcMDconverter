@@ -131,7 +131,12 @@ class ComPDB:
             for resID, resPDB in enumerate(molPDB.resList):
                 nTER=0
                 if resID==0 and resPDB.isStdAA():
-                    nTER=charmmTop.findResiParm("NTER")
+                    if resPDB.resName=="GLY":
+                        nTER = charmmTop.findResiParm("GLYP")
+                    elif resPDB.resName=="PRO":
+                        nTER = charmmTop.findResiParm("PROP")
+                    else:
+                        nTER=charmmTop.findResiParm("NTER")
                 cTER=0
                 if resID==lastResID and resPDB.isStdAA():
                     cTER=charmmTop.findResiParm("CTER")
