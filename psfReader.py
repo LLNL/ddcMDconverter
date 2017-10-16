@@ -21,3 +21,4 @@ if __name__ == '__main__':
     psf=Psf.Psf()
     psf.parse(args.psffile)
     psf.printAngle()
+    psf.printDihe()
