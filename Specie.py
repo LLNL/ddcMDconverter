@@ -29,13 +29,20 @@ class Specie:
         sysOutLine=""
         defOutLine=""
 
-        nTerTop=None;
-        cTerTop=None;
+        nTerTop=None
+        glypTop=None
+        propTop=None
+        cTerTop=None
+        newnTop=None
 
         for resTop in self.charmmTop.resTopList:
             resname=resTop.resName
             if resname == 'NTER':
                 nTerTop=resTop
+            if resname == 'GLYP':
+                glypTop=resTop
+            if resname == 'PROP':
+                propTop=resTop
             if resname == 'CTER':
                 cTerTop=resTop
 
@@ -52,8 +59,15 @@ class Specie:
                     defOutLine=defOutLine+defStr
 
             if resname in nterKeys:
-                # Use the NTER for the first group
-                for atmTop in nTerTop.atomList:
+                # Use the NTER/GLYP/PROP for the first group
+                if resname == 'GLY':
+                    newnTop =glypTop
+                elif resname == 'PRO':
+                    newnTop =propTop
+                else:
+                    newnTop = nTerTop
+
+                for atmTop in newnTop.atomList:
                     speciename=resname+"n"+atmTop.atmName
                     sysStr="   %11s \n" % speciename
                     sysOutLine=sysOutLine+sysStr
