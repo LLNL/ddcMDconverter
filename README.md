@@ -4,23 +4,28 @@
 Convert pdb file to ddcMD anatomy file.
 
 ```
-[zhang30@soifon ddcMDconverter]$ python obj2pdb.py -h
-usage: obj2pdb.py [-h] [-i OBJFILE] [-o PDBFILE] [-c CUTOFF] [-x X] [-y Y]
-                  [-z Z]
+[zhang30@soifon ddcMDconverter]$ python pdb2obj.py -h
+usage: pdb2obj.py [-h] [-t TOPFILE] [-p PDBFILE] [-o OBJFILE] [-s SPEFILE]
+                  [-l SPLFILE] [-x X] [-y Y] [-z Z]
 
 optional arguments:
   -h, --help            show this help message and exit
-  -i OBJFILE, --obj OBJFILE
-                        ddcMD object input file (default=atom#.data).
-  -o PDBFILE, --pdb PDBFILE
-                        PDB output file (default=test.pdb).
-  -c CUTOFF, --cut CUTOFF
-                        Cutoff for bond.
+  -t TOPFILE, --top TOPFILE
+                        CHARMM topology file (default=top_all22_prot.inp).
+  -p PDBFILE, --pdb PDBFILE
+                        PDB input file (default=test.pdb).
+  -o OBJFILE, --obj OBJFILE
+                        ddcMD object output file (default=atom#.data).
+  -s SPEFILE, --spe SPEFILE
+                        ddcMD species all output file (default=species.data).
+  -l SPLFILE, --spl SPLFILE
+                        ddcMD species less output file (default=speless.data).
   -x X, --bx X          Boundary x.
   -y Y, --by Y          Boundary y.
   -z Z, --bz Z          Boundary z.
 
 ```
+
 An usual way to run the script:
 ```
 python ../../pdb2obj.py -t top_all36_prot.rtf -p prot-mini.pdb  -o atom#.data
@@ -44,6 +49,25 @@ python ../../pdb2obj.py -t top_all36_prot.rtf -p prot-mini.pdb  -o atom#.data -x
 ```
 
 ## obj2pdb
+
+```
+[zhang30@soifon ddcMDconverter]$ python obj2pdb.py -h
+usage: obj2pdb.py [-h] [-i OBJFILE] [-o PDBFILE] [-c CUTOFF] [-x X] [-y Y]
+                  [-z Z]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i OBJFILE, --obj OBJFILE
+                        ddcMD object input file (default=atom#.data).
+  -o PDBFILE, --pdb PDBFILE
+                        PDB output file (default=test.pdb).
+  -c CUTOFF, --cut CUTOFF
+                        Cutoff for bond.
+  -x X, --bx X          Boundary x.
+  -y Y, --by Y          Boundary y.
+  -z Z, --bz Z          Boundary z.
+
+```
 
 
 ## CHARMM Psf reader
