@@ -2,7 +2,7 @@ __author__ = 'zhang30'
 
 
 import argparse
-import Charmm
+import CharmmTop
 import Pdb
 import Obj
 import Specie
@@ -29,7 +29,7 @@ if __name__ == '__main__':
     print "Default inputs: ",args.topfile, args.pdbfile, args.objfile, args.spefile, args.splfile
 
     print "Reading in CHARMM topology file ", args.topfile
-    charmmTop=Charmm.CharmmTop()
+    charmmTop=CharmmTop.CharmmTop()
     charmmTop.parse(args.topfile)
 
     print "Reading in pdb file ", args.pdbfile

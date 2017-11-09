@@ -1,6 +1,6 @@
 __author__ = 'zhang30'
 
-import Charmm
+import CharmmTop
 from Pdb import Coor
 
 class Obj:
@@ -21,7 +21,7 @@ class Obj:
             lastResID=len(molPDB.resList)-1
             for resID, resPDB in enumerate(molPDB.resList):
                 lastGrpID=len(resPDB.grpList)-1
-                isStdAA=Charmm.ResTop.isStdAA(resPDB.resName)
+                isStdAA=CharmmTop.ResTop.isStdAA(resPDB.resName)
                 for grpID, grpPDB in enumerate(resPDB.grpList):
                     for atmPDB in grpPDB.atmGrpList:
                         coor=atmPDB.coor

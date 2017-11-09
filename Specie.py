@@ -1,6 +1,6 @@
 __author__ = 'zhang30'
 
-import Charmm
+import CharmmTop
 
 class Specie:
     def __init__(self, charmmtop, compdb):
@@ -15,7 +15,7 @@ class Specie:
         for molPDB in self.comPDB.molList:
             lastResID=len(molPDB.resList)-1
             for resID, resPDB in enumerate(molPDB.resList):
-                if Charmm.ResTop.isStdAA(resPDB.resName):
+                if CharmmTop.ResTop.isStdAA(resPDB.resName):
                     if resID==0:
                         nterList[resPDB.resName] = 1
                     elif resID==lastResID:
