@@ -15,10 +15,13 @@ class Specie:
         for molPDB in self.comPDB.molList:
             lastResID=len(molPDB.resList)-1
             for resID, resPDB in enumerate(molPDB.resList):
-                if resID==0:
-                    nterList[resPDB.resName] = 1
-                elif resID==lastResID:
-                    cterList[resPDB.resName] = 1
+                if Charmm.ResTop.isStdAA(resPDB.resName):
+                    if resID==0:
+                        nterList[resPDB.resName] = 1
+                    elif resID==lastResID:
+                        cterList[resPDB.resName] = 1
+                    else:
+                        aaList[resPDB.resName] = 1
                 else:
                     aaList[resPDB.resName] = 1
 
