@@ -1,5 +1,6 @@
 __author__ = 'zhang30'
 
+import CharmmTop
 
 class Coor:
     def __init__(self, x, y, z):
@@ -55,7 +56,7 @@ class MolPDB:
             atmName=line[12:17].strip()
             resName=line[17:21].strip()
 
-            resID=int(line[22:27])
+            resID=int(line[22:27], 16)
             x=float(line[30:38])
             y=float(line[38:46])
             z=float(line[46:54])
@@ -84,10 +85,32 @@ class ComPDB:
         molsList=[]
         aMol=[]
 
+        oldResName = ""
+        oldResID = -1
+        isNewRes=False
+
         filename=args.pdbfile
         hasBox=False
+
         with open(filename, "r") as f:
             for line in f:
+                if line[:4]=="ATOM":
+                    resName = line[17:21].strip()
+                    resID = int(line[22:27], 16)
+                    if resID != oldResID or resName != oldResName:
+                        isNewRes = True
+                        oldResID = resID
+                        oldResName = resName
+                    else:
+                        isNewRes = False
+
+                if isNewRes:
+                    isRes=CharmmTop.ResTop.isResidue(resName)
+                    if isRes==0:
+                        if (len(aMol) > 0):
+                            molsList.append(aMol)
+                        aMol = []
+
                 if line[:3]=="TER" or line[:3]=="END" :
                     if(len(aMol)>0):
                         molsList.append(aMol)
@@ -187,3 +210,27 @@ class ComPDB:
                     return (success, grpID, atmID)
 
         return (-1, -1, -1)
+
+    def findUniqRes(self):
+        aaList={}
+        nterList={}
+        cterList={}
+
+        for molPDB in self.molList:
+            lastResID=len(molPDB.resList)-1
+            for resID, resPDB in enumerate(molPDB.resList):
+                if CharmmTop.ResTop.isStdAA(resPDB.resName):
+                    if resID==0:
+                        nterList[resPDB.resName] = 1
+                    elif resID==lastResID:
+                        cterList[resPDB.resName] = 1
+                    else:
+                        aaList[resPDB.resName] = 1
+                else:
+                    aaList[resPDB.resName] = 1
+
+        aaKeys=aaList.keys()
+        nterKeys=nterList.keys()
+        cterKeys=cterList.keys()
+
+        return (aaKeys, nterKeys, cterKeys)

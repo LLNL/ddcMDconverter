@@ -140,6 +140,15 @@ class ResTop:
         else:
             return 0
 
+    @staticmethod
+    def isResidue(resName):
+        resList=["ALA", "ARG", "ASN", "ASP", "CYS", "GLN", "GLU", "GLY", "HSD", "HSE", "HSP",
+                "ILE", "LEU", "LYS", "MET", "PHE", "PRO", "SER", "THR", "TRP", "TYR", "VAL"]
+        if resName in resList:
+            return 1
+        else:
+            return 0
+
     def parseName(self, line, count):
         strs=line.split()
         self.resID=count
@@ -269,3 +278,10 @@ class CharmmTop:
 
         print "Cannot find residue name: ", resName, " in CharmmTop.resTopList"
         return 0
+
+    def toddcMDobjFile(self, objFile, comPDB):
+        (aaKeys, nterKeys, cterKeys)=comPDB.findUniqRes()
+        for resTop in self.resTopList:
+            if resTop.resName in aaKeys:
+                continue
+

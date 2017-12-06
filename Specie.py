@@ -1,6 +1,5 @@
 __author__ = 'zhang30'
 
-import CharmmTop
 
 class Specie:
     def __init__(self, charmmtop, compdb):
@@ -8,26 +7,7 @@ class Specie:
         self.comPDB=compdb
 
     def toSpeData(self, filename):
-        aaList={}
-        nterList={}
-        cterList={}
-
-        for molPDB in self.comPDB.molList:
-            lastResID=len(molPDB.resList)-1
-            for resID, resPDB in enumerate(molPDB.resList):
-                if CharmmTop.ResTop.isStdAA(resPDB.resName):
-                    if resID==0:
-                        nterList[resPDB.resName] = 1
-                    elif resID==lastResID:
-                        cterList[resPDB.resName] = 1
-                    else:
-                        aaList[resPDB.resName] = 1
-                else:
-                    aaList[resPDB.resName] = 1
-
-        aaKeys=aaList.keys()
-        nterKeys=nterList.keys()
-        cterKeys=cterList.keys()
+        (aaKeys, nterKeys, cterKeys) = self.comPDB.findUniqRes()
 
         sysOutLine=""
         defOutLine=""
