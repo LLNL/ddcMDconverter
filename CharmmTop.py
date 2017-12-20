@@ -10,8 +10,10 @@ class LineTop:
 
         if line[:4]=="MASS":
             return "MASS"
-        elif line[:4]=="RESI" or line[:4]=="PRES" :
+        elif line[:4]=="RESI":
             return "RESI"
+        elif line[:4]=="PRES":
+            return "PRES"
         elif line[:5]=="GROUP":
             return "GROUP"
         elif line[:4]=="ATOM":
@@ -121,6 +123,7 @@ class ResTop:
         self.resType=0
         self.resName=""
         self.charge=0.0
+        self.isResi=False
 
         self.atomList=[]
         self.groupList=[]
@@ -161,8 +164,10 @@ class ResTop:
         atmCount=0
         for line in strList:
             lt=LineTop.getLineType(line)
-            if lt=="RESI":
+            if lt=="RESI" or lt=="PRES":
                 self.parseName(line, count)
+                if lt == "RESI":
+                    self.isResi=True
             elif lt=="GROUP":
                 grpTop=GroupTop()
                 grpTop.grpID=grpCount
@@ -233,6 +238,7 @@ class CharmmTop:
     def __init__(self):
         self.atmTypeTopList=[]
         self.resTopList=[]
+        self.presTopList=[]
 
     def parse(self, filename):
         firstRes=0
@@ -249,7 +255,7 @@ class CharmmTop:
                 elif lt== "MASS":
                     massList.append(line)
                 else:
-                    if lt=="RESI" or lt=="END":
+                    if lt=="RESI" or lt=="PRES" or lt=="END":
                         if firstRes!=0:
                             resiLists.append(aResiList)
                             if lt=="END":
@@ -269,7 +275,10 @@ class CharmmTop:
             resTop.parse(aResiList, count, self.atmTypeTopList)
             #if resTop.resName == 'GLUP':
             #    print resTop.resName
-            self.resTopList.append(resTop)
+            if resTop.isResi:
+                self.resTopList.append(resTop)
+            else:
+                self.presTopList.append(resTop)
 
     def findResiParm(self, resName):
         for resTop in self.resTopList:
