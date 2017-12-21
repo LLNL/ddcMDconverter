@@ -8,8 +8,12 @@ import ITP
 def getArgs():
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i', '--top', action='store', dest='itpfile', default='itpList', help='ITP file list (default=itpList).')
+    parser.add_argument('-i', '--itp', action='store', dest='itpfile', default='itpList', help='ITP file list (default=itpList).')
+    parser.add_argument('-p', '--par', action='store', dest='parfile', default='martini_v2.2.itp',
+                        help='Overall ITP file (default=martini_v2.2.itp).')
     parser.add_argument('-o', '--obj', action='store', dest='objfile', default='martini.data', help='Martini object output file (default=martini.data).')
+    parser.add_argument('-l', '--spl', action='store', dest='splfile', default='speless.data',
+                        help='ddcMD species less output file (default=speless.data).')
 
     args = parser.parse_args()
 
@@ -165,3 +169,28 @@ if __name__ == '__main__':
             line = line + "\n"
 
         fh.write(line)
+
+    # Print out species
+
+    par_itp = ITP.ITP(args.parfile)
+
+    massDict = {}
+    for atomtype in par_itp.header.atomtypes.data:
+        massDict[atomtype['name']]=atomtype['mass']
+
+    sysLine="system SYSTEM\n{species =\n"
+    speLine=""
+    for itp in itpList:
+        resName=itp.header.moleculetype.data['name']
+
+        for atom in itp.header.moleculetype.atoms.data:
+            specie=resName+"x"+atom['atomname']
+            sysLine=sysLine+specie+"\n"
+            atomType=atom['atomtype']
+            speLine=speLine+specie+" SPECIES { type = ATOM ; charge ="+str(atom['charge'])+" ; mass ="+str(massDict[atomType])+" M_p ; }\n"
+
+    sysLine=sysLine+"   ;\n}\n\n"
+
+    speFh=open(args.splfile, "w")
+    speFh.write(sysLine)
+    speFh.write(speLine)

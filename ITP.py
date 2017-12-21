@@ -457,6 +457,7 @@ class Header(ITPsection):
         super(Header, self).__init__(*args, **kwargs)
         self.parsers = {
             'atomtypes': Atomtypes,
+            'nonbond_params': NonbondParams,
             'moleculetype': Moleculetype,
             }
 
@@ -538,12 +539,29 @@ class Atomtypes(ITPdata):
     .. versionadded:: 0.2.5
     """
     name = "atomtypes"
-    dtypes = [("name", "S4"), ("bond_type", "S12"), ("mass", "f8"), ("charge", "f8"),
-              ("ptype", "S4"), ("sigma", "f8"), ("epsilon", "f8"),
+    dtypes = [("name", "S4"),  ("mass", "f8"), ("charge", "f8"),
+              ("ptype", "S4"), ("c6", "f8"), ("c12", "f8"),
               ]
-    fmt = ["%-5s", "%9s", "%9.4f", "%8.4f",
+    fmt = ["%-5s", "%9.4f", "%8.4f",
            "%-5s", "%11.5e", "%11.5e"]
-    column_comment = ";name  bond_type     mass   charge ptype       sigma     epsilon"
+    column_comment = ";name      mass   charge ptype       c6     c12"
+
+class NonbondParams(ITPdata):
+    """
+    ; i j   funda c6 c12
+    ; self terms
+    P5    P5  1   0.24145E-00     0.26027E-02 ; supra attractive
+    SP5   SP5     1   0.10620E-00     0.67132E-03 ; 75supra attractive, s=0.43
+    P4    P4  1   0.21558E-00     0.23238E-02 ; attractive
+    """
+    name="nonbond_params"
+
+    dtypes = [("i", "S4"), ("j", "S4"), ("funda", "i4"),
+              ("c6", "f8"), ("c12", "f8"),
+              ]
+    fmt = ["%-5s", "%-5s", "%8d",
+            "%11.5e", "%11.5e"]
+    column_comment = ";i j   funda c6 c12"
 
 
 class Atoms(ITPdata):
