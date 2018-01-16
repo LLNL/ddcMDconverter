@@ -1,8 +1,10 @@
 __author__ = 'zhang30'
 
+# CHARMM energy terms are 1 based and GROMACS' are 1/2 based. k(r-r0)^2 v.s. 1/2 k(r-r0)^2
 
 import argparse
 import ITP
+import math
 
 
 def getArgs():
@@ -23,6 +25,16 @@ if __name__ == '__main__':
 
     args=getArgs()
     print "Default inputs: ", args.itpfile,  args.objfile
+
+    # Mass
+    par_itp = ITP.ITP(args.parfile)
+
+    massDict = {}
+    for atomtype in par_itp.header.atomtypes.data:
+        massDict[atomtype['name']]=atomtype['mass']
+
+    # constant
+    DEG2RAD=math.pi/180
 
     itpList=[]
 
@@ -50,15 +62,48 @@ if __name__ == '__main__':
         fh.write(itp.header.moleculetype.data['name'])
         fh.write(" ");
 
-    fh.write(";\n}\n\n");
+    fh.write(";\n");
+
+    atmTypeDict={}
+
+    for itp in itpList:
+        for atom in itp.header.moleculetype.atoms.data:
+            atomType=atom['atomtype']
+            atmTypeDict[atomType]=1   # try to find all atom type
+
+    # Print out atom type
+    atmTypeList=atmTypeDict.keys()
+
+    listLine="nAtomType="+str(len(atmTypeList))+";\n"
+
+    nbLine=""
+    listLine=listLine+"ljParms="
+    for nonbond in par_itp.header.nonbond_params.data:
+        typeI=nonbond['i']
+        typeJ=nonbond['j']
+        if typeI in atmTypeList:
+            if typeJ in atmTypeList:
+                ljname=typeI+"_"+ typeJ
+                listLine=listLine+ljname+" "
+                nbLine=nbLine+ljname+" LJPARMS{atomtypeI="+typeI+"; indexI="+str(atmTypeList.index(typeI))+"; atomtypeJ="+typeJ+"; indexJ="+str(atmTypeList.index(typeJ))+"; sigma="+str(nonbond['c6'])+" nm; eps="+str(nonbond['c12'])+" kJ*mol^-1;}\n"
+
+    listLine=listLine+";\n"
+    nbLine = nbLine +"\n"
+
+    fh.write(listLine);
+    fh.write("}\n\n");
 
     resID=1
     for itp in itpList:
         #['atoms', 'bonds', 'constraints', 'angles', 'dihedrals']
         sectionKeys=itp.header.moleculetype.sections.keys()
+        # itp must have atoms, but not necessory bonds, angles, dihedrals or constraints
+        hasBond=False
         hasAngle=False
         hasDihedral=False
         hasConstraints=False
+        if 'bonds' in sectionKeys:
+            hasBond=True
         if 'angles' in sectionKeys:
             hasAngle=True
         if 'dihedrals' in sectionKeys:
@@ -76,73 +121,81 @@ if __name__ == '__main__':
         line = line + "  resName="+resName+";\n"
         resCharge=sum(itp.header.moleculetype.atoms.data.charge)
         line = line + "  charge=" + str(resCharge) + ";\n"
-        line = line + "  groupList=" + resName + "-g0;\n"
-        bondSize=len(itp.header.moleculetype.bonds.data)
-        line = line + "  bondList="
-        for i in range(bondSize):
-            line = line + resName + "-b" + str(i)+" "
-        line = line + ";\n"
+        line = line + "  groupList=" + resName + "_g0;\n"
+        if hasBond:
+            bondSize=len(itp.header.moleculetype.bonds.data)
+            line = line + "  bondList="
+            for i in range(bondSize):
+                line = line + resName + "_b" + str(i)+" "
+            line = line + ";\n"
         if hasConstraints:
             constraintSize = len(itp.header.moleculetype.constraints.data)
             line = line + "  constraintList="
             for i in range(constraintSize):
-                line = line + resName + "-c" + str(i)+" "
+                line = line + resName + "_c" + str(i)+" "
             line = line + ";\n"
         if hasAngle:
             angleSize = len(itp.header.moleculetype.angles.data)
             line = line + "  angleList="
-            for i in range(constraintSize):
-                line = line + resName + "-a" + str(i)+" "
+            for i in range(angleSize):
+                line = line + resName + "_a" + str(i)+" "
             line = line + ";\n"
         if hasDihedral:
             dihedralSize = len(itp.header.moleculetype.dihedrals.data)
             line = line + "  dihedralList="
-            for i in range(constraintSize):
-                line = line + resName + "-d" + str(i)+" "
+            for i in range(dihedralSize):
+                line = line + resName + "_d" + str(i)+" "
             line = line + ";\n"
         line = line + "}\n\n"
 
-        # TGROUP_PARMS
-        line = line + resName + "-g0 TGROUP_PARMS{\n"
+        # GROUPPARMS
+        line = line + resName + "_g0 GROUPPARMS{\n"
+        line = line + "  groupID=0;\n"
         line = line + "  atomList="
         for atom in itp.header.moleculetype.atoms.data:
-            line = line + resName + "-" + atom['atomname'] +" "
+            line = line + resName + "_" + atom['atomname'] +" "
         line = line + ";\n"
         line = line + "}\n\n"
 
-        #TATOM_PARMS
+        #ATOMPARMS
+        atomTypeList=[]
         for atom in itp.header.moleculetype.atoms.data:
             atomName = atom['atomname']
             atomID = atom['atomnr'] - 1 # 0 based
             atomType=atom['atomtype']
+            atomTypeList.append(atomType)
             atomCharge=atom['charge']
-            line = line + resName + "-" + atomName +" TATOM_PARMS{"
-            line = line + "atmID="+str(atomID)+"; atmName="+atomName+"; atmType="+atomType+"; charge="+str(atomCharge)+"; }\n"
+            line = line + resName + "_" + atomName +" ATOMPARMS{"
+            line = line + "atomID="+str(atomID)+"; atomName="+atomName+"; atomType="+atomType+"; charge="+str(atomCharge)+"; mass="+str(massDict[atomType]) +" M_p ; }\n"
         line = line +"\n"
 
-        #BOND_CONN
-        for i in range(bondSize):
-            bond=itp.header.moleculetype.bonds.data[i]
-            atomI = bond['ai']-1 # 0 based
-            atomJ = bond['aj']-1 # 0 based
-            b0=bond['b0']
-            kb=bond['kb']
-            line = line + resName + "-b" + str(i) + " BOND_CONN{"
-            line = line + "atmI="+str(atomI)+"; atomJ="+str(atomJ)+"; kb="+str(kb)+"; b0="+str(b0)+"; }\n"
-        line = line + "\n"
+        #BONDPARMS
+        if hasBond:
+            for i in range(bondSize):
+                bond=itp.header.moleculetype.bonds.data[i]
+                atomI = bond['ai']-1 # 0 based
+                atomJ = bond['aj']-1 # 0 based
+                atomTypeI = atomTypeList[atomI]
+                atomTypeJ = atomTypeList[atomJ]
+                b0=bond['b0']
+                kb=bond['kb']
+                line = line + resName + "_b" + str(i) + " BONDPARMS{"
+                line = line + "atomI="+str(atomI)+"; atomTypeI="+atomTypeI+"; atomJ="+str(atomJ) + "; atomTypeJ="+atomTypeJ \
+                       +"; kb="+str(0.5*kb)+" kJ*mol^-1*nm^-2; b0="+str(b0)+" nm; }\n"   # 1/2 k -> K
+            line = line + "\n"
 
-        # CONSTRAINT_CONN
+        # CONSPARMS
         if hasConstraints:
             for i in range(constraintSize):
                 constraint=itp.header.moleculetype.constraints.data[i]
                 atomI = constraint['ai']-1 # 0 based
                 atomJ = constraint['aj']-1 # 0 based
                 r0=constraint['r0']
-                line = line + resName + "-c" + str(i) + " CONSTRAINT_CONN{"
-                line = line + "atmI="+str(atomI)+"; atomJ="+str(atomJ)+"; r0="+str(r0)+"; }\n"
+                line = line + resName + "_c" + str(i) + " CONSPARMS{"
+                line = line + "atomI="+str(atomI)+"; atomJ="+str(atomJ)+"; r0="+str(r0)+" nm; }\n"
             line = line + "\n"
 
-        # Angle_CONN
+        # ANGLEPARMS
         if hasAngle:
             for i in range(angleSize):
                 angle=itp.header.moleculetype.angles.data[i]
@@ -151,10 +204,11 @@ if __name__ == '__main__':
                 atomK = angle['ak'] - 1  # 0 based
                 theta0=angle['theta0']
                 ktheta=angle['cth']
-                line = line + resName + "-a" + str(i) + " ANGLE_CONN{"
-                line = line + "atmI="+str(atomI)+"; atomJ="+str(atomJ)+"; atomK="+str(atomK)+"; theta0="+str(theta0)+"; ktheta="+str(ktheta)+"; }\n"
+                line = line + resName + "_a" + str(i) + " ANGLEPARMS{"
+                line = line + "atomI="+str(atomI)+"; atomJ="+str(atomJ)+"; atomK="+str(atomK)\
+                       +"; theta0="+str(math.cos(theta0*DEG2RAD))+"; ktheta="+str(0.5*ktheta)+" kJ*mol^-1; }\n" # cosine based
             line = line + "\n"
-        # TORS_CONN
+        # TORSPARMS
         if hasDihedral:
             for i in range(dihedralSize):
                 dihedral=itp.header.moleculetype.dihedrals.data[i]
@@ -164,19 +218,17 @@ if __name__ == '__main__':
                 atomL = dihedral['al'] - 1  # 0 based
                 delta=dihedral['delta']
                 kchi=dihedral['kchi']
-                line = line + resName + "-d" + str(i) + " TORS_CONN{"
-                line = line + "atmI="+str(atomI)+"; atomJ="+str(atomJ)+"; atomK="+str(atomK)+"; atomL="+str(atomL)+"; delta="+str(delta)+"; kchi="+str(kchi)+"; }\n"
+                line = line + resName + "_d" + str(i) + " TORSPARMS{"
+                line = line + "atomI="+str(atomI)+"; atomJ="+str(atomJ)+"; atomK="+str(atomK)+"; atomL="+str(atomL)\
+                       +"; delta="+str(delta*DEG2RAD)+"; kchi="+str(kchi)+" kJ*mol^-1; n=1;}\n"
             line = line + "\n"
 
         fh.write(line)
 
+
+    fh.write(nbLine)
+
     # Print out species
-
-    par_itp = ITP.ITP(args.parfile)
-
-    massDict = {}
-    for atomtype in par_itp.header.atomtypes.data:
-        massDict[atomtype['name']]=atomtype['mass']
 
     sysLine="system SYSTEM\n{species =\n"
     speLine=""
@@ -187,7 +239,7 @@ if __name__ == '__main__':
             specie=resName+"x"+atom['atomname']
             sysLine=sysLine+specie+"\n"
             atomType=atom['atomtype']
-            speLine=speLine+specie+" SPECIES { type = ATOM ; charge ="+str(atom['charge'])+" ; mass ="+str(massDict[atomType])+" M_p ; }\n"
+            speLine=speLine+specie+" SPECIES { type = ATOM ; charge ="+str(atom['charge'])+"; id="+str(atmTypeList.index(atomType))+ "; mass ="+str(massDict[atomType])+" M_p ; }\n"
 
     sysLine=sysLine+"   ;\n}\n\n"
 
