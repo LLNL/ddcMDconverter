@@ -5,6 +5,7 @@ __author__ = 'zhang30'
 import argparse
 import ITP
 import math
+import MartiniFF
 
 
 def getArgs():
@@ -25,6 +26,9 @@ if __name__ == '__main__':
 
     args=getArgs()
     print "Default inputs: ", args.itpfile,  args.objfile
+
+    # Interaction Matrix from JPC B. Vol 111, No 27, 2007
+    martiniFF=MartiniFF.MartiniFF()
 
     # Mass
     par_itp = ITP.ITP(args.parfile)
@@ -74,7 +78,11 @@ if __name__ == '__main__':
     # Print out atom type
     atmTypeList=atmTypeDict.keys()
 
-    listLine="nAtomType="+str(len(atmTypeList))+";\n"
+    listLine="atomTypeList="
+    for atomType in atmTypeList:
+        listLine=listLine+atomType+" "
+
+    listLine=listLine+";\n"
 
     nbLine=""
     listLine=listLine+"ljParms="
@@ -85,13 +93,20 @@ if __name__ == '__main__':
             if typeJ in atmTypeList:
                 ljname=typeI+"_"+ typeJ
                 listLine=listLine+ljname+" "
-                nbLine=nbLine+ljname+" LJPARMS{atomtypeI="+typeI+"; indexI="+str(atmTypeList.index(typeI))+"; atomtypeJ="+typeJ+"; indexJ="+str(atmTypeList.index(typeJ))+"; sigma="+str(nonbond['c6'])+" nm; eps="+str(nonbond['c12'])+" kJ*mol^-1;}\n"
+                (eps, sigma)=martiniFF.getLJparm(typeI, typeJ)
+                nbLine=nbLine+ljname+" LJPARMS{atomtypeI="+typeI+"; indexI="+str(atmTypeList.index(typeI))+"; atomtypeJ="+typeJ+"; indexJ="+str(atmTypeList.index(typeJ))+"; sigma="+str(sigma)+" nm; eps="+str(eps)+" kJ*mol^-1;}\n"
 
-    listLine=listLine+";\n"
+    listLine=listLine+";\n"+"}\n\n";
+    fh.write(listLine);
     nbLine = nbLine +"\n"
 
-    fh.write(listLine);
-    fh.write("}\n\n");
+    #MASSPARM
+    listLine=""
+    for index, atomType in enumerate(atmTypeList):
+        listLine=listLine+atomType+" MASSPARMS { atomType="+atomType+"; atomTypeID="+str(index)+"; mass="+str(massDict[atomType])+"M_p ; }\n"
+
+    listLine = listLine+"\n"
+    fh.write(listLine)
 
     resID=1
     for itp in itpList:
@@ -166,7 +181,7 @@ if __name__ == '__main__':
             atomTypeList.append(atomType)
             atomCharge=atom['charge']
             line = line + resName + "_" + atomName +" ATOMPARMS{"
-            line = line + "atomID="+str(atomID)+"; atomName="+atomName+"; atomType="+atomType+"; charge="+str(atomCharge)+"; mass="+str(massDict[atomType]) +" M_p ; }\n"
+            line = line + "atomID="+str(atomID)+"; atomName="+atomName+"; atomType="+atomType+"; atomTypeID="+str(atmTypeList.index(atomType))+"; charge="+str(atomCharge)+"; mass="+str(massDict[atomType]) +" M_p ; }\n"
         line = line +"\n"
 
         #BONDPARMS
