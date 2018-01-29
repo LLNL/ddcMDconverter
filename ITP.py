@@ -486,6 +486,7 @@ class Moleculetype(ITPsection):
             'atoms': Atoms,
             'bonds': Bonds,
             'constraints': Constraints,
+            'exclusions' : Exclusions,
             'angles': Angles,
             'dihedrals': Dihedrals,
             'pairs': Pairs,
@@ -655,6 +656,30 @@ class Constraints(ITPdata):
            ]
     column_comment = "; ai   aj  funct r0"
 
+class Exclusions(ITPdata):
+    """ITP ``[ exclusions ]`` section
+
+    Example format::
+
+        [ exclusions ]
+           419   420     ;   GTP
+           420   421     ;   GTP
+           421   422     ;   GTP
+           422   423     ;   GTP
+           421   424
+
+        .. versionadded:: 0.2.5
+    """
+    name = "exclusions"
+    #: :class:`numpy.dtype` columns for the data
+    dtypes = [("ai", "i4"), ("aj", "i4"),
+              # XXX: FEP columns?
+              # extra last column ("comment", "S128")
+              ]
+    #: output format (space separated), same ordering as :attr:`columns`
+    fmt = ["%4d", "%4d",
+           ]
+    column_comment = "; ai   aj "
 
 class Angles(ITPdata):
     """ITP ``[ angles ]`` section

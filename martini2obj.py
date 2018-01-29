@@ -11,7 +11,9 @@ import MartiniFF
 def getArgs():
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i', '--itp', action='store', dest='itpfile', default='itpList', help='ITP file list (default=itpList).')
+    parser.add_argument('-i', '--itp', action='store', dest='itpfile', default=None, help='ITP file list (default=itpList).')
+    parser.add_argument('-t', '--pro', action='store', dest='profile', default=None,
+                        help='Protein ITP file list (default=proItpList).')
     parser.add_argument('-p', '--par', action='store', dest='parfile', default='martini_v2.2.itp',
                         help='Overall ITP file (default=martini_v2.2.itp).')
     parser.add_argument('-o', '--obj', action='store', dest='objfile', default='martini.data', help='Martini object output file (default=martini.data).')
@@ -42,11 +44,28 @@ if __name__ == '__main__':
 
     itpList=[]
 
-    with open(args.itpfile, "r") as f:
-        for line in f:
-            tipFileName=line.rstrip("\n\r")
-            itp = ITP.ITP(tipFileName)
-            itpList.append(itp)
+    if args.profile != None:
+        with open(args.profile, "r") as f:
+            for line in f:
+                tipFileName=line.rstrip("\n\r")
+                itp = ITP.ITP(tipFileName)
+                itpList.append(itp)
+
+    # fix the atom name in the
+    for itp in itpList:
+        count = 1
+        for atom in itp.header.moleculetype.atoms.data:
+            atom['atomname'] = 'P' + str(count)
+            count = count + 1
+
+        #print itp.header.moleculetype.atoms
+
+    if args.itpfile != None:
+        with open(args.itpfile, "r") as f:
+            for line in f:
+                tipFileName=line.rstrip("\n\r")
+                itp = ITP.ITP(tipFileName)
+                itpList.append(itp)
 
     """
     martini
@@ -192,11 +211,12 @@ if __name__ == '__main__':
                 atomJ = bond['aj']-1 # 0 based
                 atomTypeI = atomTypeList[atomI]
                 atomTypeJ = atomTypeList[atomJ]
+                func=bond['func']
                 b0=bond['b0']
                 kb=bond['kb']
                 line = line + resName + "_b" + str(i) + " BONDPARMS{"
                 line = line + "atomI="+str(atomI)+"; atomTypeI="+atomTypeI+"; atomJ="+str(atomJ) + "; atomTypeJ="+atomTypeJ \
-                       +"; kb="+str(0.5*kb)+" kJ*mol^-1*nm^-2; b0="+str(b0)+" nm; }\n"   # 1/2 k -> K
+                       + "; func=" + str(func)+"; kb="+str(0.5*kb)+" kJ*mol^-1*nm^-2; b0="+str(b0)+" nm; }\n"   # 1/2 k -> K
             line = line + "\n"
 
         # CONSPARMS

@@ -26,7 +26,7 @@ def assignGid(comPDB):
 
             grpID = 0
             for atmNum, atmPDB in enumerate(resPDB.atmList):
-                atmPDB.gid = (molID << 32) + (resID << 16) + (grpID << 8) + atmNum
+                atmPDB.gid = (molID << 32) + (resID << 16) + (grpID << 8) + atmNum #for RAS atmNum exceed 8 bits.
 
 def toObj(args, comPDB):
     totAtmNum=comPDB.getTotAtmNum()
