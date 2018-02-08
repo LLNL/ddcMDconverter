@@ -32,6 +32,7 @@ sigma = {
     "3": 0.57,  # supra attractive bead type
     "4": 0.62,  # super repulsive bead type
     "5": 1.00,  # unity: c6/12 parity
+    "6": 0.32,  # for tiny atom type
 }
 
 scale = {
@@ -40,6 +41,7 @@ scale = {
     "c": 0.90,  # 90%: S* - C1 interactions with BMW water
     "d": 0.75,  # 75%: ring bead types (S*) and uncharged interactions with BMW for epsilon >=4.5
     "e": 0.71,  # 71%: uncharged interactions with BMW for epsilon<4.5
+    "f": 0.68,  # 68% for tiny atom type
 }
 
 # BEAD TYPES
@@ -59,6 +61,13 @@ small = {
     "SNda": 45,  "SNd":  45,  "SNa":  45,  "SN0":  45,              # Ring type, intermediate
     "SC5":  45,  "SC4":  45,  "SC3":  45,  "SC2":  45,  "SC1":  45, # Ring type, apolar
     "SQda": 45,  "SQd":  45,  "SQa":  45,  "SQ0":  45,              # Ring type, charged
+    }
+
+tiny = {
+    "TP5":  45,  "TP4":  45,  "TP3":  45,  "TP2":  45,  "TP1":  45, # Ring type, polar
+    "TNda": 45,  "TNd":  45,  "TNa":  45,  "TN0":  45,              # Ring type, intermediate
+    "TC5":  45,  "TC4":  45,  "TG3":  45,  "TG2":  45,  "TC1":  45, # modified
+    "TQda": 45,  "TQd":  45,  "TQa":  45,  "TQ0":  45,              # Ring type, charged
     }
 
 # Virtual sites, plain type; mapping 4:1, no mass
@@ -84,7 +93,7 @@ other = {
     "D":     0, # Dummy particle type
     }
 
-classes = ("plain","small","vsite","svste","other")
+classes = ("plain","small","tiny","vsite","svste","other")
 
 table_plain = """
        Qda   Qd   Qa   Q0   P5   P4   P3   P2   P1  Nda   Nd   Na   N0   C5   C4   C3   C2   C1  AC2  AC1
@@ -132,6 +141,28 @@ table_small = """
   SC1  Ia4  Ia4  Ia4  Ia4  Id1  Id1  Hd1  Hd1  Gd1  Gd1  Gd1  Gd1  Gd1  Fd1  Fd1  Ed1  Ed1  Ed1
 """
 
+table_tiny = """
+      TQda  TQd  TQa  TQ0  TP5  TP4  TP3  TP2  TP1 TNda  TNd  TNa  TN0  TC5  TC4  TG3  TG2  TC1
+ TQda  Af1  Af1  Af1  Cf1  Af1  Af1  Af1  Bf1  Bf1  Bf1  Bf1  Bf1  Ef1  Ff1  Gf1  Hf1  If4  If4
+  TQd  Af1  Bf1  Af1  Cf1  Af1  Af1  Af1  Bf1  Bf1  Bf1  Df1  Bf1  Ef1  Ff1  Gf1  Hf1  If4  If4
+  TQa  Af1  Af1  Bf1  Cf1  Af1  Af1  Af1  Bf1  Bf1  Bf1  Bf1  Df1  Ef1  Ff1  Gf1  Hf1  If4  If4
+  TQ0  Cf1  Cf1  Cf1  Ef1  Bf1  Af1  Bf1  Cf1  Df1  Df1  Df1  Df1  Ef1  Ff1  Gf1  Hf1  If4  If4
+  TP5  Af1  Af1  Af1  Bf1  Af1  Af1  Af1  Af1  Af1  Bf1  Bf1  Bf1  Ef1  Ff1  Gf1  Gf1  Hf1  If1
+  TP4  Af1  Af1  Af1  Af1  Af1  Bf1  Bf1  Cf1  Cf1  Df1  Df1  Df1  Ef1  Ff1  Gf1  Gf1  Hf1  If1
+  TP3  Af1  Af1  Af1  Bf1  Af1  Bf1  Bf1  Cf1  Cf1  Cf1  Cf1  Cf1  Ef1  Ef1  Ff1  Ff1  Gf1  Hf1
+  TP2  Bf1  Bf1  Bf1  Cf1  Af1  Cf1  Cf1  Cf1  Cf1  Cf1  Cf1  Cf1  Df1  Ef1  Ef1  Ff1  Gf1  Hf1
+  TP1  Bf1  Bf1  Bf1  Df1  Af1  Cf1  Cf1  Cf1  Cf1  Cf1  Cf1  Cf1  Df1  Ef1  Ef1  Ef1  Ff1  Gf1
+ TNda  Bf1  Bf1  Bf1  Df1  Bf1  Df1  Cf1  Cf1  Cf1  Cf1  Cf1  Cf1  Ef1  Ef1  Ff1  Gf1  Gf1  Gf1
+  TNd  Bf1  Df1  Bf1  Df1  Bf1  Df1  Cf1  Cf1  Cf1  Cf1  Df1  Cf1  Ef1  Ef1  Ff1  Gf1  Gf1  Gf1
+  TNa  Bf1  Bf1  Df1  Df1  Bf1  Df1  Cf1  Cf1  Cf1  Cf1  Cf1  Da6  Ea6  Ef1  Ff1  Ca6  Ca6  Gf1
+  TN0  Ef1  Ef1  Ef1  Ef1  Ef1  Ef1  Ef1  Df1  Df1  Ef1  Ef1  Ea6  Ea6  Ef1  Ef1  Da6  Da6  Gf1
+  TC5  Ff1  Ff1  Ff1  Ff1  Ff1  Ff1  Ef1  Ef1  Ef1  Ef1  Ef1  Ef1  Ef1  Ef1  Ef1  Ef1  Ff1  Ff1
+  TC4  Gf1  Gf1  Gf1  Gf1  Gf1  Gf1  Ff1  Ef1  Ef1  Ff1  Ff1  Ff1  Ef1  Ef1  Ef1  Ef1  Ff1  Ff1
+  TG3  Hf1  Hf1  Hf1  Hf1  Gf1  Gf1  Ff1  Ff1  Ef1  Ca6  Gf1  Ca6  Da6  Ef1  Ef1  Ga6  Ga6  Ef1
+  TG2  If4  If4  If4  If4  Hf1  Hf1  Gf1  Gf1  Ff1  Ca6  Gf1  Ca6  Da6  Ff1  Ff1  Ga6  Ha6  Ef1
+  TC1  If4  If4  If4  If4  If1  If1  Hf1  Hf1  Gf1  Gf1  Gf1  Gf1  Gf1  Ff1  Ff1  Ef1  Ef1  Ef1
+"""
+
 table_small_plain = """
        Qda   Qd   Qa   Q0   P5   P4   P3   P2   P1  Nda   Nd   Na   N0   C5   C4   C3   C2   C1  AC2  AC1
  SQda  Aa2  Aa2  Aa2  Ca2  Aa2  Aa2  Aa2  Ba2  Ba2  Ba2  Ba2  Ba2  Ea2  Fa2  Ga2  Ha2  Ia4  Ia4  Ia2  Ia2
@@ -152,6 +183,50 @@ table_small_plain = """
   SC3  Ha2  Ha2  Ha2  Ha2  Ga2  Ga2  Fa2  Fa2  Ea2  Ga2  Ga2  Ga2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2
   SC2  Ia4  Ia4  Ia4  Ia4  Ha2  Ha2  Ga2  Ga2  Fa2  Ga2  Ga2  Ga2  Fa2  Fa2  Fa2  Ea2  Ea2  Ea2  Ea2  Ea2
   SC1  Ia4  Ia4  Ia4  Ia4  Ia2  Ia2  Ha2  Ha2  Ga2  Ga2  Ga2  Ga2  Ga2  Fa2  Fa2  Ea2  Ea2  Ea2  Ea2  Ea2
+"""
+
+table_tiny_plain = """
+       Qda   Qd   Qa   Q0   P5   P4   P3   P2   P1  Nda   Nd   Na   N0   C5   C4   C3   C2   C1  AC2  AC1
+ TQda  Aa2  Aa2  Aa2  Ca2  Aa2  Aa2  Aa2  Ba2  Ba2  Ba2  Ba2  Ba2  Ea2  Fa2  Ga2  Ha2  Ia4  Ia4  Ia2  Ia2
+  TQd  Aa2  Ba2  Aa2  Ca2  Aa2  Aa2  Aa2  Ba2  Ba2  Ba2  Da2  Ba2  Ea2  Fa2  Ga2  Ha2  Ia4  Ia4  Ia2  Ia2
+  TQa  Aa2  Aa2  Ba2  Ca2  Aa2  Aa2  Aa2  Ba2  Ba2  Ba2  Ba2  Da2  Ea2  Fa2  Ga2  Ha2  Ia4  Ia4  Ia2  Ia2
+  TQ0  Ca2  Ca2  Ca2  Ea2  Ba2  Aa2  Ba2  Ca2  Da2  Da2  Da2  Da2  Ea2  Fa2  Ga2  Ha2  Ia4  Ia4  Ia2  Ia2
+  TP5  Aa2  Aa2  Aa2  Ba2  Aa2  Aa2  Aa2  Aa2  Aa2  Ba2  Ba2  Ba2  Ea2  Fa2  Ga2  Ga2  Ha2  Ia2  Ha2  Ia2
+  TP4  Aa2  Aa2  Aa2  Aa2  Aa2  Ba2  Ba2  Ca2  Ca2  Da2  Da2  Da2  Ea2  Fa2  Ga2  Ga2  Ha2  Ia2  Ha2  Ia2
+  TP3  Aa2  Aa2  Aa2  Ba2  Aa2  Ba2  Ba2  Ca2  Ca2  Ca2  Ca2  Ca2  Ea2  Ea2  Fa2  Fa2  Ga2  Ha2  Ga2  Ha2
+  TP2  Ba2  Ba2  Ba2  Ca2  Aa2  Ca2  Ca2  Ca2  Ca2  Ca2  Ca2  Ca2  Da2  Ea2  Ea2  Fa2  Ga2  Ha2  Ga2  Ha2
+  TP1  Ba2  Ba2  Ba2  Da2  Aa2  Ca2  Ca2  Ca2  Ca2  Ca2  Ca2  Ca2  Da2  Ea2  Ea2  Ea2  Fa2  Ga2  Fa2  Ga2
+ TNda  Ba2  Ba2  Ba2  Da2  Ba2  Da2  Ca2  Ca2  Ca2  Ca2  Ca2  Ca2  Ea2  Ea2  Fa2  Ga2  Ga2  Ga2  Ga2  Ga2
+  TNd  Ba2  Da2  Ba2  Da2  Ba2  Da2  Ca2  Ca2  Ca2  Ca2  Da2  Ca2  Ea2  Ea2  Fa2  Ga2  Ga2  Ga2  Ga2  Ga2
+  TNa  Ba2  Ba2  Da2  Da2  Ba2  Da2  Ca2  Ca2  Ca2  Ca2  Ca2  Da2  Ea2  Ea2  Fa2  Ga2  Ga2  Ga2  Ga2  Ga2
+  TN0  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Da2  Da2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Fa2  Ga2  Fa2  Ga2
+  TC5  Fa2  Fa2  Fa2  Fa2  Fa2  Fa2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Fa2  Fa2  Fa2  Fa2
+  TC4  Ga2  Ga2  Ga2  Ga2  Ga2  Ga2  Fa2  Ea2  Ea2  Fa2  Fa2  Fa2  Ea2  Ea2  Ea2  Ea2  Fa2  Fa2  Fa2  Fa2
+  TG3  Ha2  Ha2  Ha2  Ha2  Ga2  Ga2  Fa2  Fa2  Ea2  Ga2  Ga2  Ga2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2
+  TG2  Ia4  Ia4  Ia4  Ia4  Ha2  Ha2  Ga2  Ga2  Fa2  Ga2  Ga2  Ga2  Fa2  Fa2  Fa2  Ea2  Ea2  Ea2  Ea2  Ea2
+  TC1  Ia4  Ia4  Ia4  Ia4  Ia2  Ia2  Ha2  Ha2  Ga2  Ga2  Ga2  Ga2  Ga2  Fa2  Fa2  Ea2  Ea2  Ea2  Ea2  Ea2
+"""
+
+table_tiny_small = """
+      SQda  SQd  SQa  SQ0  SP5  SP4  SP3  SP2  SP1 SNda  SNd  SNa  SN0  SC5  SC4  SC3  SC2  SC1
+ TQda  Ad1  Ad1  Ad1  Cd1  Ad1  Ad1  Ad1  Bd1  Bd1  Bd1  Bd1  Bd1  Ed1  Fd1  Gd1  Hd1  Ia4  Ia4
+  TQd  Ad1  Bd1  Ad1  Cd1  Ad1  Ad1  Ad1  Bd1  Bd1  Bd1  Dd1  Bd1  Ed1  Fd1  Gd1  Hd1  Ia4  Ia4
+  TQa  Ad1  Ad1  Bd1  Cd1  Ad1  Ad1  Ad1  Bd1  Bd1  Bd1  Bd1  Dd1  Ed1  Fd1  Gd1  Hd1  Ia4  Ia4
+  TQ0  Cd1  Cd1  Cd1  Ed1  Bd1  Ad1  Bd1  Cd1  Dd1  Dd1  Dd1  Dd1  Ed1  Fd1  Gd1  Hd1  Ia4  Ia4
+  TP5  Ad1  Ad1  Ad1  Bd1  Ad1  Ad1  Ad1  Ad1  Ad1  Bd1  Bd1  Bd1  Ed1  Fd1  Gd1  Gd1  Hd1  Id1
+  TP4  Ad1  Ad1  Ad1  Ad1  Ad1  Bd1  Bd1  Cd1  Cd1  Dd1  Dd1  Dd1  Ed1  Fd1  Gd1  Gd1  Hd1  Id1
+  TP3  Ad1  Ad1  Ad1  Bd1  Ad1  Bd1  Bd1  Cd1  Cd1  Cd1  Cd1  Cd1  Ed1  Ed1  Fd1  Fd1  Gd1  Hd1
+  TP2  Bd1  Bd1  Bd1  Cd1  Ad1  Cd1  Cd1  Cd1  Cd1  Cd1  Cd1  Cd1  Dd1  Ed1  Ed1  Fd1  Gd1  Hd1
+  TP1  Bd1  Bd1  Bd1  Dd1  Ad1  Cd1  Cd1  Cd1  Cd1  Cd1  Cd1  Cd1  Dd1  Ed1  Ed1  Ed1  Fd1  Gd1
+ TNda  Bd1  Bd1  Bd1  Dd1  Bd1  Dd1  Cd1  Cd1  Cd1  Cd1  Cd1  Cd1  Ed1  Ed1  Fd1  Gd1  Gd1  Gd1
+  TNd  Bd1  Dd1  Bd1  Dd1  Bd1  Dd1  Cd1  Cd1  Cd1  Cd1  Dd1  Cd1  Ed1  Ed1  Fd1  Gd1  Gd1  Gd1
+  TNa  Bd1  Bd1  Dd1  Dd1  Bd1  Dd1  Cd1  Cd1  Cd1  Cd1  Cd1  Dd1  Ed1  Ed1  Fd1  Gd1  Gd1  Gd1
+  TN0  Ed1  Ed1  Ed1  Ed1  Ed1  Ed1  Ed1  Dd1  Dd1  Ed1  Ed1  Ed1  Ed1  Ed1  Ed1  Ed1  Fd1  Gd1
+  TC5  Fd1  Fd1  Fd1  Fd1  Fd1  Fd1  Ed1  Ed1  Ed1  Ed1  Ed1  Ed1  Ed1  Ed1  Ed1  Ed1  Fd1  Fd1
+  TC4  Gd1  Gd1  Gd1  Gd1  Gd1  Gd1  Fd1  Ed1  Ed1  Fd1  Fd1  Fd1  Ed1  Ed1  Ed1  Ed1  Fd1  Fd1
+  TG3  Hd1  Hd1  Hd1  Hd1  Gd1  Gd1  Fd1  Fd1  Ed1  Gd1  Gd1  Gd1  Ed1  Ed1  Ed1  Ed1  Ed1  Ed1
+  TG2  Ia4  Ia4  Ia4  Ia4  Hd1  Hd1  Gd1  Gd1  Fd1  Gd1  Gd1  Gd1  Fd1  Fd1  Fd1  Ed1  Ed1  Ed1
+  TC1  Ia4  Ia4  Ia4  Ia4  Id1  Id1  Hd1  Hd1  Gd1  Gd1  Gd1  Gd1  Gd1  Fd1  Fd1  Ed1  Ed1  Ed1
 """
 
 table_vsite = """
