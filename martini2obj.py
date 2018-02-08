@@ -53,7 +53,7 @@ if __name__ == '__main__':
 
     # fix the atom name in the
     for itp in itpList:
-        count = 1
+        count = 0
         for atom in itp.header.moleculetype.atoms.data:
             atom['atomname'] = 'P' + str(count)
             count = count + 1
@@ -136,6 +136,7 @@ if __name__ == '__main__':
         hasAngle=False
         hasDihedral=False
         hasConstraints=False
+        hasExclusions=False
         if 'bonds' in sectionKeys:
             hasBond=True
         if 'angles' in sectionKeys:
@@ -144,6 +145,8 @@ if __name__ == '__main__':
             hasDihedral = True
         if 'constraints' in sectionKeys:
             hasConstraints=True
+        if 'exclusions' in sectionKeys:
+            hasExclusions=True
 
         line = ""
         # RESIPARMS
@@ -167,6 +170,12 @@ if __name__ == '__main__':
             line = line + "  constraintList="
             for i in range(constraintSize):
                 line = line + resName + "_c" + str(i)+" "
+            line = line + ";\n"
+        if hasExclusions:
+            exclusionSize = len(itp.header.moleculetype.exclusions.data)
+            line = line + "  exclusionList="
+            for i in range(exclusionSize):
+                line = line + resName + "_e" + str(i)+" "
             line = line + ";\n"
         if hasAngle:
             angleSize = len(itp.header.moleculetype.angles.data)
@@ -230,6 +239,18 @@ if __name__ == '__main__':
                 line = line + "atomI="+str(atomI)+"; atomJ="+str(atomJ)+"; r0="+str(r0)+" nm; }\n"
             line = line + "\n"
 
+        # EXCLUDEPARMS
+        if hasExclusions:
+            for i in range(exclusionSize):
+                exclusion=itp.header.moleculetype.exclusions.data[i]
+                atomI = exclusion['ai']-1 # 0 based
+                atomJ = exclusion['aj']-1 # 0 based
+                atomTypeI = atomTypeList[atomI]
+                atomTypeJ = atomTypeList[atomJ]
+                line = line + resName + "_e" + str(i) + " EXCLUDEPARMS{"
+                line = line + "atomI="+str(atomI)+"; atomTypeI="+atomTypeI+"; atomJ="+str(atomJ)+ "; atomTypeJ="+atomTypeJ+"; }\n"
+            line = line + "\n"
+
         # ANGLEPARMS
         if hasAngle:
             for i in range(angleSize):
@@ -239,9 +260,14 @@ if __name__ == '__main__':
                 atomK = angle['ak'] - 1  # 0 based
                 theta0=angle['theta0']
                 ktheta=angle['cth']
+                func = angle['func']
                 line = line + resName + "_a" + str(i) + " ANGLEPARMS{"
-                line = line + "atomI="+str(atomI)+"; atomJ="+str(atomJ)+"; atomK="+str(atomK)\
-                       +"; theta0="+str(math.cos(theta0*DEG2RAD))+"; ktheta="+str(0.5*ktheta)+" kJ*mol^-1; }\n" # cosine based
+                if func==1:
+                    line = line + "atomI="+str(atomI)+"; atomJ="+str(atomJ)+"; atomK="+str(atomK) + "; func=" + str(func)\
+                           +"; theta0="+str(theta0*DEG2RAD)+"; ktheta="+str(0.5*ktheta)+" kJ*mol^-1; }\n"
+                if func==2:
+                    line = line + "atomI="+str(atomI)+"; atomJ="+str(atomJ)+"; atomK="+str(atomK) + "; func=" + str(func)\
+                           +"; theta0="+str(math.cos(theta0*DEG2RAD))+"; ktheta="+str(0.5*ktheta)+" kJ*mol^-1; }\n" # cosine based
             line = line + "\n"
         # TORSPARMS
         if hasDihedral:
@@ -253,9 +279,14 @@ if __name__ == '__main__':
                 atomL = dihedral['al'] - 1  # 0 based
                 delta=dihedral['delta']
                 kchi=dihedral['kchi']
+                func=dihedral['func']
+                if func==1:
+                    delta=-delta
+                if func==2:
+                    kchi=kchi/2.0
                 line = line + resName + "_d" + str(i) + " TORSPARMS{"
-                line = line + "atomI="+str(atomI)+"; atomJ="+str(atomJ)+"; atomK="+str(atomK)+"; atomL="+str(atomL)\
-                       +"; delta="+str(delta*DEG2RAD)+"; kchi="+str(kchi)+" kJ*mol^-1; n=1;}\n"
+                line = line + "atomI="+str(atomI)+"; atomJ="+str(atomJ)+"; atomK="+str(atomK)+"; atomL="+str(atomL) \
+                       + "; func=" + str(func) +"; delta="+str(delta*DEG2RAD)+"; kchi="+str(kchi)+" kJ*mol^-1; n=1;}\n"
             line = line + "\n"
 
         fh.write(line)

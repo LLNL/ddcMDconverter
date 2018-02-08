@@ -42,12 +42,21 @@ class MolPDB:
     def __init__(self):
         self.molID=0
         self.resList=[]
+        self.isPortein=False
+        self.proteinName=""
 
     def parse(self, molstrs):
 
         oldResName=""
         oldResID=-1
         for line in molstrs:
+            if line[:7] == "PROTEIN":
+                strs=line.split()
+                if len(strs) > 2:
+                    self.isPortein = True
+                    self.proteinName = strs[2]
+                continue
+
             if line[:4]=="ATOM" :
                 atmID=int(line[4:11])
             elif line[:6]=="HETATM" :
@@ -111,11 +120,11 @@ class ComPDB:
                             molsList.append(aMol)
                         aMol = []
 
-                if line[:3]=="TER" or line[:3]=="END" :
+                if line[:3]=="TER" or line[:3]=="END":
                     if(len(aMol)>0):
                         molsList.append(aMol)
                     aMol=[]
-                elif line[:4]=="ATOM" or line[:6]=="HETATM" :
+                elif line[:4]=="ATOM" or line[:6]=="HETATM" or line[:7]=="PROTEIN":
                     aMol.append(line)
                 elif line[:6]=="CRYST1":
                     hasBox=self.getBoxSize(args, line)

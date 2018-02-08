@@ -4,7 +4,7 @@ __author__ = 'zhang30'
 import argparse
 
 import Pdb
-import Obj
+import ITP
 import Specie
 
 
@@ -12,6 +12,8 @@ def getArgs():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-p', '--pdb', action='store', dest='pdbfile', default='test.pdb', help='PDB input file (default=test.pdb).')
+    parser.add_argument('-t', '--pro', action='store', dest='profile', default=None,
+                        help='Protein ITP file list (default=proItpList).')
     parser.add_argument('-o', '--obj', action='store', dest='objfile', default='atom#.data',
                         help='ddcMD object output file (default=atom#.data).')
 
@@ -19,14 +21,33 @@ def getArgs():
 
     return args
 
+def renameProt(comPDB):
+    for molID, molPDB in enumerate(comPDB.molList):
+        if molPDB.isPortein:
+            count=0
+            for resID, resPDB in enumerate(molPDB.resList):
+                resPDB.resName=molPDB.proteinName
+                for atmNum, atmPDB in enumerate(resPDB.atmList):
+                    atmPDB.name="P"+str(count)
+                    count=count+1
+
+
 def assignGid(comPDB):
     for molID, molPDB in enumerate(comPDB.molList):
-        lastResID = len(molPDB.resList) - 1
-        for resID, resPDB in enumerate(molPDB.resList):
-
-            grpID = 0
-            for atmNum, atmPDB in enumerate(resPDB.atmList):
-                atmPDB.gid = (molID << 32) + (resID << 16) + (grpID << 8) + atmNum #for RAS atmNum exceed 8 bits.
+        #lastResID = len(molPDB.resList) - 1
+        if molPDB.isPortein:
+            count=0
+            for resID, resPDB in enumerate(molPDB.resList):
+                grpID = 0
+                resID = 0
+                for atmNum, atmPDB in enumerate(resPDB.atmList):
+                    atmPDB.gid = (molID << 32) + (resID << 16) + (grpID << 8) + count #for RAS atmNum exceed 8 bits.
+                    count = count + 1
+        else:
+            for resID, resPDB in enumerate(molPDB.resList):
+                grpID = 0
+                for atmNum, atmPDB in enumerate(resPDB.atmList):
+                    atmPDB.gid = (molID << 32) + (resID << 16) + (grpID << 8) + atmNum #for RAS atmNum exceed 8 bits.
 
 def toObj(args, comPDB):
     totAtmNum=comPDB.getTotAtmNum()
@@ -70,10 +91,26 @@ if __name__ == '__main__':
     args=getArgs()
     print "Default inputs: ", args.pdbfile
 
+    itpList=[]
+
+    if args.profile != None:
+        with open(args.profile, "r") as f:
+            for line in f:
+                tipFileName=line.rstrip("\n\r")
+                itp = ITP.ITP(tipFileName)
+                itpList.append(itp)
+
+    # fix the atom name in the
+    for itp in itpList:
+        count = 1
+        for atom in itp.header.moleculetype.atoms.data:
+            atom['atomname'] = 'P' + str(count)
+            count = count + 1
 
     print "Reading in pdb file ", args.pdbfile
     comPDB=Pdb.ComPDB()
     comPDB.parse(args)
+    renameProt(comPDB)
     assignGid(comPDB)
     toObj(args, comPDB)
 

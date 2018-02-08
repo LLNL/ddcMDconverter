@@ -145,8 +145,8 @@ class ResTop:
 
     @staticmethod
     def isResidue(resName):
-        resList=["ALA", "ARG", "ASN", "ASP", "CYS", "GLN", "GLU", "GLY", "HSD", "HSE", "HSP",
-                "ILE", "LEU", "LYS", "MET", "PHE", "PRO", "SER", "THR", "TRP", "TYR", "VAL"]
+        resList=["ALA", "ARG", "ASN", "ASP", "CYS", "GLN", "GLU", "GLY", "HSD", "HSE", "HSP", "HIS",
+                "ILE", "LEU", "LYS", "MET", "PHE", "PRO", "SER", "THR", "TRP", "TYR", "VAL", "CYF", "GTP", "MG"]
         if resName in resList:
             return 1
         else:
