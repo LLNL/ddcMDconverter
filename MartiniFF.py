@@ -202,8 +202,8 @@ table_tiny_plain = """
   TN0  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Da2  Da2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Fa2  Ga2  Fa2  Ga2
   TC5  Fa2  Fa2  Fa2  Fa2  Fa2  Fa2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Fa2  Fa2  Fa2  Fa2
   TC4  Ga2  Ga2  Ga2  Ga2  Ga2  Ga2  Fa2  Ea2  Ea2  Fa2  Fa2  Fa2  Ea2  Ea2  Ea2  Ea2  Fa2  Fa2  Fa2  Fa2
-  TG3  Ha2  Ha2  Ha2  Ha2  Ga2  Ga2  Fa2  Fa2  Ea2  Ga2  Ga2  Ga2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2  Ea2
-  TG2  Ia4  Ia4  Ia4  Ia4  Ha2  Ha2  Ga2  Ga2  Fa2  Ga2  Ga2  Ga2  Fa2  Fa2  Fa2  Ea2  Ea2  Ea2  Ea2  Ea2
+  TG3  Ia2  Ba2  Ba2  Da2  Aa2  Ca2  Ca2  Ca2  Ca2  Ca2  Ca2  Ca2  Da2  Ea2  Fa2  Ea2  Fa2  Ea2  Fa2  Ga2
+  TG2  Ia2  Da2  Ba2  Da2  Aa2  Ca2  Ca2  Ca2  Ca2  Ca2  Da2  Ca2  Da2  Ea2  Fa2  Ea2  Fa2  Ea2  Fa2  Ga2
   TC1  Ia4  Ia4  Ia4  Ia4  Ia2  Ia2  Ha2  Ha2  Ga2  Ga2  Ga2  Ga2  Ga2  Fa2  Fa2  Ea2  Ea2  Ea2  Ea2  Ea2
 """
 
@@ -224,8 +224,8 @@ table_tiny_small = """
   TN0  Ed1  Ed1  Ed1  Ed1  Ed1  Ed1  Ed1  Dd1  Dd1  Ed1  Ed1  Ed1  Ed1  Ed1  Ed1  Ed1  Fd1  Gd1
   TC5  Fd1  Fd1  Fd1  Fd1  Fd1  Fd1  Ed1  Ed1  Ed1  Ed1  Ed1  Ed1  Ed1  Ed1  Ed1  Ed1  Fd1  Fd1
   TC4  Gd1  Gd1  Gd1  Gd1  Gd1  Gd1  Fd1  Ed1  Ed1  Fd1  Fd1  Fd1  Ed1  Ed1  Ed1  Ed1  Fd1  Fd1
-  TG3  Hd1  Hd1  Hd1  Hd1  Gd1  Gd1  Fd1  Fd1  Ed1  Gd1  Gd1  Gd1  Ed1  Ed1  Ed1  Ed1  Ed1  Ed1
-  TG2  Ia4  Ia4  Ia4  Ia4  Hd1  Hd1  Gd1  Gd1  Fd1  Gd1  Gd1  Gd1  Fd1  Fd1  Fd1  Ed1  Ed1  Ed1
+  TG3  Ia4  Ia4  Ia4  Ia4  Hd1  Hd1  Gd1  Gd1  Cd1  Cd1  Gd1  Cd1  Dd1  Ed1  Ed1  Ed1  Ed1  Ed1
+  TG2  Ia4  Ia4  Ia4  Ia4  Hd1  Hd1  Gd1  Gd1  Cd1  Cd1  Gd1  Cd1  Dd1  Ed1  Ed1  Ed1  Ed1  Ed1
   TC1  Ia4  Ia4  Ia4  Ia4  Id1  Id1  Hd1  Hd1  Gd1  Gd1  Gd1  Gd1  Gd1  Fd1  Fd1  Ed1  Ed1  Ed1
 """
 

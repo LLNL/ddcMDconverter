@@ -24,6 +24,81 @@ def getArgs():
 
     return args
 
+def clusterConstraint(data):
+    consCluster=[]
+    consList=[]
+
+    for i in range(len(data)):
+        addcons = False
+        constraint = data[i]
+        atomI = constraint['ai']   # 0 based
+        atomJ = constraint['aj']   # 0 based
+        for consTemp in consList:
+            atomItemp = consTemp['ai']   # 0 based
+            atomJtemp = consTemp['aj']   # 0 based
+            if atomItemp==atomI:
+                consList.append(constraint)
+                addcons = True
+                break
+            if atomItemp==atomJ:
+                consList.append(constraint)
+                addcons = True
+                break
+            if atomJtemp==atomI:
+                consList.append(constraint)
+                addcons = True
+                break
+            if atomJtemp==atomJ:
+                consList.append(constraint)
+                addcons = True
+                break
+
+        if not addcons:
+            consList = []
+            consList.append(constraint)
+            consCluster.append(consList)
+
+
+    clustering=True
+
+    while clustering:
+        clustering = False
+        clusterSize=len(consCluster)
+        firstSave=0
+        secondSave=0
+        for first in range(clusterSize):
+            for second in range(first + 1, clusterSize):
+                consListFirst  = consCluster[first]
+                consListSecond = consCluster[second]
+                for consFirst in consListFirst:
+                    for consSecond in consListSecond:
+                        consFirstI = consFirst['ai']  # 0 based
+                        consFirstJ = consFirst['aj']  # 0 based
+                        consSecondI = consSecond['ai']  # 0 based
+                        consSecondJ = consSecond['aj']  # 0 based
+                        if consFirstI==consSecondI or consFirstI==consSecondJ or consFirstJ==consSecondI or consFirstJ==consSecondJ :
+                            firstSave=first
+                            secondSave=second
+                            clustering = True
+                            break
+                    if clustering:
+                        break
+                if clustering:
+                    break
+            if clustering:
+                break
+
+        if clustering:
+            consListFirst = consCluster[firstSave]
+            consListSecond = consCluster[secondSave]
+            for cons in consListSecond:
+                consListFirst.append(cons)
+            del consCluster[secondSave]
+
+    return consCluster
+
+
+
 if __name__ == '__main__':
 
     args=getArgs()
@@ -148,6 +223,9 @@ if __name__ == '__main__':
         if 'exclusions' in sectionKeys:
             hasExclusions=True
 
+        if hasConstraints:
+            consCluster=clusterConstraint(itp.header.moleculetype.constraints.data)
+
         line = ""
         # RESIPARMS
         resName=itp.header.moleculetype.data['name']
@@ -166,10 +244,10 @@ if __name__ == '__main__':
                 line = line + resName + "_b" + str(i)+" "
             line = line + ";\n"
         if hasConstraints:
-            constraintSize = len(itp.header.moleculetype.constraints.data)
+            constraintSize = len(consCluster)
             line = line + "  constraintList="
             for i in range(constraintSize):
-                line = line + resName + "_c" + str(i)+" "
+                line = line + resName + "_cl" + str(i)+" "
             line = line + ";\n"
         if hasExclusions:
             exclusionSize = len(itp.header.moleculetype.exclusions.data)
@@ -230,14 +308,40 @@ if __name__ == '__main__':
 
         # CONSPARMS
         if hasConstraints:
+            constraintSize = len(consCluster)
             for i in range(constraintSize):
-                constraint=itp.header.moleculetype.constraints.data[i]
-                atomI = constraint['ai']-1 # 0 based
-                atomJ = constraint['aj']-1 # 0 based
-                r0=constraint['r0']
-                line = line + resName + "_c" + str(i) + " CONSPARMS{"
-                line = line + "atomI="+str(atomI)+"; atomJ="+str(atomJ)+"; r0="+str(r0)+" nm; }\n"
-            line = line + "\n"
+                line = line + resName + "_cl" + str(i) + " CONSLISTPARMS{ constraintSubList="
+                consList=consCluster[i]
+                for j in range(len(consList)):
+                    line = line + resName + "_cl" + str(i) +"_c"+str(j)+" "
+                line = line + "; }\n"
+
+                for j in range(len(consList)):
+                    constraint=consList[j]
+                    atomI = constraint['ai']-1 # 0 based
+                    atomJ = constraint['aj']-1 # 0 based
+                    atomTypeI = atomTypeList[atomI]
+                    atomTypeJ = atomTypeList[atomJ]
+                    r0=constraint['r0']
+                    func = constraint['func']
+                    line = line + resName + "_cl" + str(i) +"_c"+str(j) + " CONSPARMS{"
+                    line = line + "atomI="+str(atomI)+"; atomTypeI="+atomTypeI+"; atomJ="+str(atomJ)+ "; atomTypeJ="+atomTypeJ + "; func=" + str(func) +"; r0="+str(r0)+" nm; }\n"
+                line = line + "\n"
+
+
+        #if hasConstraints:
+        #    constraintSize = len(consCluster)
+        #    for i in range(constraintSize):
+        #        constraint=itp.header.moleculetype.constraints.data[i]
+        #        atomI = constraint['ai']-1 # 0 based
+        #        atomJ = constraint['aj']-1 # 0 based
+        #        atomTypeI = atomTypeList[atomI]
+        #        atomTypeJ = atomTypeList[atomJ]
+        #        r0=constraint['r0']
+        #        func = constraint['func']
+        #        line = line + resName + "_c" + str(i) + " CONSPARMS{"
+        #        line = line + "atomI="+str(atomI)+"; atomTypeI="+atomTypeI+"; atomJ="+str(atomJ)+ "; atomTypeJ="+atomTypeJ + "; func=" + str(func) +"; r0="+str(r0)+" nm; }\n"
+        #    line = line + "\n"
 
         # EXCLUDEPARMS
         if hasExclusions:
@@ -280,13 +384,16 @@ if __name__ == '__main__':
                 delta=dihedral['delta']
                 kchi=dihedral['kchi']
                 func=dihedral['func']
+                ntor = dihedral['ntor']
+                if not ntor:
+                    ntor=1
                 if func==1:
                     delta=-delta
                 if func==2:
                     kchi=kchi/2.0
                 line = line + resName + "_d" + str(i) + " TORSPARMS{"
                 line = line + "atomI="+str(atomI)+"; atomJ="+str(atomJ)+"; atomK="+str(atomK)+"; atomL="+str(atomL) \
-                       + "; func=" + str(func) +"; delta="+str(delta*DEG2RAD)+"; kchi="+str(kchi)+" kJ*mol^-1; n=1;}\n"
+                       + "; func=" + str(func) +"; delta="+str(delta*DEG2RAD)+"; kchi="+str(kchi)+" kJ*mol^-1; n="+str(ntor)+";}\n"
             line = line + "\n"
 
         fh.write(line)

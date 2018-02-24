@@ -732,7 +732,7 @@ class Dihedrals(ITPdata):
     name = "dihedrals"
     #: :class:`numpy.dtype` columns for the data
     dtypes = [("ai", "i4"), ("aj", "i4"), ("ak", "i4"), ("al", "i4"), ("func", "i4"),
-              ("delta", "f8"), ("kchi", "f8"),
+              ("delta", "f8"), ("kchi", "f8"), ("ntor", "i4"),
               #("c0", "f8"), ("c1", "f8"), ("c2", "f8"), ("c3", "f8"), ("c4", "f8"), ("c5", "f8"),
               #("c0", object), ("c1", object), ("c2", object), ("c3", object), ("c4", object), ("c5", object),
               # XXX: FEP columns?
@@ -741,9 +741,9 @@ class Dihedrals(ITPdata):
     #: output format (space separated), same ordering as :attr:`columns`
     fmt = ["%4d", "%4d", "%4d", "%4d", "%5d",
            #"%f9.5", "%f9.5", "%f9.5", "%f9.5", "%f9.5", "%f9.5",
-           "%9s", "%9s", "%9s", "%9s", "%9s", "%9s",
+           "%9s", "%9s", "%4d" #, "%9s", "%9s", "%9s"
            ]
-    column_comment = "; ai   aj   ak   al  funct   C0  ...  C5"
+    column_comment = "; ai   aj   ak   al  funct   delta kchi ntor "
 
 
 class Pairs(ITPdata):
