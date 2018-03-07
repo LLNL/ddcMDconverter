@@ -3,6 +3,7 @@ import ITP
 #itp=ITP.ITP("martini_v2.0_POPC_02.itp")
 #itp=ITP.ITP("martini_v2.1-dna.itp")
 itp=ITP.ITP("KRAS-GTP-04-HVR-best-guess-M22-CYFpos.itp")
+print itp.header.moleculetype.data['name']
 #itp=ITP.ITP("martini_v2.0_CHOL_01.itp")
 #print itp.header
 print itp.header.moleculetype
@@ -17,7 +18,7 @@ for atom in itp.header.moleculetype.atoms.data:
 print itp.header.moleculetype.atoms
 
 #print itp.header.moleculetype.data
-#print itp.header.moleculetype.data['name']
+print itp.header.moleculetype.data['name']
 
 #print itp.header.moleculetype.sections.keys()
 

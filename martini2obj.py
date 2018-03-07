@@ -212,6 +212,7 @@ if __name__ == '__main__':
         hasDihedral=False
         hasConstraints=False
         hasExclusions=False
+        hasRestraints = False
         if 'bonds' in sectionKeys:
             hasBond=True
         if 'angles' in sectionKeys:
@@ -222,6 +223,8 @@ if __name__ == '__main__':
             hasConstraints=True
         if 'exclusions' in sectionKeys:
             hasExclusions=True
+        if 'position_restraints' in sectionKeys:
+            hasRestraints=True
 
         if hasConstraints:
             consCluster=clusterConstraint(itp.header.moleculetype.constraints.data)
@@ -254,6 +257,12 @@ if __name__ == '__main__':
             line = line + "  exclusionList="
             for i in range(exclusionSize):
                 line = line + resName + "_e" + str(i)+" "
+            line = line + ";\n"
+        if hasRestraints:
+            restraintSize = len(itp.header.moleculetype.position_restraints.data)
+            line = line + "  restraintList="
+            for i in range(restraintSize):
+                line = line + resName + "_r" + str(i)+" "
             line = line + ";\n"
         if hasAngle:
             angleSize = len(itp.header.moleculetype.angles.data)
@@ -353,6 +362,21 @@ if __name__ == '__main__':
                 atomTypeJ = atomTypeList[atomJ]
                 line = line + resName + "_e" + str(i) + " EXCLUDEPARMS{"
                 line = line + "atomI="+str(atomI)+"; atomTypeI="+atomTypeI+"; atomJ="+str(atomJ)+ "; atomTypeJ="+atomTypeJ+"; }\n"
+            line = line + "\n"
+
+        # RESTRAINT
+        if hasRestraints:
+            for i in range(restraintSize):
+                restraint=itp.header.moleculetype.position_restraints.data[i]
+                atomI = restraint['ai']-1 # 0 based
+                atomTypeI = atomTypeList[atomI]
+                func=restraint['func']
+                fcx = restraint['fcx']
+                fcy = restraint['fcy']
+                fcz = restraint['fcz']
+                line = line + resName + "_r" + str(i) + " RESTRAINTPARMS{"
+                line = line + "atomI="+str(atomI)+"; atomTypeI="+atomTypeI + "; func=" + str(func) \
+                       +"; fcx="+str(fcx)+"; fcy="+str(fcy)+"; fcz="+str(fcz)+"; kb= 1.0 kJ*mol^-1*nm^-2; }\n"   # 1/2 k -> K
             line = line + "\n"
 
         # ANGLEPARMS

@@ -162,6 +162,9 @@ The section hierarchy is
 .. autoclass:: Constraints
    :members:
 
+.. autoclass:: Restraints
+   :members:
+
 .. autoclass:: Angles
    :members:
 
@@ -486,6 +489,7 @@ class Moleculetype(ITPsection):
             'atoms': Atoms,
             'bonds': Bonds,
             'constraints': Constraints,
+            'position_restraints': Restraints,
             'exclusions' : Exclusions,
             'angles': Angles,
             'dihedrals': Dihedrals,
@@ -655,6 +659,31 @@ class Constraints(ITPdata):
            "%10.5f",
            ]
     column_comment = "; ai   aj  funct r0"
+
+class Restraints(ITPdata):
+    """ITP ``[ position_restraints ]`` section
+
+    Example format::
+
+    [ position_restraints ]
+    ; ai  funct  fcx    fcy    fcz
+       2    1    0      0      2   ; restrains to a plane (x-y-plane)
+
+
+    .. versionadded:: 0.2.5
+    """
+    name = "position_restraints"
+    #: :class:`numpy.dtype` columns for the data
+    dtypes = [("ai", "i4"), ("func", "i4"),
+              ("fcx", "i4"), ("fcy", "i4"), ("fcz", "i4"),
+              # XXX: FEP columns?
+              # extra last column ("comment", "S128")
+              ]
+    #: output format (space separated), same ordering as :attr:`columns`
+    fmt = ["%4d", "%4d",
+           "%4d", "%4d", "%4d"
+           ]
+    column_comment = "; ai  funct  fcx    fcy    fcz"
 
 class Exclusions(ITPdata):
     """ITP ``[ exclusions ]`` section
