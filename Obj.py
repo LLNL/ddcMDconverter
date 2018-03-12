@@ -262,6 +262,96 @@ class Obj:
                     boxCount=boxCount+1
 
 
+    def toRestraint(self, args, restraintMap):
+        atmMask = 255
+
+        prtflg=0
+        boxflg=0
+        boxCount=0
+        first=0
+        fileID=0
+
+        # index for fields
+        fieldSize=0
+        gidIndex=0
+        typeIndex=0
+        rxIndex=0
+        ryIndex=0
+        rzIndex=0
+
+
+
+        oldmolres=-1
+        resid=0
+
+        count=0
+        listLine = "restraint RESTRAINTLIST{\n"
+        listLine = listLine + "  restraintList="
+        outLine = ""
+        with open(args.objfile, "r") as f:
+            for line in f:
+                if prtflg==1:
+                    strs=line.split()
+                    if len(strs)>=fieldSize:
+                        gid=int(strs[gidIndex])
+                        molres=gid>>16
+                        if molres!=oldmolres:
+                            resid=resid+1
+                            oldmolres=molres
+
+                        names=strs[typeIndex].replace('x', ' ').replace('n', ' ').replace('c', ' ').split()
+                        if len(names) !=2:
+                            print "Specie name ", strs[3], " dosen't split properly"
+                        else:
+                            resName=names[0]
+                            atmName=names[1]
+
+                        if resName in restraintMap:
+
+                            restraintList=restraintMap[resName]
+
+                            atomI=gid&atmMask
+
+                            for restraint in restraintList:
+                                resAtomI = restraint['ai']-1 # 0 based
+                                if resAtomI==atomI:
+                                    func = restraint['func']
+                                    fcx = restraint['fcx']
+                                    fcy = restraint['fcy']
+                                    fcz = restraint['fcz']
+                                    x = float(strs[rxIndex])
+                                    y = float(strs[ryIndex])
+                                    z = float(strs[rzIndex])
+                                    listLine = listLine+"r_" + str(count) + " "
+                                    outLine = outLine+ "r_" + str(count) + " RESTRAINTPARMS{gid="+str(gid)+"; atomI=" + str(atomI) + "; func=" + str(func) \
+                                              + "; fcx=" + str(fcx) + "; fcy=" + str(fcy) + "; fcz=" + str(fcz) \
+                                              + "; x0=" + str(x) + "; y0=" + str(y) + "; z0=" + str(z) \
+                                              + "; kb= 1.0 kJ*mol^-1*nm^-2; }\n"
+                                    count = count + 1
+
+                if line[0]=='}':
+                    prtflg=1
+
+                if line[0:11]=='field_names':
+                    fstrs=line.split('=')
+                    fnameLine=fstrs[1]
+                    strs=fnameLine.split()
+                    # id class type group rx ry rz vx vy vz
+                    gidIndex=strs.index("id")
+                    typeIndex = strs.index("type")
+                    rxIndex = strs.index("rx")
+                    ryIndex = strs.index("ry")
+                    rzIndex = strs.index("rz")
+                    fieldSize=len(strs)
+
+        listLine = listLine + ";\n"
+        listLine = listLine + "}\n\n"
+
+        outLine = outLine +"\n"
+
+        outFh=open(args.resfile, "w")
+        outFh.write(listLine)
+        outFh.write(outLine)
 
     @staticmethod
     def reduceImage(args, coor, oldcoor):
