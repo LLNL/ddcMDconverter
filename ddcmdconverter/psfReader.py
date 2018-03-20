@@ -14,11 +14,15 @@ def getArgs():
 
     return args
 
-if __name__ == '__main__':
 
+def main():
     args=getArgs()
     print "Default inputs: ", args.psffile
     psf=Psf.Psf()
     psf.parse(args.psffile)
     psf.printAngle()
     psf.printDihe()
+
+
+if __name__ == '__main__':
+    main()

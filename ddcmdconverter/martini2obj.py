@@ -100,9 +100,7 @@ def clusterConstraint(data):
     return consCluster
 
 
-
-if __name__ == '__main__':
-
+def main():
     args=getArgs()
     print "Default inputs: ", args.itpfile,  args.objfile
 
@@ -150,7 +148,7 @@ if __name__ == '__main__':
     {
         resiParms = CHOL
     POPC;
-    }    
+    }
     """
 
     fh=open(args.objfile, "w")
@@ -472,3 +470,7 @@ if __name__ == '__main__':
     speFh=open(args.splfile, "w")
     speFh.write(sysLine)
     speFh.write(speLine)
+
+
+if __name__ == '__main__':
+    main()

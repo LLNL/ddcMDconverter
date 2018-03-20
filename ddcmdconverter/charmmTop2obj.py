@@ -18,8 +18,8 @@ def getArgs():
 
     return args
 
-if __name__ == '__main__':
 
+def main():
     args=getArgs()
     print "Default inputs: ", args.topfile,  args.objfile
 
@@ -27,3 +27,6 @@ if __name__ == '__main__':
     charmmTop=CharmmTop.CharmmTop()
     charmmTop.parse(args.topfile)
 
+
+if __name__ == '__main__':
+    main()
