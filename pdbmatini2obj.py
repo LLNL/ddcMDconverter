@@ -16,6 +16,7 @@ def getArgs():
                         help='Protein ITP file list (default=proItpList).')
     parser.add_argument('-o', '--obj', action='store', dest='objfile', default='atom#.data',
                         help='ddcMD object output file (default=atom#.data).')
+    parser.add_argument('-c', '--cut', action='store', dest='cutoff', type=float, help='Cutoff for bond.')
 
     args = parser.parse_args()
 

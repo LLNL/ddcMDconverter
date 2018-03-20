@@ -19,8 +19,8 @@ def getArgs():
 
     return args
 
-if __name__ == '__main__':
 
+def main():
     args=getArgs()
     print "Default inputs: ",args.objfile, args.pdbfile
 
@@ -44,8 +44,12 @@ if __name__ == '__main__':
             newAtomname= 'P' + str(count)
             residueAtom=atom['resname']+":"+str(atom['resnr'])+":"+atom['atomname']
             atomNameMap[newAtomname]=residueAtom
+            print newAtomname, residueAtom
             count = count + 1
         atomNameMapCollection[newResName]=atomNameMap
 
     obj=Obj.Obj()
     obj.toMartiniPDB(args, atomNameMapCollection)
+
+if __name__ == '__main__':
+    main()

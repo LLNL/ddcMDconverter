@@ -179,6 +179,7 @@ class Obj:
                         if molres!=oldmolres:
                             resid=resid+1
                             oldmolres=molres
+                            first=1
 
                         names=strs[typeIndex].replace('x', ' ').replace('n', ' ').replace('c', ' ').split()
                         if len(names) !=2:
@@ -202,7 +203,7 @@ class Obj:
                         coor=Coor(x,y,z)
                         #coor=Obj.image(args, coor)
                         newcoor=coor
-                        #if first !=0:
+                        #if first ==0:
                         #    newcoor=Obj.reduceImage(args, coor, oldcoor)
                         #    if newcoor==-1:
                         #        print "Fail to shift the atom coordinates"
@@ -210,7 +211,7 @@ class Obj:
                         #        print "Use the original coordinates"
                         #        newcoor=coor
 
-                        #first=1
+                        first=0
                         fileID=fileID+1
                         #oldcoor=newcoor
 

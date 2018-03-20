@@ -19,6 +19,8 @@ def getArgs():
     parser.add_argument('-o', '--obj', action='store', dest='objfile', default='martini.data', help='Martini object output file (default=martini.data).')
     parser.add_argument('-l', '--spl', action='store', dest='splfile', default='speless.data',
                         help='ddcMD species less output file (default=speless.data).')
+    parser.add_argument('-c', '--c2b', action='store', dest='cons2bond', default=False,
+                        help='Add constraints to the bondList(default=True).')
 
     args = parser.parse_args()
 
@@ -204,6 +206,7 @@ if __name__ == '__main__':
 
     resID=1
     for itp in itpList:
+        cons2bond=args.cons2bond   # TODO: also print out the constraint pair as bond - hacking the code - should be a better solution
         #['atoms', 'bonds', 'constraints', 'angles', 'dihedrals']
         sectionKeys=itp.header.moleculetype.sections.keys()
         # itp must have atoms, but not necessory bonds, angles, dihedrals or constraints
@@ -242,8 +245,12 @@ if __name__ == '__main__':
         line = line + "  groupList=" + resName + "_g0;\n"
         if hasBond:
             bondSize=len(itp.header.moleculetype.bonds.data)
+            totalBondSize = bondSize
+            if cons2bond and hasConstraints:  # TODO: also print out the constraint pair as bond - hacking the code - should be a better solution
+                constraintSize = len(itp.header.moleculetype.constraints.data)
+                totalBondSize=bondSize+constraintSize
             line = line + "  bondList="
-            for i in range(bondSize):
+            for i in range(totalBondSize):
                 line = line + resName + "_b" + str(i)+" "
             line = line + ";\n"
         if hasConstraints:
@@ -276,6 +283,11 @@ if __name__ == '__main__':
             for i in range(dihedralSize):
                 line = line + resName + "_d" + str(i)+" "
             line = line + ";\n"
+        if resName=="KRAS":
+            line = line + "  centerAtom=160;\n"
+        else:
+            line = line + "  centerAtom=0;\n"
+
         line = line + "}\n\n"
 
         # GROUPPARMS
@@ -314,6 +326,23 @@ if __name__ == '__main__':
                 line = line + "atomI="+str(atomI)+"; atomTypeI="+atomTypeI+"; atomJ="+str(atomJ) + "; atomTypeJ="+atomTypeJ \
                        + "; func=" + str(func)+"; kb="+str(0.5*kb)+" kJ*mol^-1*nm^-2; b0="+str(b0)+" nm; }\n"   # 1/2 k -> K
             line = line + "\n"
+            count=bondSize
+            if cons2bond and hasConstraints:  # TODO: also print out the constraint pair as bond - hacking the code - should be a better solution
+                constraintSize = len(consCluster)
+                for i in range(constraintSize):
+                    consList = consCluster[i]
+                    for j in range(len(consList)):
+                        constraint = consList[j]
+                        atomI = constraint['ai'] - 1  # 0 based
+                        atomJ = constraint['aj'] - 1  # 0 based
+                        atomTypeI = atomTypeList[atomI]
+                        atomTypeJ = atomTypeList[atomJ]
+                        b0 = constraint['r0']
+                        line = line + resName + "_b" + str(count) + " BONDPARMS{"
+                        line = line + "atomI=" + str(atomI) + "; atomTypeI=" + atomTypeI + "; atomJ=" + str(atomJ) + "; atomTypeJ=" + atomTypeJ \
+                               + "; func=1; kb=4000 kJ*mol^-1*nm^-2; b0=" + str(b0) + " nm; }\n"  # 1/2 k -> K
+                        count=count+1
+                    line = line + "\n"
 
         # CONSPARMS
         if hasConstraints:
