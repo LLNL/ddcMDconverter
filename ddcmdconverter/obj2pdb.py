@@ -1,7 +1,7 @@
 __author__ = 'zhang30'
 
 import argparse
-import Obj
+from ddcmdconverter.Obj import Obj
 
 def getArgs():
 

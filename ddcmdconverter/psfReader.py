@@ -2,7 +2,7 @@ __author__ = 'zhang30'
 
 
 import argparse
-import Psf
+from ddcmdconverter.Psf import Psf
 
 
 

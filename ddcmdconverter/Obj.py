@@ -1,7 +1,7 @@
 __author__ = 'zhang30'
 
-import CharmmTop
-from Pdb import Coor
+from ddcmdconverter.CharmmTop import CharmmTop
+from ddcmdconverter.Pdb import Coor
 
 class Obj:
     def __init__(self):

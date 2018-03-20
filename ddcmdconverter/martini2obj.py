@@ -3,9 +3,10 @@ __author__ = 'zhang30'
 # CHARMM energy terms are 1 based and GROMACS' are 1/2 based. k(r-r0)^2 v.s. 1/2 k(r-r0)^2
 
 import argparse
-import ITP
 import math
-import MartiniFF
+
+from ddcmdconverter.ITP import ITP
+from ddcmdconverter.MartiniFF import MartiniFF
 
 
 def getArgs():

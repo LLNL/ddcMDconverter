@@ -3,9 +3,9 @@ __author__ = 'zhang30'
 
 import argparse
 
-import Pdb
-import ITP
-import Specie
+import ddcmdconverter.Pdb as Pdb
+from ddcmdconverter.ITP import ITP
+#import Specie
 
 
 def getArgs():

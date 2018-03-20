@@ -2,10 +2,8 @@ __author__ = 'zhang30'
 
 
 import argparse
-import CharmmTop
-import Pdb
-import Obj
-import Specie
+from ddcmdconverter.CharmmTop import CharmmTop
+
 
 
 def getArgs():
