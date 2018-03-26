@@ -3,9 +3,9 @@ __author__ = 'zhang30'
 
 import argparse
 
-import Pdb
-import ITP
-import Specie
+import ddcmdconverter.Pdb as Pdb
+from ddcmdconverter.ITP import ITP
+#import Specie
 
 
 def getArgs():
@@ -86,9 +86,7 @@ def getHeader(totAtmNum, args):
     return header
 
 
-
-if __name__ == '__main__':
-
+def main():
     args=getArgs()
     print "Default inputs: ", args.pdbfile
 
@@ -117,3 +115,5 @@ if __name__ == '__main__':
 
 
 
+if __name__ == '__main__':
+    main()

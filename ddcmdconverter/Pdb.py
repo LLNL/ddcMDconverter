@@ -1,6 +1,6 @@
 __author__ = 'zhang30'
 
-import CharmmTop
+from ddcmdconverter.CharmmTop import ResTop 
 
 class Coor:
     def __init__(self, x, y, z):
@@ -114,7 +114,7 @@ class ComPDB:
                         isNewRes = False
 
                 if isNewRes:
-                    isRes=CharmmTop.ResTop.isResidue(resName)
+                    isRes=ResTop.isResidue(resName)
                     if isRes==0:
                         if (len(aMol) > 0):
                             molsList.append(aMol)

@@ -188,10 +188,11 @@ import re
 import numpy
 
 #from ..exceptions import ParseError, AutoCorrectionWarning
-import utilities
+
 from collections import OrderedDict as odict
 
-from preprocessor import Preprocessor
+from ddcmdconverter.preprocessor import Preprocessor
+from ddcmdconverter import utilities
 
 import logging
 

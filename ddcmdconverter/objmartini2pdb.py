@@ -1,8 +1,8 @@
 __author__ = 'zhang30'
 
 import argparse
-import Obj
-import ITP
+from ddcmdconverter import Obj
+from ddcmdconverter import ITP
 
 def getArgs():
 

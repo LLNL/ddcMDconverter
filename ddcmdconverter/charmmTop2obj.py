@@ -2,10 +2,8 @@ __author__ = 'zhang30'
 
 
 import argparse
-import CharmmTop
-import Pdb
-import Obj
-import Specie
+from ddcmdconverter.CharmmTop import CharmmTop
+
 
 
 def getArgs():
@@ -18,8 +16,8 @@ def getArgs():
 
     return args
 
-if __name__ == '__main__':
 
+def main():
     args=getArgs()
     print "Default inputs: ", args.topfile,  args.objfile
 
@@ -27,3 +25,6 @@ if __name__ == '__main__':
     charmmTop=CharmmTop.CharmmTop()
     charmmTop.parse(args.topfile)
 
+
+if __name__ == '__main__':
+    main()

@@ -3,9 +3,10 @@ __author__ = 'zhang30'
 # CHARMM energy terms are 1 based and GROMACS' are 1/2 based. k(r-r0)^2 v.s. 1/2 k(r-r0)^2
 
 import argparse
-import ITP
 import math
-import MartiniFF
+
+from ddcmdconverter.ITP import ITP
+from ddcmdconverter.MartiniFF import MartiniFF
 
 
 def getArgs():
@@ -100,9 +101,7 @@ def clusterConstraint(data):
     return consCluster
 
 
-
-if __name__ == '__main__':
-
+def main():
     args=getArgs()
     print "Default inputs: ", args.itpfile,  args.objfile
 
@@ -150,7 +149,7 @@ if __name__ == '__main__':
     {
         resiParms = CHOL
     POPC;
-    }    
+    }
     """
 
     fh=open(args.objfile, "w")
@@ -472,3 +471,7 @@ if __name__ == '__main__':
     speFh=open(args.splfile, "w")
     speFh.write(sysLine)
     speFh.write(speLine)
+
+
+if __name__ == '__main__':
+    main()

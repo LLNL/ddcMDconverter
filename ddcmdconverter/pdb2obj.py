@@ -2,10 +2,10 @@ __author__ = 'zhang30'
 
 
 import argparse
-import CharmmTop
-import Pdb
-import Obj
-import Specie
+import ddcmdconverter.Pdb as Pdb
+from ddcmdconverter.CharmmTop import CharmmTop
+from ddcmdconverter.Obj import Obj
+from ddcmdconverter.Specie import Specie
 
 
 def getArgs():
@@ -23,8 +23,8 @@ def getArgs():
 
     return args
 
-if __name__ == '__main__':
 
+def main():
     args=getArgs()
     print "Default inputs: ",args.topfile, args.pdbfile, args.objfile, args.spefile, args.splfile
 
@@ -42,5 +42,9 @@ if __name__ == '__main__':
     obj.toObj(args, comPDB)
 
     print "Generating species file ", args.splfile
-    specie=Specie.Specie(charmmTop, comPDB)
+    specie=Specie(charmmTop, comPDB)
     specie.toSpeData(args.splfile)
+
+
+if __name__ == '__main__':
+    main()
