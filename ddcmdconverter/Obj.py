@@ -214,6 +214,11 @@ class Obj:
                         first=0
                         fileID=fileID+1
                         #oldcoor=newcoor
+                        if fileID==100000:
+                            fileID=0
+
+                        if resid==10000:
+                            resid=0
 
                         #outLine = "ATOM%7d %-4s %-4s%5d    %8.3f%8.3f%8.3f\n"  \
                         #            % (fileID, atmName, resName, resid, newcoor.x, newcoor.y, newcoor.z)
@@ -257,7 +262,7 @@ class Obj:
                         boxflg = 0
                         outLine = "REMARK CONVERTED FROM %s BY ddcMDconvertor\n" % (args.objfile)
                         outFh.write(outLine)
-                        outLine = "CRYST1%8.3f%8.3f%8.3f  90.00  90.00  90.00 P 1           1\n" % (args.x, args.y, args.z)
+                        outLine = "CRYST1 %8.3f %8.3f %8.3f  90.00  90.00  90.00 P 1           1\n" % (args.x, args.y, args.z)
                         outFh.write(outLine)
 
                     boxCount=boxCount+1

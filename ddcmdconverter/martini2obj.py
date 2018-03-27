@@ -106,10 +106,10 @@ def main():
     print "Default inputs: ", args.itpfile,  args.objfile
 
     # Interaction Matrix from JPC B. Vol 111, No 27, 2007
-    martiniFF=MartiniFF.MartiniFF()
+    martiniFF=MartiniFF()
 
     # Mass
-    par_itp = ITP.ITP(args.parfile)
+    par_itp = ITP(args.parfile)
 
     massDict = {}
     for atomtype in par_itp.header.atomtypes.data:
@@ -140,7 +140,7 @@ def main():
         with open(args.itpfile, "r") as f:
             for line in f:
                 tipFileName=line.rstrip("\n\r")
-                itp = ITP.ITP(tipFileName)
+                itp = ITP(tipFileName)
                 itpList.append(itp)
 
     """

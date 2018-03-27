@@ -27,7 +27,7 @@ if __name__ == '__main__':
         with open(args.itpfile, "r") as f:
             for line in f:
                 tipFileName=line.rstrip("\n\r")
-                itp = ITP.ITP(tipFileName)
+                itp = ITP(tipFileName)
                 itpList.append(itp)
 
     restraintMap={}
@@ -43,5 +43,5 @@ if __name__ == '__main__':
                 restraintList.append(restraint)
             restraintMap[resName]=restraintList
 
-    obj=Obj.Obj()
+    obj=Obj()
     obj.toRestraint(args, restraintMap)
