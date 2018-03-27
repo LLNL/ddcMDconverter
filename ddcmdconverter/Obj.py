@@ -286,8 +286,8 @@ class Obj:
         resid=0
 
         count=0
-        listLine = "restraint RESTRAINTLIST{\n"
-        listLine = listLine + "  restraintList="
+        entryLine = "restraint RESTRAINTLIST{\n"
+        listLine = "  restraintList="
         outLine = ""
         with open(args.objfile, "r") as f:
             for line in f:
@@ -318,15 +318,21 @@ class Obj:
                                 if resAtomI==atomI:
                                     func = restraint['func']
                                     fcx = restraint['fcx']
+                                    if fcx>0:
+                                        fcx=1
                                     fcy = restraint['fcy']
+                                    if fcy>0:
+                                        fcy=1
                                     fcz = restraint['fcz']
+                                    if fcz>0:
+                                        fcz=1
                                     x = float(strs[rxIndex])
                                     y = float(strs[ryIndex])
                                     z = float(strs[rzIndex])
                                     listLine = listLine+"r_" + str(count) + " "
                                     outLine = outLine+ "r_" + str(count) + " RESTRAINTPARMS{gid="+str(gid)+"; atomI=" + str(atomI) + "; func=" + str(func) \
                                               + "; fcx=" + str(fcx) + "; fcy=" + str(fcy) + "; fcz=" + str(fcz) \
-                                              + "; x0=" + str(x) + "; y0=" + str(y) + "; z0=" + str(z) \
+                                              + "; x0=" + str(x/args.x) + "; y0=" + str(y/args.y) + "; z0=" + str(z/args.z) \
                                               + "; kb= 1.0 kJ*mol^-1*nm^-2; }\n"
                                     count = count + 1
 
@@ -345,13 +351,35 @@ class Obj:
                     rzIndex = strs.index("rz")
                     fieldSize=len(strs)
 
-        listLine = listLine + ";\n"
-        listLine = listLine + "}\n\n"
+
+                if line[0:2]=='h=':
+                    boxflg=1
+
+                if boxflg==1:
+                    strs = line.split()
+                    if boxCount==0:
+                        args.x=float(strs[1])
+                    elif boxCount==1:
+                        args.y=float(strs[boxCount])
+                    elif boxCount==2:
+                        endstr=strs[boxCount]
+                        estrs=endstr.split(";")
+                        args.z=float(estrs[0])
+                        boxflg = 0
+                        entryLine = entryLine + "  xbox = " + str(args.x) + ";\n"
+                        entryLine = entryLine + "  ybox = " + str(args.y) + ";\n"
+                        entryLine = entryLine + "  zbox = " + str(args.z) + ";\n"
+
+                    boxCount=boxCount+1
+
+        entryLine=entryLine+listLine
+        entryLine = entryLine + ";\n"
+        entryLine = entryLine + "}\n\n"
 
         outLine = outLine +"\n"
 
         outFh=open(args.resfile, "w")
-        outFh.write(listLine)
+        outFh.write(entryLine)
         outFh.write(outLine)
 
     @staticmethod

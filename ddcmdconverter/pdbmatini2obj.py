@@ -85,6 +85,19 @@ def getHeader(totAtmNum, args):
 
     return header
 
+def getRestart(args, comPDB):
+    totAtmNum = comPDB.getTotAtmNum()
+
+    line="simulate SIMULATE { loop=0; time=0.000000 ;}\n"
+    line=line+"box BOX {\n"
+    line=line+"h=     "+ str(args.x)+"         0.00000000000000      0.00000000000000\n"
+    line = line + "       0.00000000000000      "+ str(args.y)+"         0.00000000000000\n"
+    line = line + "       0.00000000000000      0.00000000000000     "+ str(args.z)+"  ;\n"
+    line=line+"}\n"
+    line=line+"collection COLLECTION { mode=VARRECORDASCII; size="+str(totAtmNum)+"; files=snapshot.mem/atoms#;}\n"
+
+    outFh = open("restart", "w")
+    outFh.write(line)
 
 def main():
     args=getArgs()
@@ -112,6 +125,7 @@ def main():
     renameProt(comPDB)
     assignGid(comPDB)
     toObj(args, comPDB)
+    getRestart(args, comPDB)
 
 
 
