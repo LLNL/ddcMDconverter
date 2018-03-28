@@ -16,8 +16,7 @@ def getArgs():
 
     return args
 
-if __name__ == '__main__':
-
+def main():
     args=getArgs()
     print "Default inputs: ", args.objfile, args.resfile, args.itpfile
 
@@ -45,3 +44,6 @@ if __name__ == '__main__':
 
     obj=Obj()
     obj.toRestraint(args, restraintMap)
+
+if __name__ == '__main__':
+    main()

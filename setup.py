@@ -14,6 +14,7 @@ setup(name='ddcmdconverter',
             'pdbmartini2obj = ddcmdconverter.pdbmartini2obj:main',
             'pdb2obj = ddcmdconverter.pdb2obj:main',
             'obj2pdb = ddcmdconverter.obj2pdb:main',
+            'restraint = ddcmdconverter.restraint:main',
         ]
       },
       install_requires=[],
