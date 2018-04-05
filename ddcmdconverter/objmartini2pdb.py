@@ -49,7 +49,11 @@ def main():
         atomNameMapCollection[newResName]=atomNameMap
 
     obj=Obj.Obj()
-    obj.toMartiniPDB(args, atomNameMapCollection)
+    obj.parseHeader(args)
+    if obj.datatype=='FIXRECORDBINARY':
+        obj.toBinaryMartiniPDB(args, atomNameMapCollection)
+    else:
+        obj.toMartiniPDB(args, atomNameMapCollection)
 
 if __name__ == '__main__':
     main()

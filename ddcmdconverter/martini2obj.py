@@ -20,7 +20,7 @@ def getArgs():
     parser.add_argument('-o', '--obj', action='store', dest='objfile', default='martini.data', help='Martini object output file (default=martini.data).')
     parser.add_argument('-l', '--spl', action='store', dest='splfile', default='speless.data',
                         help='ddcMD species less output file (default=speless.data).')
-    parser.add_argument('-c', '--c2b', action='store', dest='cons2bond', default=False,
+    parser.add_argument('-c', '--c2b', action='store', dest='cons2bond', default=True,
                         help='Add constraints to the bondList(default=True).')
 
     args = parser.parse_args()
@@ -124,7 +124,7 @@ def main():
         with open(args.profile, "r") as f:
             for line in f:
                 tipFileName=line.rstrip("\n\r")
-                itp = ITP.ITP(tipFileName)
+                itp = ITP(tipFileName)
                 itpList.append(itp)
 
     # fix the atom name in the
@@ -339,7 +339,7 @@ def main():
                         b0 = constraint['r0']
                         line = line + resName + "_b" + str(count) + " BONDPARMS{"
                         line = line + "atomI=" + str(atomI) + "; atomTypeI=" + atomTypeI + "; atomJ=" + str(atomJ) + "; atomTypeJ=" + atomTypeJ \
-                               + "; func=1; kb=4000 kJ*mol^-1*nm^-2; b0=" + str(b0) + " nm; }\n"  # 1/2 k -> K
+                               + "; func=1; kb=40000 kJ*mol^-1*nm^-2; b0=" + str(b0) + " nm; }\n"  # 1/2 k -> K
                         count=count+1
                     line = line + "\n"
 
