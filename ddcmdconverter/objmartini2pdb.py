@@ -44,7 +44,7 @@ def main():
             newAtomname= 'P' + str(count)
             residueAtom=atom['resname']+":"+str(atom['resnr'])+":"+atom['atomname']
             atomNameMap[newAtomname]=residueAtom
-            print newAtomname, residueAtom
+            #print newAtomname, residueAtom
             count = count + 1
         atomNameMapCollection[newResName]=atomNameMap
 

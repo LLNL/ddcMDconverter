@@ -20,7 +20,7 @@ def getArgs():
     parser.add_argument('-o', '--obj', action='store', dest='objfile', default='martini.data', help='Martini object output file (default=martini.data).')
     parser.add_argument('-l', '--spl', action='store', dest='splfile', default='speless.data',
                         help='ddcMD species less output file (default=speless.data).')
-    parser.add_argument('-c', '--c2b', action='store', dest='cons2bond', default=True,
+    parser.add_argument('-c', '--c2b', action='store', dest='cons2bond', default=False,
                         help='Add constraints to the bondList(default=True).')
 
     args = parser.parse_args()

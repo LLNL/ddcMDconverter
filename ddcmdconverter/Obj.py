@@ -305,8 +305,8 @@ class Obj:
             pair=content.split("=")
             if len(pair) == 2:
                 contentDict[pair[0].strip()]=pair[1].strip()
-            else:
-                print "Wrong pair in object:", content
+            #else:
+            #   print "Wrong pair in object:", content
 
         return contentDict
 
