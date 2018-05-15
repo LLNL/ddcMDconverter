@@ -51,20 +51,20 @@ representation of what it would look like written to a file)::
 Each section is an object that contains the parsed data in a
 :attr:`~ITPsection.data` attribute::
 
-  >>> print itp.header.moleculetype.data
+  >>> print (itp.header.moleculetype.data)
   odict([('name', '5FH'), ('nrexcl', 3)])
-  >>> print itp.header.moleculetype.data['name']
+  >>> print (itp.header.moleculetype.data['name'])
   5FH
 
 The moleculetypes section contains the important subsections that make up the
 topology::
 
-  >>> print itp.header.moleculetype.sections.keys()
+  >>> print (itp.header.moleculetype.sections.keys())
   ['atoms', 'bonds', 'angles', 'dihedrals', 'pairs']
 
 They can be accessed in the same manner. For instance, counting all atom records::
 
-  >>> print len(itp.header.moleculetype.atoms)
+  >>> print (len(itp.header.moleculetype.atoms))
   24
 
 For the atoms, the :attr:`~ITPdata.data` structure is a :class:`numpy.rec.recarray`.
@@ -180,6 +180,8 @@ The section hierarchy is
 """
 
 from __future__ import absolute_import, with_statement
+
+from six import string_types
 
 #import os, errno
 import re
@@ -509,7 +511,7 @@ class Moleculetype(ITPsection):
         try:
             self.data['name'] = fields[0]
             self.data['nrexcl'] = int(fields[1])
-        except Exception, err:
+        except Exception as err:
             msg = "Failed to parse [moleculetype] section: line: {0!r}\n".format(line)
             msg += "Exception: {0!r}".format(err)
             self.logger.error(msg)
@@ -1060,7 +1062,7 @@ def flatten(l):
     .. versionadded:: 0.2.5
     """
     for el in l:
-        if isinstance(el, collections.Iterable) and not isinstance(el, basestring):
+        if isinstance(el, collections.Iterable) and not isinstance(el, string_types):
             for sub in flatten(el):
                 yield sub
         else:

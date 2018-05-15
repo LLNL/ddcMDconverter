@@ -103,7 +103,7 @@ def clusterConstraint(data):
 
 def main():
     args=getArgs()
-    print "Default inputs: ", args.itpfile,  args.objfile
+    print( "Default inputs: ", args.itpfile,  args.objfile)
 
     # Interaction Matrix from JPC B. Vol 111, No 27, 2007
     martiniFF=MartiniFF()
@@ -134,7 +134,7 @@ def main():
             atom['atomname'] = 'P' + str(count)
             count = count + 1
 
-        #print itp.header.moleculetype.atoms
+        #print(itp.header.moleculetype.atoms)
 
     if args.itpfile != None:
         with open(args.itpfile, "r") as f:

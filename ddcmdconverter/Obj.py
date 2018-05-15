@@ -105,7 +105,7 @@ class Obj:
 
                         names=strs[typeIndex].replace('x', ' ').replace('n', ' ').replace('c', ' ').split()
                         if len(names) !=2:
-                            print "Specie name ", strs[3], " dosen't split properly"
+                            print("Specie name ", strs[3], " dosen't split properly")
                         else:
                             resName=names[0]
                             atmName=names[1]
@@ -120,9 +120,9 @@ class Obj:
                         #if first !=0:
                         #    newcoor=Obj.reduceImage(args, coor, oldcoor)
                         #    if newcoor==-1:
-                        #        print "Fail to shift the atom coordinates"
-                        #        print line
-                        #        print "Use the original coordinates"
+                        #        print( "Fail to shift the atom coordinates")
+                        #        print( line)
+                        #        print( "Use the original coordinates")
                         #        newcoor=coor
 
                         #first=1
@@ -206,7 +206,7 @@ class Obj:
 
                         names=strs[typeIndex].replace('x', ' ').replace('n', ' ').replace('c', ' ').split()
                         if len(names) !=2:
-                            print "Specie name ", strs[3], " dosen't split properly"
+                            print ("Specie name ", strs[3], " dosen't split properly")
                         else:
                             resName=names[0]
                             atmName=names[1]
@@ -229,9 +229,9 @@ class Obj:
                         #if first ==0:
                         #    newcoor=Obj.reduceImage(args, coor, oldcoor)
                         #    if newcoor==-1:
-                        #        print "Fail to shift the atom coordinates"
-                        #        print line
-                        #        print "Use the original coordinates"
+                        #        print( "Fail to shift the atom coordinates")
+                        #        print( line)
+                        #        print( "Use the original coordinates")
                         #        newcoor=coor
 
                         first=0
@@ -295,7 +295,7 @@ class Obj:
         splitObjs=re.split('{|}', replaceObj)
 
         if len(splitObjs)<3:
-            print "Object doesn't enclose with a pair of {}"
+            print("Object doesn't enclose with a pair of {}")
 
         contentList=splitObjs[1].split(";")
 
@@ -306,7 +306,7 @@ class Obj:
             if len(pair) == 2:
                 contentDict[pair[0].strip()]=pair[1].strip()
             #else:
-            #   print "Wrong pair in object:", content
+            #   print ("Wrong pair in object:", content)
 
         return contentDict
 
@@ -325,14 +325,14 @@ class Obj:
         requiredKeys=['datatype', 'h', 'field_names', 'nfields', 'nfiles', 'nrecord', 'species']
         for key in requiredKeys:
             if key not in headerDict:
-                print "Missing required key in header :", key
+                print ("Missing required key in header :", key)
                 exit(-1)
 
         self.datatype = headerDict['datatype']
 
         boxSplit=headerDict['h'].split()
         if len(boxSplit)<9:
-            print "Item of box values should be 9 but it is ", len(boxSplit)
+            print ("Item of box values should be 9 but it is ", len(boxSplit))
             exit(-1)
         self.lx = float(boxSplit[0])
         self.ly = float(boxSplit[4])
@@ -351,7 +351,7 @@ class Obj:
         requiredFields=['id', 'species', 'rx', 'ry', 'rz']
         for field in requiredFields:
             if field not in self.fieldName:
-                print "Missing field name: ", field
+                print ("Missing field name: ", field)
                 exit(-1)
 
         # find out the offset for the first file
@@ -373,7 +373,7 @@ class Obj:
 
         fileNames=[]
         fileBaseName=args.objfile.split("#")[0]
-        for i in xrange(self.nfiles):
+        for i in range(self.nfiles):
             numbering=str(i).zfill(6)
             newfileName=fileBaseName+"#"+numbering
             fileNames.append(newfileName)
@@ -411,7 +411,7 @@ class Obj:
 
                     names = specieName.replace('x', ' ').replace('n', ' ').replace('c', ' ').split()
                     if len(names) != 2:
-                        print "Specie name ", specieName, " dosen't split properly"
+                        print ("Specie name ", specieName, " dosen't split properly")
                     else:
                         resName = names[0]
                         atmName = names[1]
@@ -506,7 +506,7 @@ class Obj:
 
                         names=strs[typeIndex].replace('x', ' ').replace('n', ' ').replace('c', ' ').split()
                         if len(names) !=2:
-                            print "Specie name ", strs[3], " dosen't split properly"
+                            print ("Specie name ", strs[3], " dosen't split properly")
                         else:
                             resName=names[0]
                             atmName=names[1]

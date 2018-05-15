@@ -130,9 +130,9 @@ class ComPDB:
                     hasBox=self.getBoxSize(args, line)
 
         if hasBox:
-            print "The box size is: ", args.x, args.y, args.z
+            print("The box size is: ", args.x, args.y, args.z)
         else:
-            print "Dosen't have box size info in pdb, use default box size."
+            print("Dosen't have box size info in pdb, use default box size.")
 
         for aMol in molsList:
             mol=MolPDB()
@@ -179,7 +179,7 @@ class ComPDB:
                 for atmNum, atmPDB in enumerate(resPDB.atmList):
                     (success, grpID, atmID)=ComPDB.findGrpAtmID(curResiParm, nTER, cTER, atmPDB)
                     if success<0:
-                        print "Cannot find PDB atom name: ", atmPDB.name, " in residuce parm", curResiParm.resName
+                        print("Cannot find PDB atom name: ", atmPDB.name, " in residuce parm", curResiParm.resName)
                     atmPDB.gid=(molID<<32)+(resID<<16)+(grpID<<8)+atmID
                     if grpID !=oldGrpID:
                         grpPDB=GroupPDB()
@@ -211,7 +211,7 @@ class ComPDB:
     @staticmethod
     def findAtmIDinGrp(resiParm, atmPDB):
         atmName=atmPDB.name
-        #print "atmPDB.name=", atmName, " resiParm", resiParm.resName
+        #print("atmPDB.name=", atmName, " resiParm", resiParm.resName)
         for grpID, grpTop in enumerate(resiParm.groupList):
             for atmID, atmTop in enumerate(grpTop.grpAtoms):
                 if atmTop.atmName==atmName:

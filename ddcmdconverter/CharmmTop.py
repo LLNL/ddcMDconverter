@@ -69,7 +69,7 @@ class AtomTop:
                 return atmTypeTop
 
         return 0
-        print "Cannot find atom type for ", atmType
+        print("Cannot find atom type for ", atmType)
 
     def parse(self, line, count, atmTypeTopList):
         strs=line.split()
@@ -109,7 +109,7 @@ class ICTop:
     def parse(self, line):
         strs=line.split()
         if len(strs) <10:
-            print "IC field number is wrong ", line
+            print("IC field number is wrong ", line)
         self.dihTop=DihTop(strs[1],strs[2], strs[3],strs[4])
         self.kconst1=float(strs[5])
         self.angle1=float(strs[6])
@@ -179,7 +179,7 @@ class ResTop:
                 atmTop.parse(line, atmCount, atmTypeTopList)
                 atmCount=atmCount+1
                 self.atomList.append(atmTop)
-                #print atmTop.atmID, atmTop.atmName, self.resName
+                #print(atmTop.atmID, atmTop.atmName, self.resName)
                 if 'grpTop' not in locals():  # If there is no group before ATOM
                     grpTop = GroupTop()
                     grpTop.grpID = grpCount
@@ -191,7 +191,7 @@ class ResTop:
                 strs=ncline.split()
                 numStr=len(strs)-1
                 if numStr%2 != 0 :
-                    print "Odd bond atom number", line
+                    print("Odd bond atom number", line)
                 nPair=numStr/2
                 for i in range(nPair):
                     bndTop=BondTop(strs[2*i+1], strs[2*i+2])
@@ -201,7 +201,7 @@ class ResTop:
                 strs=ncline.split()
                 numStr=len(strs)-1
                 if numStr%4 != 0 :
-                    print "Odd IMPR atom number", line
+                    print("Odd IMPR atom number", line)
                 nPair=numStr/4
                 for i in range(nPair):
                     dihTop=DihTop(strs[4*i+1], strs[4*i+2],strs[4*i+3], strs[4*i+4])
@@ -211,7 +211,7 @@ class ResTop:
                 strs=ncline.split()
                 numStr=len(strs)-1
                 if numStr%4 != 0 :
-                    print "Odd CMAP atom number", line
+                    print("Odd CMAP atom number", line)
                 nPair=numStr/4
                 for i in range(nPair):
                     dihTop=DihTop(strs[4*i+1], strs[4*i+2],strs[4*i+3], strs[4*i+4])
@@ -274,7 +274,7 @@ class CharmmTop:
             resTop=ResTop()
             resTop.parse(aResiList, count, self.atmTypeTopList)
             #if resTop.resName == 'GLUP':
-            #    print resTop.resName
+            #    print(resTop.resName)
             if resTop.isResi:
                 self.resTopList.append(resTop)
             else:
@@ -285,7 +285,7 @@ class CharmmTop:
             if resName==resTop.resName:
                 return resTop
 
-        print "Cannot find residue name: ", resName, " in CharmmTop.resTopList"
+        print("Cannot find residue name: ", resName, " in CharmmTop.resTopList")
         return 0
 
     def toddcMDobjFile(self, objFile, comPDB):

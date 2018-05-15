@@ -26,22 +26,22 @@ def getArgs():
 
 def main():
     args=getArgs()
-    print "Default inputs: ",args.topfile, args.pdbfile, args.objfile, args.spefile, args.splfile
+    print ("Default inputs: ",args.topfile, args.pdbfile, args.objfile, args.spefile, args.splfile)
 
-    print "Reading in CHARMM topology file ", args.topfile
+    print ("Reading in CHARMM topology file ", args.topfile)
     charmmTop=CharmmTop.CharmmTop()
     charmmTop.parse(args.topfile)
 
-    print "Reading in pdb file ", args.pdbfile
+    print ("Reading in pdb file ", args.pdbfile)
     comPDB=Pdb.ComPDB()
     comPDB.parse(args)
     comPDB.assignGid(charmmTop)
 
-    print "Generating ddcMD object file ", args.objfile
+    print ("Generating ddcMD object file ", args.objfile)
     obj=Obj.Obj()
     obj.toObj(args, comPDB)
 
-    print "Generating species file ", args.splfile
+    print ("Generating species file ", args.splfile)
     specie=Specie(charmmTop, comPDB)
     specie.toSpeData(args.splfile)
 

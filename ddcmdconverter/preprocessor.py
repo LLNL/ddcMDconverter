@@ -111,6 +111,8 @@ __URL__ = "http://code.google.com/p/pypreprocessor/"
 import os
 from contextlib import contextmanager
 
+import six
+
 class Preprocessor(object):
     """CPP-style processing of files.
 
@@ -318,7 +320,7 @@ class Preprocessor(object):
         The resulting instance can be treated as a read-only file containing
         the processed input from the last invocation of :meth:`parse`.
         """
-        from cStringIO import StringIO
+        from six import StringIO
         return StringIO(self.__outputBuffer)
 
     @contextmanager

@@ -19,9 +19,9 @@ def getArgs():
 
 def main():
     args=getArgs()
-    print "Default inputs: ", args.topfile,  args.objfile
+    print("Default inputs: ", args.topfile,  args.objfile)
 
-    print "Reading in CHARMM topology file ", args.topfile
+    print("Reading in CHARMM topology file ", args.topfile)
     charmmTop=CharmmTop.CharmmTop()
     charmmTop.parse(args.topfile)
 

@@ -17,7 +17,7 @@ def getArgs():
 
 def main():
     args=getArgs()
-    print "Default inputs: ", args.psffile
+    print("Default inputs: ", args.psffile)
     psf=Psf.Psf()
     psf.parse(args.psffile)
     psf.printAngle()

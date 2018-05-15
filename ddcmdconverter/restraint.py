@@ -18,7 +18,7 @@ def getArgs():
 
 def main():
     args=getArgs()
-    print "Default inputs: ", args.objfile, args.resfile, args.itpfile
+    print("Default inputs: ", args.objfile, args.resfile, args.itpfile)
 
     itpList=[]
 

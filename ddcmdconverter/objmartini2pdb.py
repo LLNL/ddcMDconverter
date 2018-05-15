@@ -22,7 +22,7 @@ def getArgs():
 
 def main():
     args=getArgs()
-    print "Default inputs: ",args.objfile, args.pdbfile
+    print ("Default inputs: ",args.objfile, args.pdbfile)
 
     itpList=[]
 

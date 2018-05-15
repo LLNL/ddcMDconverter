@@ -101,7 +101,7 @@ def getRestart(args, comPDB):
 
 def main():
     args=getArgs()
-    print "Default inputs: ", args.pdbfile
+    print ("Default inputs: ", args.pdbfile)
 
     itpList=[]
 
@@ -119,7 +119,7 @@ def main():
             atom['atomname'] = 'P' + str(count)
             count = count + 1
 
-    print "Reading in pdb file ", args.pdbfile
+    print( "Reading in pdb file ", args.pdbfile)
     comPDB=Pdb.ComPDB()
     comPDB.parse(args)
     renameProt(comPDB)
