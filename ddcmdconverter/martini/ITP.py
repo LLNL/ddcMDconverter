@@ -193,8 +193,8 @@ import numpy
 
 from collections import OrderedDict as odict
 
-from ddcmdconverter.preprocessor import Preprocessor
-from ddcmdconverter import utilities
+from ddcmdconverter.martini.preprocessor import Preprocessor
+from ddcmdconverter.martini import utilities
 
 import logging
 

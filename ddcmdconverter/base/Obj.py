@@ -1,7 +1,7 @@
 __author__ = 'zhang30'
 
-from ddcmdconverter.CharmmTop import CharmmTop
-from ddcmdconverter.Pdb import Coor
+from ddcmdconverter.charmm.CharmmTop import CharmmTop
+from ddcmdconverter.base.Pdb import Coor
 import re
 import struct
 

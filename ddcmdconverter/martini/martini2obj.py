@@ -5,8 +5,8 @@ __author__ = 'zhang30'
 import argparse
 import math
 
-from ddcmdconverter.ITP import ITP
-from ddcmdconverter.MartiniFF import MartiniFF
+from ddcmdconverter.martini.ITP import ITP
+from ddcmdconverter.martini.MartiniFF import MartiniFF
 
 
 def getArgs():

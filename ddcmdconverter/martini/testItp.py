@@ -1,4 +1,4 @@
-from ddcmdconverter.ITP import ITP
+from ddcmdconverter.martini.ITP import ITP
 
 #itp=ITP.ITP("martini_v2.0_POPC_02.itp")
 #itp=ITP.ITP("martini_v2.1-dna.itp")

@@ -1,6 +1,6 @@
 __author__ = 'zhang30'
 
-from ddcmdconverter.CharmmTop import ResTop 
+from ddcmdconverter.charmm.CharmmTop import ResTop
 
 class Coor:
     def __init__(self, x, y, z):

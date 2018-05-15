@@ -1,7 +1,7 @@
 __author__ = 'zhang30'
 
 import argparse
-from ddcmdconverter.Obj import Obj
+from ddcmdconverter.base.Obj import Obj
 
 def getArgs():
 
@@ -21,7 +21,7 @@ def main():
     args=getArgs()
     print("Default inputs: ",args.objfile, args.pdbfile)
 
-    obj=Obj.Obj()
+    obj=Obj()
     obj.toPDB(args)
 
 

@@ -2,7 +2,7 @@ __author__ = 'zhang30'
 
 
 import argparse
-from ddcmdconverter.CharmmTop import CharmmTop
+from ddcmdconverter.charmm.CharmmTop import CharmmTop
 
 
 

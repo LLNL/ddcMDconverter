@@ -3,8 +3,8 @@ __author__ = 'zhang30'
 
 import argparse
 
-import ddcmdconverter.Pdb as Pdb
-from ddcmdconverter.ITP import ITP
+import ddcmdconverter.base.Pdb as Pdb
+from ddcmdconverter.martini.ITP import ITP
 #import Specie
 
 
