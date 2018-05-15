@@ -10,7 +10,7 @@ setup(name='ddcmdconverter',
       entry_points={
         'console_scripts': [
             'martiniobj2pdb = ddcmdconverter.martini.objmartini2pdb:main',
-            'martini2obj = ddcmdconverter.martini.martini2obj.:main',
+            'martini2obj = ddcmdconverter.martini.martini2obj:main',
             'pdbmartini2obj = ddcmdconverter.martini.pdbmartini2obj:main',
             'pdb2obj = ddcmdconverter.charmm.pdb2obj:main',
             'obj2pdb = ddcmdconverter.charmm.obj2pdb:main',
