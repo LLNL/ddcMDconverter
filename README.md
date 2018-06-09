@@ -1,5 +1,7 @@
 # Python tools for ddcMD 
 
+The code uses python3 syntax after version v1.0.0.
+
 ## pdb2obj
 Convert pdb file to ddcMD anatomy file.
 
@@ -71,3 +73,13 @@ optional arguments:
 
 
 ## CHARMM Psf reader
+
+
+
+## install the software
+
+```
+ssh://git@cz-bitbucket.llnl.gov:7999/xzr/ddcmdconvertor.git
+cd ddcmdconvertor
+pip3 install -e .
+```

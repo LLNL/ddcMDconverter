@@ -190,6 +190,11 @@ class Obj:
 
         outFh=open(args.pdbfile, "w")
 
+        outLine = "REMARK CONVERTED FROM %s BY ddcMDconvertor\n" % (args.objfile)
+        outFh.write(outLine)
+        outLine = self.getPdbBox()
+        outFh.write(outLine)
+
         oldmolres=-1
         resid=0
         with open(args.objfile, "r") as f:
@@ -269,26 +274,6 @@ class Obj:
                     rzIndex = strs.index("rz")
                     fieldSize=len(strs)
 
-                if line[0:2]=='h=':
-                    boxflg=1
-
-                if boxflg==1:
-                    strs = line.split()
-                    if boxCount==0:
-                        args.x=float(strs[1])
-                    elif boxCount==1:
-                        args.y=float(strs[boxCount])
-                    elif boxCount==2:
-                        endstr=strs[boxCount]
-                        estrs=endstr.split(";")
-                        args.z=float(estrs[0])
-                        boxflg = 0
-                        outLine = "REMARK CONVERTED FROM %s BY ddcMDconvertor\n" % (args.objfile)
-                        outFh.write(outLine)
-                        outLine = "CRYST1 %8.3f %8.3f %8.3f  90.00  90.00  90.00 P 1           1\n" % (args.x, args.y, args.z)
-                        outFh.write(outLine)
-
-                    boxCount=boxCount+1
 
     def parseObj(self, object):
         replaceObj=object.replace("\n", " ")
@@ -344,6 +329,8 @@ class Obj:
         self.fieldName = headerDict['field_names'].split()
         self.species = headerDict['species'].split()
 
+    def getPdbBox(self):
+        return "CRYST1 {0:8.3f} {1:8.3f} {2:8.3f}  90.00  90.00  90.00 P 1           1\n".format(self.lx, self.ly, self.lz)
 
     def toBinaryMartiniPDB(self, args, atomNameMapCollection):
 
@@ -452,7 +439,7 @@ class Obj:
         outFh = open(args.pdbfile, "w")
         outLine = "REMARK CONVERTED FROM %s BY ddcMDconvertor\n" % (args.objfile)
         outFh.write(outLine)
-        outLine = "CRYST1 %8.3f %8.3f %8.3f  90.00  90.00  90.00 P 1           1\n" % (self.lx, self.ly, self.lz)
+        outLine = self.getPdbBox()
         outFh.write(outLine)
 
         for pdbItem in pdbItemList:
