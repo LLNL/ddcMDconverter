@@ -307,7 +307,7 @@ class Obj:
 
         headerDict=self.parseObj(header)
 
-        requiredKeys=['datatype', 'h', 'field_names', 'nfields', 'nfiles', 'nrecord', 'species']
+        requiredKeys=['datatype', 'h', 'field_names', 'nfields', 'nfiles', 'nrecord']
         for key in requiredKeys:
             if key not in headerDict:
                 print ("Missing required key in header :", key)
@@ -327,7 +327,8 @@ class Obj:
         self.nfiles = int(headerDict['nfiles'])
         self.nrecord = int(headerDict['nrecord'])
         self.fieldName = headerDict['field_names'].split()
-        self.species = headerDict['species'].split()
+        if 'species' in headerDict:
+            self.species = headerDict['species'].split()
 
     def getPdbBox(self):
         return "CRYST1 {0:8.3f} {1:8.3f} {2:8.3f}  90.00  90.00  90.00 P 1           1\n".format(self.lx, self.ly, self.lz)

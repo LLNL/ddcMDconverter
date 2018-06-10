@@ -17,6 +17,8 @@ def getArgs():
     parser.add_argument('-o', '--obj', action='store', dest='objfile', default='atom#.data',
                         help='ddcMD object output file (default=atom#.data).')
     parser.add_argument('-c', '--cut', action='store', dest='cutoff', type=float, help='Cutoff for bond.')
+    parser.add_argument('-r', '--ori', action='store', dest='origin', default=True,
+                        help='Move origin to -1/2L.')
 
     args = parser.parse_args()
 
@@ -58,6 +60,10 @@ def toObj(args, comPDB):
     header=getHeader(totAtmNum, args)
     outFh.write(header)
 
+    xLHalf = args.x / 2
+    yLHalf = args.y / 2
+    zLHalf = args.z / 2
+
     zeroV=0.0
 
     for molID, molPDB in enumerate(comPDB.molList):
@@ -65,8 +71,18 @@ def toObj(args, comPDB):
             for atmNum, atmPDB in enumerate(resPDB.atmList):
                 coor = atmPDB.coor
                 speciename = resPDB.resName + "x" + atmPDB.name
+
+                x = coor.x
+                y = coor.y
+                z = coor.z
+
+                if args.origin:
+                    x = x - xLHalf
+                    y = y - yLHalf
+                    z = z - zLHalf
+
                 outLine = "%14d ATOM %11s group %21.13e %21.13e %21.13e %21.13e %21.13e %21.13e\n" \
-                          % (atmPDB.gid, speciename, coor.x, coor.y, coor.z, zeroV, zeroV, zeroV)
+                          % (atmPDB.gid, speciename, x, y, z, zeroV, zeroV, zeroV)
                 outFh.write(outLine)
 
 
