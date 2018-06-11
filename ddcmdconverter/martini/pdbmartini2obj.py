@@ -4,6 +4,7 @@ __author__ = 'zhang30'
 import argparse
 
 import ddcmdconverter.base.Pdb as Pdb
+import ddcmdconverter.base.Gro as Gro
 from ddcmdconverter.martini.ITP import ITP
 #import Specie
 
@@ -12,6 +13,8 @@ def getArgs():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-p', '--pdb', action='store', dest='pdbfile', default='test.pdb', help='PDB input file (default=test.pdb).')
+    parser.add_argument('-g', '--gro', action='store', dest='grofile', default=None,
+                        help='GRO input file (default=None).')
     parser.add_argument('-t', '--pro', action='store', dest='profile', default=None,
                         help='Protein ITP file list (default=proItpList).')
     parser.add_argument('-o', '--obj', action='store', dest='objfile', default='atom#.data',
@@ -52,8 +55,12 @@ def assignGid(comPDB):
                 for atmNum, atmPDB in enumerate(resPDB.atmList):
                     atmPDB.gid = (molID << 32) + (resID << 16) + (grpID << 8) + atmNum #for RAS atmNum exceed 8 bits.
 
-def toObj(args, comPDB):
+def toObj(args, comPDB, vList):
     totAtmNum=comPDB.getTotAtmNum()
+
+    if args.grofile:
+        if totAtmNum !=len(vList):
+            raise Exception("toObj - Total number of atoms doesn't match the number of velocity")
 
     filename=args.objfile
     outFh=open(filename, "w")
@@ -65,6 +72,7 @@ def toObj(args, comPDB):
     zLHalf = args.z / 2
 
     zeroV=0.0
+    count=0
 
     for molID, molPDB in enumerate(comPDB.molList):
         for resID, resPDB in enumerate(molPDB.resList):
@@ -81,8 +89,15 @@ def toObj(args, comPDB):
                     y = y - yLHalf
                     z = z - zLHalf
 
-                outLine = "%14d ATOM %11s group %21.13e %21.13e %21.13e %21.13e %21.13e %21.13e\n" \
+                if args.grofile:
+                    vel=vList[count]
+                    count=count+1
+                    outLine = "%14d ATOM %11s group %21.13e %21.13e %21.13e %21.13e %21.13e %21.13e\n" \
+                          % (atmPDB.gid, speciename, x, y, z, vel.vx, vel.vy, vel.vz)
+                else:
+                    outLine = "%14d ATOM %11s group %21.13e %21.13e %21.13e %21.13e %21.13e %21.13e\n" \
                           % (atmPDB.gid, speciename, x, y, z, zeroV, zeroV, zeroV)
+
                 outFh.write(outLine)
 
 
@@ -117,7 +132,7 @@ def getRestart(args, comPDB):
 
 def main():
     args=getArgs()
-    print ("Default inputs: ", args.pdbfile)
+    print ("Default inputs: ", args.pdbfile, args.grofile)
 
     itpList=[]
 
@@ -125,7 +140,7 @@ def main():
         with open(args.profile, "r") as f:
             for line in f:
                 tipFileName=line.rstrip("\n\r")
-                itp = ITP.ITP(tipFileName)
+                itp = ITP(tipFileName)
                 itpList.append(itp)
 
     # fix the atom name in the
@@ -140,7 +155,10 @@ def main():
     comPDB.parse(args)
     renameProt(comPDB)
     assignGid(comPDB)
-    toObj(args, comPDB)
+    gro = Gro.GRO()
+    if args.grofile:
+        gro.parse(args.grofile)
+    toObj(args, comPDB, gro.vList)
     getRestart(args, comPDB)
 
 

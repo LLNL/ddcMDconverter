@@ -524,7 +524,7 @@ class Obj:
                                     listLine = listLine+"r_" + str(count) + " "
                                     outLine = outLine+ "r_" + str(count) + " RESTRAINTPARMS{gid="+str(gid)+"; atomI=" + str(atomI) + "; func=" + str(func) \
                                               + "; fcx=" + str(fcx) + "; fcy=" + str(fcy) + "; fcz=" + str(fcz) \
-                                              + "; x0=" + str(x/args.x) + "; y0=" + str(y/args.y) + "; z0=" + str(z/args.z) \
+                                              + "; x0=" + str(x/args.x+0.5) + "; y0=" + str(y/args.y+0.5) + "; z0=" + str(z/args.z+0.5) \
                                               + "; kb= 1.0 kJ*mol^-1*nm^-2; }\n"
                                     count = count + 1
 
