@@ -17,6 +17,8 @@ def getArgs():
                         help='GRO input file (default=None).')
     parser.add_argument('-t', '--pro', action='store', dest='profile', default=None,
                         help='Protein ITP file list (default=proItpList).')
+    parser.add_argument('-f', '--fre', action='store', dest='frefile', default=None,
+                        help='Constrant atom name for setting free in group.')
     parser.add_argument('-o', '--obj', action='store', dest='objfile', default='atom#.data',
                         help='ddcMD object output file (default=atom#.data).')
     parser.add_argument('-c', '--cut', action='store', dest='cutoff', type=float, help='Cutoff for bond.')
@@ -55,12 +57,31 @@ def assignGid(comPDB):
                 for atmNum, atmPDB in enumerate(resPDB.atmList):
                     atmPDB.gid = (molID << 32) + (resID << 16) + (grpID << 8) + atmNum #for RAS atmNum exceed 8 bits.
 
+def getUniqueConsAtomList(frefile):
+
+    consAtomDict={}
+
+    with open(frefile, "r") as f:
+        for line in f:
+            strs=line.split('{')
+            resName=strs[0].strip()
+            subStrs=strs[1].split('}')
+            nameLine=subStrs[0].strip()
+            names=nameLine.split()
+            consAtomDict[resName]=names
+
+    return consAtomDict
+
+
 def toObj(args, comPDB, vList):
     totAtmNum=comPDB.getTotAtmNum()
 
     if args.grofile:
         if totAtmNum !=len(vList):
             raise Exception("toObj - Total number of atoms doesn't match the number of velocity")
+
+    if args.frefile:
+        consAtomDict=getUniqueConsAtomList(args.frefile)
 
     filename=args.objfile
     outFh=open(filename, "w")
@@ -89,14 +110,21 @@ def toObj(args, comPDB, vList):
                     y = y - yLHalf
                     z = z - zLHalf
 
+                group="group"
+                if args.frefile:
+                    if resPDB.resName in consAtomDict:
+                        atomNames=consAtomDict[resPDB.resName]
+                        if atmPDB.name in atomNames:
+                            group = "free"
+
                 if args.grofile:
                     vel=vList[count]
                     count=count+1
-                    outLine = "%14d ATOM %11s group %21.13e %21.13e %21.13e %21.13e %21.13e %21.13e\n" \
-                          % (atmPDB.gid, speciename, x, y, z, vel.vx, vel.vy, vel.vz)
+                    outLine = "%14d ATOM %11s %s %21.13e %21.13e %21.13e %21.13e %21.13e %21.13e\n" \
+                          % (atmPDB.gid, speciename, group, x, y, z, vel.vx, vel.vy, vel.vz)
                 else:
-                    outLine = "%14d ATOM %11s group %21.13e %21.13e %21.13e %21.13e %21.13e %21.13e\n" \
-                          % (atmPDB.gid, speciename, x, y, z, zeroV, zeroV, zeroV)
+                    outLine = "%14d ATOM %11s %s %21.13e %21.13e %21.13e %21.13e %21.13e %21.13e\n" \
+                          % (atmPDB.gid, speciename, group, x, y, z, zeroV, zeroV, zeroV)
 
                 outFh.write(outLine)
 

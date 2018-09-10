@@ -7,6 +7,7 @@ import math
 
 from ddcmdconverter.martini.ITP import ITP
 from ddcmdconverter.martini.MartiniFF import MartiniFF
+from ddcmdconverter.martini.MartiniInput import martini_input
 
 
 def getArgs():
@@ -26,6 +27,39 @@ def getArgs():
     args = parser.parse_args()
 
     return args
+
+def uniqueConsAtom(itp):
+
+    resName=itp.header.moleculetype.data['name']
+
+    atomList=[]
+    for atom in itp.header.moleculetype.atoms.data:
+        atomName = atom['atomname']
+        atomList.append(atomName)
+
+    consData=itp.header.moleculetype.constraints.data
+
+    atomDict={}
+    for i in range(len(consData)):
+        constraint = consData[i]
+        atomI = constraint['ai'] - 1   # 0 based
+        atomJ = constraint['aj'] - 1  # 0 based
+        atomDict[atomI] = 1
+        atomDict[atomJ] = 1
+
+    atomIndexes=atomDict.keys()
+    #print resName, atomIndexes
+
+    uniqueNameList=resName+" { "
+
+    for i in atomIndexes:
+        name=atomList[i]
+        uniqueNameList=uniqueNameList+name+" "
+
+    uniqueNameList = uniqueNameList + "}\n"
+
+    return uniqueNameList
+
 
 def clusterConstraint(data):
     consCluster=[]
@@ -203,6 +237,7 @@ def main():
     listLine = listLine+"\n"
     fh.write(listLine)
 
+    consAtomFh = open("ConsAtom.data", "w")
     resID=1
     for itp in itpList:
         cons2bond=args.cons2bond   # TODO: also print out the constraint pair as bond - hacking the code - should be a better solution
@@ -230,6 +265,8 @@ def main():
 
         if hasConstraints:
             consCluster=clusterConstraint(itp.header.moleculetype.constraints.data)
+            uniqueConsNameList=uniqueConsAtom(itp)
+            consAtomFh.write(uniqueConsNameList)
 
         line = ""
         # RESIPARMS
@@ -339,7 +376,7 @@ def main():
                         b0 = constraint['r0']
                         line = line + resName + "_b" + str(count) + " BONDPARMS{"
                         line = line + "atomI=" + str(atomI) + "; atomTypeI=" + atomTypeI + "; atomJ=" + str(atomJ) + "; atomTypeJ=" + atomTypeJ \
-                               + "; func=1; kb=40000 kJ*mol^-1*nm^-2; b0=" + str(b0) + " nm; }\n"  # 1/2 k -> K
+                               + "; func=1; kb=10000 kJ*mol^-1*nm^-2; b0=" + str(b0) + " nm; }\n"  # 1/2 k -> K
                         count=count+1
                     line = line + "\n"
 
@@ -455,21 +492,53 @@ def main():
 
     # Print out species
 
-    sysLine="system SYSTEM\n{species =\n"
-    speLine=""
-    for itp in itpList:
-        resName=itp.header.moleculetype.data['name']
+    # comment out old specie input
+    #sysLine="system SYSTEM\n{species =\n"
+    #speLine=""
+    #for itp in itpList:
+    #    resName=itp.header.moleculetype.data['name']
 
+    #    for atom in itp.header.moleculetype.atoms.data:
+    #        specie=resName+"x"+atom['atomname']
+    #        sysLine=sysLine+specie+"\n"
+    #        atomType=atom['atomtype']
+    #        speLine=speLine+specie+" SPECIES { type = ATOM ; charge ="+str(atom['charge'])+"; id="+str(atmTypeList.index(atomType))+ "; mass ="+str(massDict[atomType])+" M_p ; }\n"
+
+    #sysLine=sysLine+"   ;\n}\n\n"
+
+
+    molecLine="moleculeClass MOLECULECLASS { molecules = "
+    moleSpecie="\n"
+    speLine = "\n"
+    for itp in itpList:
+        resName = itp.header.moleculetype.data['name']
+        molName=resName+"x"
+        molecLine=molecLine+" "+molName
+
+        moleSpecie =moleSpecie+molName+" MOLECULE {ownershipSpecies = "
+
+        count=0
         for atom in itp.header.moleculetype.atoms.data:
-            specie=resName+"x"+atom['atomname']
-            sysLine=sysLine+specie+"\n"
+            specie = molName + atom['atomname']
+
             atomType=atom['atomtype']
             speLine=speLine+specie+" SPECIES { type = ATOM ; charge ="+str(atom['charge'])+"; id="+str(atmTypeList.index(atomType))+ "; mass ="+str(massDict[atomType])+" M_p ; }\n"
 
-    sysLine=sysLine+"   ;\n}\n\n"
+            if count==0:
+                moleSpecie=moleSpecie+specie+"; species = "+specie
+            else:
+                moleSpecie=moleSpecie+" "+specie
+            count=count+1
+
+        moleSpecie = moleSpecie + ";}\n"
+
+
+    molecLine=molecLine+"; }\n"
 
     speFh=open(args.splfile, "w")
-    speFh.write(sysLine)
+    speFh.write(martini_input)
+    speFh.write(molecLine)
+    speFh.write(moleSpecie)
     speFh.write(speLine)
 
 
