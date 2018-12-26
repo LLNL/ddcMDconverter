@@ -2,6 +2,7 @@ __author__ = 'zhang30'
 
 
 import argparse
+import sys
 
 import ddcmdconverter.base.Pdb as Pdb
 import ddcmdconverter.base.Gro as Gro
@@ -9,7 +10,7 @@ from ddcmdconverter.martini.ITP import ITP
 #import Specie
 
 
-def getArgs():
+def getArgs(in_options):
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-p', '--pdb', action='store', dest='pdbfile', default='test.pdb', help='PDB input file (default=test.pdb).')
@@ -25,7 +26,7 @@ def getArgs():
     parser.add_argument('-r', '--ori', action='store', dest='origin', default=True,
                         help='Move origin to -1/2L.')
 
-    args = parser.parse_args()
+    args = parser.parse_args(in_options)
 
     return args
 
@@ -159,7 +160,11 @@ def getRestart(args, comPDB):
     outFh.write(line)
 
 def main():
-    args=getArgs()
+    run_converter(sys.argv[1:])
+
+def run_converter(in_options):
+
+    args=getArgs(in_options)
     print ("Default inputs: ", args.pdbfile, args.grofile)
 
     itpList=[]
