@@ -202,7 +202,10 @@ class Obj:
                 if prtflg==1:
                     strs=line.split()
                     if len(strs)>=fieldSize:
-                        gid=int(strs[gidIndex])
+                        if args.hex:
+                            gid = int(strs[gidIndex], 16)
+                        else:
+                            gid=int(strs[gidIndex])
                         molres=gid>>16
                         if molres!=oldmolres:
                             resid=resid+1
