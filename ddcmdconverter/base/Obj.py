@@ -28,6 +28,7 @@ class Obj:
         self.nfield=0
         self.fieldName=[]
         self.species=[]
+        self.hex=False
 
 
     def toObj(self, args, comPDB):
@@ -202,7 +203,7 @@ class Obj:
                 if prtflg==1:
                     strs=line.split()
                     if len(strs)>=fieldSize:
-                        if args.hex:
+                        if self.hex:
                             gid = int(strs[gidIndex], 16)
                         else:
                             gid=int(strs[gidIndex])
@@ -332,6 +333,14 @@ class Obj:
         self.fieldName = headerDict['field_names'].split()
         if 'species' in headerDict:
             self.species = headerDict['species'].split()
+        if 'field_format' in headerDict:
+            idx = self.fieldName.index("id")
+            fieldFormats = headerDict['field_format'].split()
+            gidFmt = fieldFormats[idx]
+
+            if gidFmt[-1] == 'x':
+                self.hex = True
+
 
     def getPdbBox(self):
         return "CRYST1 {0:8.3f} {1:8.3f} {2:8.3f}  90.00  90.00  90.00 P 1           1\n".format(self.lx, self.ly, self.lz)

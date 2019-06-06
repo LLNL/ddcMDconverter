@@ -15,8 +15,8 @@ def getArgs():
     parser.add_argument('-x', '--bx', action='store', dest='x', type=float, help='Boundary x.')
     parser.add_argument('-y', '--by', action='store', dest='y', type=float, help='Boundary y.')
     parser.add_argument('-z', '--bz', action='store', dest='z', type=float, help='Boundary z.')
-    parser.add_argument('-hx', '--hex', action='store_true', dest='hex', default=False,
-                        help='gid is in hex format')
+    #parser.add_argument('-hx', '--hex', action='store_true', dest='hex', default=False,
+    #                    help='gid is in hex format')
     args = parser.parse_args()
 
     return args
