@@ -232,7 +232,12 @@ def main():
     #MASSPARM
     listLine=""
     for index, atomType in enumerate(atmTypeList):
-        listLine=listLine+atomType+" MASSPARMS { atomType="+atomType+"; atomTypeID="+str(index)+"; mass="+str(massDict[atomType])+"M_p ; }\n"
+        try:
+            listLine=listLine+atomType+" MASSPARMS { atomType="+atomType+"; atomTypeID="+str(index)+"; mass="+str(massDict[atomType])+"M_p ; }\n"
+        except:
+            print("atomType="+atomType)
+            print("atomTypeID="+str(index))
+            print("mass="+str(massDict[atomType]))
 
     listLine = listLine+"\n"
     fh.write(listLine)
@@ -314,7 +319,10 @@ def main():
                 line = line + resName + "_a" + str(i)+" "
             line = line + ";\n"
         if hasDihedral:
-            dihedralSize = len(itp.header.moleculetype.dihedrals.data)
+            try:
+                dihedralSize = len(itp.header.moleculetype.dihedrals.data)
+            except:
+                print(itp.filename())
             line = line + "  dihedralList="
             for i in range(dihedralSize):
                 line = line + resName + "_d" + str(i)+" "

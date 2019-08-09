@@ -5,7 +5,7 @@ simulate SIMULATE
     type = MD;
     system=system;
    integrator=nglf;
-   deltaloop=500000;
+   deltaloop=500;
     maxloop =1000000;
    dt = 20;
    printrate=100;
@@ -21,15 +21,7 @@ simulate SIMULATE
 energyInfo ENERGYINFO{}
 heap HEAP { size = 1000 ;}
 
-//ddc DDC { }
-//ddc DDC { lx=2;ly=2;lz=1; ddcRule = rule; loadbalance=balance;}
-ddc DDC { lx=2;ly=2;lz=1; }
-
-//balance LOADBALANCE {
-//   type=bisection;
-//}
-
-rule DDCRULE { type = MARTINI;}
+ddc DDC { updateRate=20; }
 
 printinfo PRINTINFO
 {
@@ -38,7 +30,8 @@ printinfo PRINTINFO
   TEMPERATURE = K;
   ENERGY = kJ/mol;
   TIME = ns;
-  printStress=1;
+  printStress=0;
+  printMolecularPressure=1;
 }
 
 martini  POTENTIAL
@@ -50,39 +43,38 @@ martini  POTENTIAL
    rcoulomb=11.0 Angstrom; epsilon_r=15; epsilon_rf=-1;
    function=lennardjones;
    parmfile=martini.data;
+   use_gpu=1;
 }
 
-//nglf INTEGRATOR {type = NGLF; }
-nglf INTEGRATOR {type = NGLFCONSTRAINT; T=310K; P0 = 1.0 bar; beta = 3.0e-4/bar; tauBarostat = 1.0 ps;}
+restraint POTENTIAL { type=RESTRAINT; use_gpu=1; parmfile=restraint.data; }
+
+nglf INTEGRATOR { type=NGLFCONSTRAINTGPULANGEVIN; T=310K; P0 = 1.0 bar; beta = 3.0e-4/bar; tauBarostat = 1.0 ps;}
 
 system SYSTEM
 {
    type = NORMAL;
-   potential = martini;
+   potential = martini restraint ;
    neighbor=nbr;
    groups= group free ;
    random = lcg64;
    box = box;
    collection=collection;
    moleculeClass = moleculeClass;
+   nConstraints=5866;
 }
 
 
-thermal TRANSFORM { type=THERMALIZE; temperature=0.003eV/kB;}
-vcm TRANSFORM { type=SETVELOCITY; vcm=0 0 0;}
-
 box BOX { type=ORTHORHOMBIC; pbc=7; }
 
-nbr NEIGHBOR { type = NORMAL; deltaR=4.0000;minBoxSide=6; }
+nbr NEIGHBOR { type = NORMAL; deltaR=4.0000; minBoxSide=6; }
 
 group GROUP { type = LANGEVIN; Teq=310K; tau=1ps; useDefault=0;}
-//group   GROUP { type = FREE;  }
-free   GROUP { type = FREE;  }
+free GROUP { type = LANGEVIN; Teq=310K; tau=1ps; useDefault=0;}
 
 lcg64 RANDOM {type = LCG64;randomizeSeed=1;}
 
-martini ANALYSIS { type =  PAIRCORRELATION; eval_rate=100; delta_r =0.05; length=40; outputrate=1; }
-vcm ANALYSIS { type =  vcmWrite; outputrate=1; }
+//martini ANALYSIS { type =  PAIRCORRELATION; eval_rate=100; delta_r =0.05; length=40; outputrate=1; }
+//vcm ANALYSIS { type =  vcmWrite; outputrate=1; }
 writeCharmm  ANALYSIS { type = subsetWrite; outputrate=1000; format=binaryCharmm; }
 
 """

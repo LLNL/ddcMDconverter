@@ -91,6 +91,7 @@ svste = {
 other = {
     "BP4":  72, # Big water particle (antifreeze).
     "D":     0, # Dummy particle type
+    "ICZ":  72, # Dummy particle for ZN+ metal
     }
 
 classes = ("plain","small","tiny","vsite","svste","other")
@@ -390,28 +391,33 @@ vSNda  Ba2  Ba2  Ba2  Da2  Ba2  Da2  Ca2  Ca2  Ca2  Ca2  Ca2  Ca2  Ea2  Ea2  Fa2
 """
 
 table_other = """
-       BP4
-  BP4  Ba2
+       BP4   ICZ
+  BP4  Ba2   0a0
+  ICZ  0a0   0a0
 """
 
 table_other_plain = """
        Qda   Qd   Qa   Q0   P5   P4   P3   P2   P1  Nda   Nd   Na   N0   C5   C4   C3   C2   C1  AC2  AC1
   BP4  Aa2  Aa2  Aa2  Aa2  Aa2  Aa3  Ba2  Ca2  Ca2  Da2  Da2  Da2  Ea2  Fa2  Ga2  Ga2  Ha2  Ia2  Ha2  Ia2
+  ICZ  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0
 """
 
 table_other_small = """
       SQda  SQd  SQa  SQ0  SP5  SP4  SP3  SP2  SP1 SNda  SNd  SNa  SN0  SC5  SC4  SC3  SC2  SC1
   BP4  Aa2  Aa2  Aa2  Aa2  Aa2  Ba2  Ba2  Ca2  Ca2  Da2  Da2  Da2  Ea2  Fa2  Ga2  Ga2  Ha2  Ia2
+  ICZ  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  
 """
 
 table_other_vsite = """
       vQda  vQd  vQa  vQ0  vP5  vP4  vP3  vP2  vP1 vNda  vNd  vNa  vN0  vC5  vC4  vC3  vC2  vC1 vAC2 vAC1
   BP4  Aa2  Aa2  Aa2  Aa2  Aa2  Aa3  Ba2  Ca2  Ca2  Da2  Da2  Da2  Ea2  Fa2  Ga2  Ga2  Ha2  Ia2  Ha2  Ia2
+  ICZ  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0
 """
 
 table_other_svste = """
       vSQda vSQd vSQa vSQ0 vSP5 vSP4 vSP3 vSP2 vSP1 vSNda vSNd vSNa vSN0 vSC5 vSC4 vSC3 vSC2 vSC1
   BP4  Aa2  Aa2  Aa2  Aa2  Aa2  Ba2  Ba2  Ca2  Ca2  Da2  Da2  Da2  Ea2  Fa2  Ga2  Ga2  Ha2  Ia2
+  ICZ  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  
 """
 
 class MartiniFF:
