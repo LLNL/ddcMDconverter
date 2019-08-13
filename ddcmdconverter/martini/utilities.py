@@ -84,7 +84,6 @@ Data
 .. autodata:: amino_acid_codes
 
 """
-from __future__ import absolute_import, with_statement
 from six import string_types
 
 __docformat__ = "restructuredtext en"

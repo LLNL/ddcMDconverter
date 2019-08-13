@@ -179,8 +179,6 @@ The section hierarchy is
 
 """
 
-from __future__ import absolute_import, with_statement
-
 from six import string_types
 
 #import os, errno
@@ -271,7 +269,7 @@ class ITPsection(object):
         current_section = self.name
         while True:
             try:
-                line = stream.next().strip()
+                line = stream.__next__().strip()
             except (StopIteration, EOFError):
                 break                  # done reading the input
             #self.logger.debug("[%s] %s", current_section, line)
@@ -896,7 +894,6 @@ class ITP(utilities.FileUtils):
 
         .. versionadded: 0.3.1
         """
-        from itertools import izip
 
         kwargs = self.defines.copy()
         kwargs['commentchar'] = self.commentchar
@@ -915,7 +912,7 @@ class ITP(utilities.FileUtils):
             self.logger.debug("File %r is preprocessed (pp: %d vs raw %d lines (stripped))",
                               self.real_filename, len(pp_lines), len(raw_lines))
             return True
-        for linenum, (raw, pp) in enumerate(izip(raw_lines, pp_lines)):
+        for linenum, (raw, pp) in enumerate(zip(raw_lines, pp_lines)):
             if raw != pp:
                 self.logger.debug("File %r is preprocessed. Difference at (stripped) line %d",
                                   self.real_filename, linenum)
@@ -949,7 +946,7 @@ class ITP(utilities.FileUtils):
             itp = open(self.real_filename)
 
         try:
-            stream = OneLineBuffer(itp.next)
+            stream = OneLineBuffer(itp.__next__)
             self.parse(stream)
         finally:
             itp.close()
@@ -1041,7 +1038,7 @@ class OneLineBuffer(object):
         self.buffer = None
         self.getline = getline
         self._reread_last_line = False
-    def next(self):
+    def __next__(self):
         """Return next line (or previous line if :meth:`unread` was called)"""
         if not self._reread_last_line:
             self.buffer = self.getline()
