@@ -408,6 +408,12 @@ table_other_small = """
   ICZ  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  
 """
 
+table_other_tiny = """
+      TQda  TQd  TQa  TQ0  TP5  TP4  TP3  TP2  TP1 TNda  TNd  TNa  TN0  TC5  TC4  TG3  TG2  TC1
+  BP4  Ad1  Ad1  Ad1  Cd1  Ad1  Ad1  Ad1  Bd1  Bd1  Bd1  Bd1  Bd1  Ed1  Fd1  Gd1  Hd1  Ia4  Ia4
+  ICZ  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  0a0  
+"""
+
 table_other_vsite = """
       vQda  vQd  vQa  vQ0  vP5  vP4  vP3  vP2  vP1 vNda  vNd  vNa  vN0  vC5  vC4  vC3  vC2  vC1 vAC2 vAC1
   BP4  Aa2  Aa2  Aa2  Aa2  Aa2  Aa3  Ba2  Ca2  Ca2  Da2  Da2  Da2  Ea2  Fa2  Ga2  Ga2  Ha2  Ia2  Ha2  Ia2

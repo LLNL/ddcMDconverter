@@ -34,7 +34,7 @@ def uniqueConsAtom(itp):
 
     atomList=[]
     for atom in itp.header.moleculetype.atoms.data:
-        atomName = atom['atomname']
+        atomName = atom['atomname'].decode('UTF-8')
         atomList.append(atomName)
 
     consData=itp.header.moleculetype.constraints.data
@@ -147,7 +147,7 @@ def main():
 
     massDict = {}
     for atomtype in par_itp.header.atomtypes.data:
-        massDict[atomtype['name']]=atomtype['mass']
+        massDict[atomtype['name'].decode('UTF-8')]=atomtype['mass']
 
     # constant
     DEG2RAD=math.pi/180
@@ -201,11 +201,11 @@ def main():
 
     for itp in itpList:
         for atom in itp.header.moleculetype.atoms.data:
-            atomType=atom['atomtype']
+            atomType=atom['atomtype'].decode('UTF-8')
             atmTypeDict[atomType]=1   # try to find all atom type
 
     # Print out atom type
-    atmTypeList=atmTypeDict.keys()
+    atmTypeList=[x for x in atmTypeDict.keys()]
 
     listLine="atomTypeList="
     for atomType in atmTypeList:
@@ -216,13 +216,15 @@ def main():
     nbLine=""
     listLine=listLine+"ljParms="
     for nonbond in par_itp.header.nonbond_params.data:
-        typeI=nonbond['i']
-        typeJ=nonbond['j']
+        typeI=nonbond['i'].decode('UTF-8')
+        typeJ=nonbond['j'].decode('UTF-8')
         if typeI in atmTypeList:
             if typeJ in atmTypeList:
                 ljname=typeI+"_"+ typeJ
                 listLine=listLine+ljname+" "
                 (eps, sigma)=martiniFF.getLJparm(typeI, typeJ)
+                if eps == None:
+                    print(typeI, typeJ)
                 nbLine=nbLine+ljname+" LJPARMS{atomtypeI="+typeI+"; indexI="+str(atmTypeList.index(typeI))+"; atomtypeJ="+typeJ+"; indexJ="+str(atmTypeList.index(typeJ))+"; sigma="+str(sigma)+" nm; eps="+str(eps)+" kJ*mol^-1;}\n"
 
     listLine=listLine+";\n"+"}\n\n";
@@ -339,16 +341,16 @@ def main():
         line = line + "  groupID=0;\n"
         line = line + "  atomList="
         for atom in itp.header.moleculetype.atoms.data:
-            line = line + resName + "_" + atom['atomname'] +" "
+            line = line + resName + "_" + atom['atomname'].decode('UTF-8') +" "
         line = line + ";\n"
         line = line + "}\n\n"
 
         #ATOMPARMS
         atomTypeList=[]
         for atom in itp.header.moleculetype.atoms.data:
-            atomName = atom['atomname']
+            atomName = atom['atomname'].decode('UTF-8')
             atomID = atom['atomnr'] - 1 # 0 based
-            atomType=atom['atomtype']
+            atomType=atom['atomtype'].decode('UTF-8')
             atomTypeList.append(atomType)
             atomCharge=atom['charge']
             line = line + resName + "_" + atomName +" ATOMPARMS{"
@@ -366,6 +368,8 @@ def main():
                 func=bond['func']
                 b0=bond['b0']
                 kb=bond['kb']
+                if b0<0.63:
+                    func=1
                 line = line + resName + "_b" + str(i) + " BONDPARMS{"
                 line = line + "atomI="+str(atomI)+"; atomTypeI="+atomTypeI+"; atomJ="+str(atomJ) + "; atomTypeJ="+atomTypeJ \
                        + "; func=" + str(func)+"; kb="+str(0.5*kb)+" kJ*mol^-1*nm^-2; b0="+str(b0)+" nm; }\n"   # 1/2 k -> K
@@ -527,9 +531,9 @@ def main():
 
         count=0
         for atom in itp.header.moleculetype.atoms.data:
-            specie = molName + atom['atomname']
+            specie = molName + atom['atomname'].decode('UTF-8')
 
-            atomType=atom['atomtype']
+            atomType=atom['atomtype'].decode('UTF-8')
             speLine=speLine+specie+" SPECIES { type = ATOM ; charge ="+str(atom['charge'])+"; id="+str(atmTypeList.index(atomType))+ "; mass ="+str(massDict[atomType])+" M_p ; }\n"
 
             if count==0:

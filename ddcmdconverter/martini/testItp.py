@@ -48,6 +48,27 @@ for i in range(bondSize):
     else:
         bondDict[(atomI, atomJ)] = 1
 
+constraintSize = len(itp.header.moleculetype.constraints.data)
+for i in range(constraintSize):
+    constraint = itp.header.moleculetype.constraints.data[i]
+    atomI = constraint['ai']   # 0 based
+    atomJ = constraint['aj']  # 0 based
+
+    if (atomI, atomJ) in bondDict.keys() or (atomJ, atomI) in bondDict.keys():
+        if (atomI, atomJ) in bondDict.keys():
+            bondDict[(atomI, atomJ)] = bondDict[(atomI, atomJ)] + 1
+        if (atomJ, atomI) in bondDict.keys():
+            bondDict[(atomJ, atomI)] = bondDict[(atomJ, atomI)] + 1
+    else:
+        bondDict[(atomI, atomJ)] = 1
+
+exclusionSize = len(itp.header.moleculetype.exclusions.data)
+for i in range(exclusionSize):
+    exclusion = itp.header.moleculetype.exclusions.data[i]
+    atomI = exclusion['ai']   # 0 based
+    atomJ = exclusion['aj']  # 0 based
+
+
 for key, value in bondDict.items():
     if value> 1:
         print(key, value)
@@ -68,6 +89,19 @@ for i in range(angleSize):
             angleDict[(atomJ, atomI, atomK)] = angleDict[(atomJ, atomI, atomK)] + 1
     else:
         angleDict[(atomI, atomJ)] = 1
+
+    if (atomI, atomK) in bondDict.keys() or (atomK, atomI) in bondDict.keys():
+        if (atomI, atomK) in bondDict.keys():
+            bondDict[(atomI, atomK)] = bondDict[(atomI, atomK)] + 1
+        if (atomK, atomI) in bondDict.keys():
+            bondDict[(atomK, atomI)] = bondDict[(atomK, atomI)] + 1
+    else:
+        bondDict[(atomI, atomJ)] = 1
+
+for key, value in bondDict.items():
+    if value> 1:
+        print(key, value)
+
 
 for key, value in angleDict.items():
     if value> 1:
