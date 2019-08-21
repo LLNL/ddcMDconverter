@@ -4,6 +4,7 @@ __author__ = 'zhang30'
 
 import argparse
 import math
+import numpy as np
 
 from ddcmdconverter.martini.ITP import ITP
 from ddcmdconverter.martini.MartiniFF import MartiniFF
@@ -134,6 +135,63 @@ def clusterConstraint(data):
 
     return consCluster
 
+def rmDuplicateBonds(itp):
+    bondDict = {}
+    new_constraints=None
+    new_bonds=None
+
+    sectionKeys = itp.header.moleculetype.sections.keys()
+    if 'constraints' in sectionKeys:
+        constraintSize = len(itp.header.moleculetype.constraints.data)
+        constraintRMlist = []
+        for i in range(constraintSize):
+            constraint = itp.header.moleculetype.constraints.data[i]
+            atomI = constraint['ai']  # 0 based
+            atomJ = constraint['aj']  # 0 based
+
+            if (atomI, atomJ) in bondDict.keys() or (atomJ, atomI) in bondDict.keys():
+                if (atomI, atomJ) in bondDict.keys():
+                    bondDict[(atomI, atomJ)] = bondDict[(atomI, atomJ)] + 1
+                if (atomJ, atomI) in bondDict.keys():
+                    bondDict[(atomJ, atomI)] = bondDict[(atomJ, atomI)] + 1
+                constraintRMlist.append(i)
+                print("Warning: Remove constraint ", constraint)
+            else:
+                bondDict[(atomI, atomJ)] = 1
+
+        print("Remove constraints: ", len(constraintRMlist))
+        new_constraints = np.delete(itp.header.moleculetype.constraints.data, constraintRMlist)
+
+    if 'bonds' in sectionKeys:
+
+        bondSize = len(itp.header.moleculetype.bonds.data)
+        bondRMlist = []
+        for i in range(bondSize):
+            bond = itp.header.moleculetype.bonds.data[i]
+            atomI = bond['ai']  # 0 based
+            atomJ = bond['aj']  # 0 based
+
+            if (atomI, atomJ) in bondDict.keys() or (atomJ, atomI) in bondDict.keys():
+                if (atomI, atomJ) in bondDict.keys():
+                    bondDict[(atomI, atomJ)] = bondDict[(atomI, atomJ)] + 1
+                if (atomJ, atomI) in bondDict.keys():
+                    bondDict[(atomJ, atomI)] = bondDict[(atomJ, atomI)] + 1
+                bondRMlist.append(i)
+                print("Warning: Remove bond ", bond)
+            else:
+                bondDict[(atomI, atomJ)] = 1
+
+        # print(bondRMlist)
+        # bondRMlist.sort(reverse=True)
+        # print(bondRMlist)
+        print("Original total bonds: ", len(itp.header.moleculetype.bonds.data))
+        print("Remove bonds: ", len(bondRMlist))
+
+        new_bonds = np.delete(itp.header.moleculetype.bonds.data, bondRMlist)
+
+        print("Final total number of bonds: ", len(new_bonds))
+
+    return new_constraints, new_bonds
 
 def main():
     args=getArgs()
@@ -224,7 +282,7 @@ def main():
                 listLine=listLine+ljname+" "
                 (eps, sigma)=martiniFF.getLJparm(typeI, typeJ)
                 if eps == None:
-                    print(typeI, typeJ)
+                    print("Warning: Not LJ paramters for ", typeI, typeJ)
                 nbLine=nbLine+ljname+" LJPARMS{atomtypeI="+typeI+"; indexI="+str(atmTypeList.index(typeI))+"; atomtypeJ="+typeJ+"; indexJ="+str(atmTypeList.index(typeJ))+"; sigma="+str(sigma)+" nm; eps="+str(eps)+" kJ*mol^-1;}\n"
 
     listLine=listLine+";\n"+"}\n\n";
@@ -247,6 +305,7 @@ def main():
     consAtomFh = open("ConsAtom.data", "w")
     resID=1
     for itp in itpList:
+        print("###########  ", itp.header.moleculetype.data["name"], "  ###########",)
         cons2bond=args.cons2bond   # TODO: also print out the constraint pair as bond - hacking the code - should be a better solution
         #['atoms', 'bonds', 'constraints', 'angles', 'dihedrals']
         sectionKeys=itp.header.moleculetype.sections.keys()
@@ -270,8 +329,11 @@ def main():
         if 'position_restraints' in sectionKeys:
             hasRestraints=True
 
+        #Remove duplicate constraints and bonds
+        newConstraints, newBonds=rmDuplicateBonds(itp)
+
         if hasConstraints:
-            consCluster=clusterConstraint(itp.header.moleculetype.constraints.data)
+            consCluster=clusterConstraint(newConstraints)
             uniqueConsNameList=uniqueConsAtom(itp)
             consAtomFh.write(uniqueConsNameList)
 
@@ -287,10 +349,10 @@ def main():
         line = line + "  charge=" + str(resCharge) + ";\n"
         line = line + "  groupList=" + resName + "_g0;\n"
         if hasBond:
-            bondSize=len(itp.header.moleculetype.bonds.data)
+            bondSize=len(newBonds)
             totalBondSize = bondSize
             if cons2bond and hasConstraints:  # TODO: also print out the constraint pair as bond - hacking the code - should be a better solution
-                constraintSize = len(itp.header.moleculetype.constraints.data)
+                constraintSize = len(newConstraints)
                 totalBondSize=bondSize+constraintSize
             line = line + "  bondList="
             for i in range(totalBondSize):
@@ -360,7 +422,7 @@ def main():
         #BONDPARMS
         if hasBond:
             for i in range(bondSize):
-                bond=itp.header.moleculetype.bonds.data[i]
+                bond=newBonds[i]
                 atomI = bond['ai']-1 # 0 based
                 atomJ = bond['aj']-1 # 0 based
                 atomTypeI = atomTypeList[atomI]

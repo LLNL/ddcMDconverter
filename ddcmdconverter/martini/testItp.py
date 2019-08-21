@@ -1,9 +1,10 @@
 from ddcmdconverter.martini.ITP import ITP
-
+import numpy as np
 #itp=ITP.ITP("martini_v2.0_POPC_02.itp")
 #itp=ITP.ITP("martini_v2.1-dna.itp")
 #itp=ITP("KRAS-GTP-04-HVR-best-guess-M22-CYFpos.itp")
-itp=ITP("TERNARY.itp")
+itp=ITP("TERNARY.itp-old")
+#itp=ITP("DPPC.itp")
 #print(itp.header.moleculetype.data['name'])
 #itp=ITP.ITP("martini_v2.0_CHOL_01.itp")
 #print itp.header
@@ -34,39 +35,77 @@ for atom in itp.header.moleculetype.atoms.data:
 #print itp.header.moleculetype.bonds.data
 
 bondDict={}
-bondSize = len(itp.header.moleculetype.bonds.data)
-for i in range(bondSize):
-    bond = itp.header.moleculetype.bonds.data[i]
-    atomI = bond['ai']   # 0 based
-    atomJ = bond['aj']   # 0 based
 
-    if (atomI, atomJ) in bondDict.keys() or (atomJ, atomI) in bondDict.keys():
-        if (atomI, atomJ) in bondDict.keys():
-            bondDict[(atomI, atomJ)] = bondDict[(atomI, atomJ)] + 1
-        if (atomJ, atomI) in bondDict.keys():
-            bondDict[(atomJ, atomI)] = bondDict[(atomJ, atomI)] + 1
-    else:
-        bondDict[(atomI, atomJ)] = 1
+sectionKeys=itp.header.moleculetype.sections.keys()
+if 'constraints' in sectionKeys:
+    constraintSize = len(itp.header.moleculetype.constraints.data)
+    constraintRMlist = []
+    for i in range(constraintSize):
+        constraint = itp.header.moleculetype.constraints.data[i]
+        atomI = constraint['ai']   # 0 based
+        atomJ = constraint['aj']  # 0 based
 
-constraintSize = len(itp.header.moleculetype.constraints.data)
-for i in range(constraintSize):
-    constraint = itp.header.moleculetype.constraints.data[i]
-    atomI = constraint['ai']   # 0 based
-    atomJ = constraint['aj']  # 0 based
+        if (atomI, atomJ) in bondDict.keys() or (atomJ, atomI) in bondDict.keys():
+            if (atomI, atomJ) in bondDict.keys():
+                bondDict[(atomI, atomJ)] = bondDict[(atomI, atomJ)] + 1
+            if (atomJ, atomI) in bondDict.keys():
+                bondDict[(atomJ, atomI)] = bondDict[(atomJ, atomI)] + 1
+            constraintRMlist.append(i)
+        else:
+            bondDict[(atomI, atomJ)] = 1
 
-    if (atomI, atomJ) in bondDict.keys() or (atomJ, atomI) in bondDict.keys():
-        if (atomI, atomJ) in bondDict.keys():
-            bondDict[(atomI, atomJ)] = bondDict[(atomI, atomJ)] + 1
-        if (atomJ, atomI) in bondDict.keys():
-            bondDict[(atomJ, atomI)] = bondDict[(atomJ, atomI)] + 1
-    else:
-        bondDict[(atomI, atomJ)] = 1
+    print(len(constraintRMlist))
+    new_constraints =np.delete(itp.header.moleculetype.constraints.data, constraintRMlist)
 
-exclusionSize = len(itp.header.moleculetype.exclusions.data)
-for i in range(exclusionSize):
-    exclusion = itp.header.moleculetype.exclusions.data[i]
-    atomI = exclusion['ai']   # 0 based
-    atomJ = exclusion['aj']  # 0 based
+if 'bonds' in sectionKeys:
+
+    bondSize = len(itp.header.moleculetype.bonds.data)
+    bondRMlist=[]
+    for i in range(bondSize):
+        bond = itp.header.moleculetype.bonds.data[i]
+        atomI = bond['ai']   # 0 based
+        atomJ = bond['aj']   # 0 based
+
+        if (atomI, atomJ) in bondDict.keys() or (atomJ, atomI) in bondDict.keys():
+            if (atomI, atomJ) in bondDict.keys():
+                bondDict[(atomI, atomJ)] = bondDict[(atomI, atomJ)] + 1
+            if (atomJ, atomI) in bondDict.keys():
+                bondDict[(atomJ, atomI)] = bondDict[(atomJ, atomI)] + 1
+            bondRMlist.append(i)
+        else:
+            bondDict[(atomI, atomJ)] = 1
+
+    #print(bondRMlist)
+    #bondRMlist.sort(reverse=True)
+    #print(bondRMlist)
+    print(len(bondRMlist))
+    print(len(itp.header.moleculetype.bonds.data))
+    for i in bondRMlist:
+        new_bonds =np.delete(itp.header.moleculetype.bonds.data, bondRMlist)
+        #print(bond['ai'], bond['aj'])
+    print(len(new_bonds))
+    print(new_bonds)
+
+    for i in range(len(new_bonds)):
+        bond = new_bonds[i]
+        atomI = bond['ai'] - 1  # 0 based
+        atomJ = bond['aj'] - 1  # 0 based
+        func = bond['func']
+        b0 = bond['b0']
+        kb = bond['kb']
+        print(atomI, atomJ, func, kb, b0)
+    #print(itp.header.moleculetype.bonds.data)
+
+exit(0)
+
+
+
+if 'exclusions' in sectionKeys:
+    exclusionSize = len(itp.header.moleculetype.exclusions.data)
+    for i in range(exclusionSize):
+        exclusion = itp.header.moleculetype.exclusions.data[i]
+        atomI = exclusion['ai']   # 0 based
+        atomJ = exclusion['aj']  # 0 based
 
 
 for key, value in bondDict.items():
