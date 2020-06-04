@@ -5,7 +5,7 @@ simulate SIMULATE
     type = MD;
     system=system;
    integrator=nglf;
-   deltaloop=500;
+   deltaloop=10000;
     maxloop =1000000;
    dt = 20;
    printrate=100;
@@ -16,8 +16,15 @@ simulate SIMULATE
     printinfo=printinfo;
     heap=heap;
     ddc = ddc;
-   xanalysis = writeCharmm;
+    analysis = writeCharmm;
 }
+
+accelerator ACCELERATOR
+{
+   type=CUDA;
+   maxPagesPerParticle = 1;
+}
+
 energyInfo ENERGYINFO{}
 heap HEAP { size = 1000 ;}
 
@@ -43,10 +50,9 @@ martini  POTENTIAL
    rcoulomb=11.0 Angstrom; epsilon_r=15; epsilon_rf=-1;
    function=lennardjones;
    parmfile=martini.data;
-   use_gpu=1;
 }
 
-restraint POTENTIAL { type=RESTRAINT; use_gpu=1; parmfile=restraint.data; }
+restraint POTENTIAL { type=RESTRAINT; parmfile=restraint.data; }
 
 nglf INTEGRATOR { type=NGLFCONSTRAINTGPULANGEVIN; T=310K; P0 = 1.0 bar; beta = 3.0e-4/bar; tauBarostat = 1.0 ps;}
 

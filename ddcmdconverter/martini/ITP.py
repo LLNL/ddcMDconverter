@@ -2,6 +2,11 @@
 # Copyright (c) 2009-2011 Oliver Beckstein <orbeckst@gmail.com>
 # Released under the GNU Public License 3 (or higher, your choice)
 # See the file COPYING for details.
+
+# This file is adapted from GromacsWrapper release-0.6.2
+# https://github.com/Becksteinlab/GromacsWrapper/releases/tag/release-0.6.2
+# The original file is located at: GromacsWrapper/gromacs/fileformats/itp.py
+
 """
 Gromacs topology file (ITP) parser
 ==================================

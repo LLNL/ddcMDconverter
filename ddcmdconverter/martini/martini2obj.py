@@ -521,6 +521,8 @@ def main():
         # ANGLEPARMS
         if hasAngle:
             for i in range(angleSize):
+                if i==418 :
+                    print(itp.header.moleculetype.angles.data[i])
                 angle=itp.header.moleculetype.angles.data[i]
                 atomI = angle['ai']-1 # 0 based
                 atomJ = angle['aj']-1 # 0 based
@@ -532,7 +534,7 @@ def main():
                 if func==1:
                     line = line + "atomI="+str(atomI)+"; atomJ="+str(atomJ)+"; atomK="+str(atomK) + "; func=" + str(func)\
                            +"; theta0="+str(theta0*DEG2RAD)+"; ktheta="+str(0.5*ktheta)+" kJ*mol^-1; }\n"
-                if func==2:
+                if func==2 or func==10:
                     line = line + "atomI="+str(atomI)+"; atomJ="+str(atomJ)+"; atomK="+str(atomK) + "; func=" + str(func)\
                            +"; theta0="+str(math.cos(theta0*DEG2RAD))+"; ktheta="+str(0.5*ktheta)+" kJ*mol^-1; }\n" # cosine based
             line = line + "\n"
