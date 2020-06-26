@@ -12,7 +12,7 @@ simulate SIMULATE
    snapshotrate=0;
    checkpointrate=50000;
    nLoopDigits=12;
-   gidFormat=hex;
+   //gidFormat=hex;
     printinfo=printinfo;
     heap=heap;
     ddc = ddc;

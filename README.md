@@ -1,4 +1,6 @@
-# Python tools for ddcMD 
+# ddcMD Converter: a Python tool to convert GROMACS files to ddcMD inputs
+
+Authors: Xiaohua Zhang, Francesco Di Natale, and Jim Glosli
 
 The code uses python3 syntax after version v1.0.0.
 
