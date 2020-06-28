@@ -211,6 +211,7 @@ def main():
     DEG2RAD=math.pi/180
 
     itpList=[]
+    proteinList=[]
 
     if args.profile != None:
         with open(args.profile, "r") as f:
@@ -218,6 +219,8 @@ def main():
                 tipFileName=line.rstrip("\n\r")
                 itp = ITP(tipFileName)
                 itpList.append(itp)
+                resName = itp.header.moleculetype.data['name']
+                proteinList.append(resName)
 
     # fix the atom name in the
     for itp in itpList:
@@ -345,6 +348,12 @@ def main():
         resID=resID+1
         line = line + "  resType=0;\n"
         line = line + "  resName="+resName+";\n"
+        if resName in proteinList:
+            line = line + "  isProtein=1;\n"
+        else:
+            line = line + "  isProtein=0;\n"
+        numAtoms=len(itp.header.moleculetype.atoms.data)
+        line = line + "  numAtoms=" + str(numAtoms) + ";\n"
         resCharge=sum(itp.header.moleculetype.atoms.data.charge)
         line = line + "  charge=" + str(resCharge) + ";\n"
         line = line + "  groupList=" + resName + "_g0;\n"
