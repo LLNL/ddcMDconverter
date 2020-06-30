@@ -14,14 +14,18 @@ from ddcmdconverter.martini.MartiniInput import martini_input
 def getArgs():
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i', '--itp', action='store', dest='itpfile', default=None, help='ITP file list (default=itpList).')
+    parser.add_argument('-i', '--itp', action='store', dest='itpfile', default=None,
+                        help='ITP file list (default=itpList).')
     parser.add_argument('-t', '--pro', action='store', dest='profile', default=None,
                         help='Protein ITP file list (default=proItpList).')
     parser.add_argument('-p', '--par', action='store', dest='parfile', default='martini_v2.2.itp',
                         help='Overall ITP file (default=martini_v2.2.itp).')
-    parser.add_argument('-o', '--obj', action='store', dest='objfile', default='martini.data', help='Martini object output file (default=martini.data).')
-    parser.add_argument('-l', '--spl', action='store', dest='splfile', default='speless.data',
-                        help='ddcMD species less output file (default=speless.data).')
+    parser.add_argument('-o', '--obj', action='store', dest='objfile', default='martini.data',
+                        help='Martini object output file (default=martini.data).')
+    parser.add_argument('-l', '--spl', action='store', dest='splfile', default='molecule.data',
+                        help='ddcMD molecule object file (default=molecule.data).')
+    parser.add_argument('-d', '--dat', action='store', dest='datfile', default='object.data',
+                        help='ddcMD simulationn setting object file (default=object.data).')
     parser.add_argument('-c', '--c2b', action='store', dest='cons2bond', default=False,
                         help='Add constraints to the bondList(default=True).')
 
@@ -620,11 +624,13 @@ def main():
 
     molecLine=molecLine+"; }\n"
 
-    speFh=open(args.splfile, "w")
-    speFh.write(martini_input)
-    speFh.write(molecLine)
-    speFh.write(moleSpecie)
-    speFh.write(speLine)
+    with open(args.splfile, "w") as f:
+        f.write(molecLine)
+        f.write(moleSpecie)
+        f.write(speLine)
+
+    with open(args.datfile, "w") as f:
+        f.write(martini_input)
 
 
 if __name__ == '__main__':

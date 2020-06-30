@@ -5,18 +5,19 @@ simulate SIMULATE
     type = MD;
     system=system;
    integrator=nglf;
-   deltaloop=10000;
-    maxloop =1000000;
+   deltaloop=2000000000;
+    maxloop =2000000000;
    dt = 20;
-   printrate=100;
+   printrate=25000;
    snapshotrate=0;
-   checkpointrate=50000;
+   checkpointrate=500000;
    nLoopDigits=12;
-   //gidFormat=hex;
+   gidFormat=hex;
     printinfo=printinfo;
     heap=heap;
     ddc = ddc;
     analysis = writeCharmm;
+    accelerator=accelerator;
 }
 
 accelerator ACCELERATOR
@@ -69,18 +70,17 @@ system SYSTEM
    nConstraints=5866;
 }
 
-
 box BOX { type=ORTHORHOMBIC; pbc=7; }
 
 nbr NEIGHBOR { type = NORMAL; deltaR=4.0000; minBoxSide=6; }
 
-group GROUP { type = LANGEVIN; Teq=310K; tau=1ps; useDefault=0;}
-free GROUP { type = LANGEVIN; Teq=310K; tau=1ps; useDefault=0;}
+group GROUP { type = LANGEVIN; Teq=310K; tau=5ps; useDefault=0;}
+free GROUP { type = LANGEVIN; Teq=310K; tau=5ps; useDefault=0;}
 
 lcg64 RANDOM {type = LCG64;randomizeSeed=1;}
 
 //martini ANALYSIS { type =  PAIRCORRELATION; eval_rate=100; delta_r =0.05; length=40; outputrate=1; }
 //vcm ANALYSIS { type =  vcmWrite; outputrate=1; }
-writeCharmm  ANALYSIS { type = subsetWrite; outputrate=1000; format=binaryCharmm; }
+writeCharmm  ANALYSIS { type = subsetWrite; outputrate=25000; format=binaryCharmm; }
 
 """
