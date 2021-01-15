@@ -44,7 +44,7 @@ def main():
         newResName=itp.header.moleculetype.data['name']
         for atom in itp.header.moleculetype.atoms.data:
             newAtomname= 'P' + str(count)
-            residueAtom=atom['resname']+":"+str(atom['resnr'])+":"+atom['atomname']
+            residueAtom=atom['resname'].decode("utf-8")+":"+str(atom['resnr'])+":"+atom['atomname'].decode("utf-8")
             atomNameMap[newAtomname]=residueAtom
             #print newAtomname, residueAtom
             count = count + 1

@@ -6,8 +6,8 @@ The code uses python3 syntax after version v1.0.0.
 
 ## Convert GROMACS inputs to ddcMD inputs
 Here is a sample script to Convert GROMACS inputs to ddcMD inputs.
-ddcMD requires the residue name to be unique. So ION residue name is replaced with the actual name
-"+" and "-" are reserved key words inn ddcMD that cannot be used in residue/atom names.
+ddcMD requires the residue name to be unique. So ION residue name is replaced with the actual name.
+"+" and "-" are reserved keywords in ddcMD that cannot be used in residue/atom names.
 
 ```
 gmx editconf -f ../topol.tpr -o system.pdb > gmx-editconf.log
