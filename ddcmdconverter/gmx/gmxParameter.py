@@ -145,7 +145,8 @@ class MolType():
         self.angle.parse()
         self.dihedral.parse()
         self.constraint.parse()
-        self.virtual.parse()
+        if self.virtual:
+            self.virtual.parse()
         self.setGroup()
 
     def setGroup(self):
@@ -161,9 +162,10 @@ class MolType():
                 uniqConsAtoms.append(x)
 
         vSiteAtoms=[]
-        for vs in self.virtual.vSites:
-            vIdxStr=vs['idx'][0]
-            vSiteAtoms.append(int(vIdxStr))
+        if self.virtual:
+            for vs in self.virtual.vSites:
+                vIdxStr=vs['idx'][0]
+                vSiteAtoms.append(int(vIdxStr))
 
         uniqVsAtoms=[]
         for x in vSiteAtoms:

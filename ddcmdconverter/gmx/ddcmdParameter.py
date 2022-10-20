@@ -133,7 +133,7 @@ class ddcMDpara():
                 exclusionStr = exclusionStr + ";\n"
                 self.fileHandle.write(exclusionStr)
 
-            if len(moltype.virtual.vSites)>0:
+            if moltype.virtual and len(moltype.virtual.vSites)>0:
                 count=0
                 vSiteStr="\tvsiteList="
                 for vs in moltype.virtual.vSites:
@@ -321,24 +321,25 @@ class ddcMDpara():
             self.fileHandle.write("\n")
             
             # Virtual site
-            for vs in moltype.virtual.vSites:
-                funct=functypes[vs['type']]
-                vsName=moltype.name+"_vs"+str(vs['id'])
-                vsType=funct['type']
-                vsStr=vsName+" VSITEPARMS{"
-                for k, v in funct.items():
-                    if vsType == 'VSITE3OUT' and k=='c':
-                        v = v*0.1
-                    vsStr=vsStr + k + "=" +str(v) +"; "
-                count=0
-                for i in vs['idx']:
-                    count=count+1
-                    vsStr = vsStr + "atom"+str(count)+"="+str(i)+"; "
-                    atomI = atoms[int(i)]
-                    vsStr = vsStr + "atomType" + str(count) + "=" + atomI['typename'] + "; "
-                vsStr = vsStr + "}\n"
-                self.fileHandle.write(vsStr)
-            self.fileHandle.write("\n")
+            if moltype.virtual:
+                for vs in moltype.virtual.vSites:
+                    funct=functypes[vs['type']]
+                    vsName=moltype.name+"_vs"+str(vs['id'])
+                    vsType=funct['type']
+                    vsStr=vsName+" VSITEPARMS{"
+                    for k, v in funct.items():
+                        if vsType == 'VSITE3OUT' and k=='c':
+                            v = v*0.1
+                        vsStr=vsStr + k + "=" +str(v) +"; "
+                    count=0
+                    for i in vs['idx']:
+                        count=count+1
+                        vsStr = vsStr + "atom"+str(count)+"="+str(i)+"; "
+                        atomI = atoms[int(i)]
+                        vsStr = vsStr + "atomType" + str(count) + "=" + atomI['typename'] + "; "
+                    vsStr = vsStr + "}\n"
+                    self.fileHandle.write(vsStr)
+                self.fileHandle.write("\n")
 
     def _writeLJPARMS(self):
         numTypes = self.top.atnr
@@ -509,7 +510,8 @@ def main():
     parameter=Parameter(tprLog)
     logger.info("Parse coordinate")
     #coordinates=TprCoors(tprLog, topology)
-    coordinates = GroCoors("start.gro")
+    #coordinates = GroCoors("start.gro")
+    coordinates = GroCoors("sim-eq2.gro")
     logger.info("Generate martini.data")
     ddcmdPar=ddcMDpara(topology, parameter)
     ddcmdPar.toFile('martini.data')
