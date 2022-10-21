@@ -360,9 +360,13 @@ class ddcMDpara():
                 lj={}
                 ljPair=ljPairs[count]
                 c6 = ljPair['c6']
-                c12= ljPair['c12']
-                sigma=(c12 / c6) ** (1 / 6.0)
-                eps=c6 * c6 / (4 * c12)
+                c12 = ljPair['c12']
+                if c6 != 0 or c12 != 0 :
+                    sigma = (c12 / c6) ** (1 / 6.0)
+                    eps = c6 * c6 / (4 * c12)
+                else:
+                    sigma = 0
+                    eps = 0
                 lj['sigma']=round(sigma,3)
                 lj['eps']  =round(eps, 3)
                 ljRowParm.append(lj)
