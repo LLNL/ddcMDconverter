@@ -516,13 +516,17 @@ class VirtualSite():
 
     def parse(self):
         siteType=None
+        vsiten_list=[]
         for line in self.lines:
             secName=getSecName(line, level=2)
             if secName:
                 section=secName
                 strs=line.split()
                 siteType=strs[2].strip(':')
-            if 'VSITE' in line:
+            # VSITEN has to treat differently
+            if 'VSITEN' in line:
+                vsiten_list.append(line)
+            elif 'VSITE' in line:
                 strs=re.split('\(|\)', line)
                 if len(strs)!=3:
                     logger.warning("Incorrect Virtual Site format: " + line)
@@ -534,3 +538,22 @@ class VirtualSite():
                 vS['idx'] = iStrs
                 self.vSites.append(vS)
 
+        if len(vsiten_list) > 0:
+            vsiten_dcit = {}
+            for line in vsiten_list:
+                strs = re.split('\(|\)', line)
+                if len(strs) != 3:
+                    logger.warning("Incorrect Virtual Site format: " + line)
+                    continue
+                tStrs = strs[0].split('=')
+                iStrs = strs[2].split()
+                vAtomStr = iStrs[0]
+                if vAtomStr not in vsiten_dcit:
+                    vsiten_dcit[vAtomStr] = {'type': int(tStrs[1]), 'idx':[iStrs[1]]}
+                else:
+                    vsiten_dcit[vAtomStr]['idx'].append(iStrs[1])
+            for key, value in vsiten_dcit.items():
+                vS = {}
+                vS['type'] = value['type']
+                vS['idx'] = [key] + value['idx']
+                self.vSites.append(vS)

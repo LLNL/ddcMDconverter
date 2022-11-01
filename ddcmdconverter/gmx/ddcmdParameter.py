@@ -515,7 +515,7 @@ def main():
     logger.info("Parse coordinate")
     #coordinates=TprCoors(tprLog, topology)
     #coordinates = GroCoors("start.gro")
-    coordinates = GroCoors("sim-eq2.gro")
+    coordinates = GroCoors("CG-em.gro")
     logger.info("Generate martini.data")
     ddcmdPar=ddcMDpara(topology, parameter)
     ddcmdPar.toFile('martini.data')
