@@ -115,7 +115,9 @@ class ddcMDpara():
             if moltype.name == "POPX":
                 self.fileHandle.write("\trestraintList=POPX_r0 ;\n")
 
+            constraintStr="\tconstraints="
             if len(moltype.constraint.constraints)>0:
+                """
                 count=0
                 constraintStr="\tconstraintList="
                 for consList in moltype.constraint.consCluster:
@@ -123,6 +125,13 @@ class ddcMDpara():
                     count = count + 1
                 constraintStr = constraintStr + ";\n"
                 self.fileHandle.write(constraintStr)
+                """
+                count = 0
+                for consCl in moltype.constraint.consCluster:
+                    for cons in consCl:
+                        cName = moltype.name + "_C" + str(count)
+                        constraintStr = constraintStr + cName + " "
+                        count = count + 1
 
             if len(moltype.excls.exclsions)>0:
                 count=0
@@ -134,6 +143,7 @@ class ddcMDpara():
                 self.fileHandle.write(exclusionStr)
 
             if moltype.virtual and len(moltype.virtual.vSites)>0:
+                """
                 count=0
                 vSiteStr="\tvsiteList="
                 for vs in moltype.virtual.vSites:
@@ -142,6 +152,16 @@ class ddcMDpara():
                     count=count+1
                 vSiteStr=vSiteStr+";\n"
                 self.fileHandle.write(vSiteStr)
+                """
+                count = 0
+                for vs in moltype.virtual.vSites:
+                    vsName=moltype.name+"_VS"+str(count)
+                    constraintStr = constraintStr + vsName + " "
+                    count = count + 1
+
+            constraintStr = constraintStr +";\n"
+            if len(constraintStr) > 15:
+                self.fileHandle.write(constraintStr)
 
             self.fileHandle.write("\tcenterAtom=0;\n")
             self.fileHandle.write("}\n\n")
@@ -206,8 +226,12 @@ class ddcMDpara():
                 # atomK = atoms[indexK]
                 func = functypes[angle['type']]
                 try:
-                    ktheta=(func['ctA']+func['ctB'])/4 # average and ddcMD uses 1/2 k
-                    theta0=(func['thA']+func['thB'])/2 # average
+                    if func['type'] =='ANGLES' or func['type'] =='G96ANGLES':
+                        ktheta=func['ctA']/2 # ddcMD uses 1/2 k
+                        theta0=func['thA'] #
+                    elif func['type'] =='RESTRANGLES':
+                        ktheta=func['kthetaA']/2 # ddcMD uses 1/2 k
+                        theta0=func['costheta0A']
                 except:
                     print(moltype.name, indexI, indexJ, indexK, angle['type'], func)
                     continue
@@ -216,8 +240,11 @@ class ddcMDpara():
                     theta0 = theta0 * math.pi/180  # deg to rad
                 elif func['type'] == 'G96ANGLES':
                     funcID = 2
-                else:
+                elif func['type'] == 'RESTRANGLES':
                     funcID = 10
+                    theta0 = theta0 * math.pi / 180  # deg to rad
+                else:
+                    funcID = 0
                 self.fileHandle.write(moltype.name + "_a"+str(angle['id'])+
                         " ANGLEPARMS{atomI="+str(indexI)+
                         "; atomJ="+str(indexJ)+
@@ -276,6 +303,7 @@ class ddcMDpara():
             #constraint
             #CHOL_cl0 CONSLISTPARMS{ constraintSubList=CHOL_cl0_c0 CHOL_cl0_c1 CHOL_cl0_c2 CHOL_cl0_c3 CHOL_cl0_c4 CHOL_cl0_c5 ; }
             #CHOL_cl0_c0 CONSPARMS{atomI=0; atomTypeI=SP1; atomJ=2; atomTypeJ=SC3; func=1; r0=0.493 nm; }
+            """
             count = 0
             for consCl in moltype.constraint.consCluster:
                 clName = moltype.name + "_cl" + str(count)
@@ -302,6 +330,24 @@ class ddcMDpara():
                 self.fileHandle.write(clStr)
                 self.fileHandle.write(cStr)
                 count = count + 1
+            """
+
+            count = 0
+            cStr=""
+            for consCl in moltype.constraint.consCluster:
+                for cons in consCl:
+                    cName = moltype.name + "_C" + str(count)
+                    cStr = cStr + cName + " "
+                    indexI = cons['atom1']
+                    indexJ = cons['atom2']
+                    func = functypes[cons['type']]
+                    r0 = (func['dA'] + func['dB']) / 2
+                    cStr = cStr + cName + "  CONSTRAINT { type=bondLength; offsets=" + \
+                            str(indexI) +" " + str(indexJ) + ";" + \
+                           " r0=" + str(r0) + " nm; }\n"
+                    count = count + 1
+            cStr = cStr + "\n"
+            self.fileHandle.write(cStr)
 
             # Exclusion list
             count = 0
@@ -322,6 +368,7 @@ class ddcMDpara():
             
             # Virtual site
             if moltype.virtual:
+                """
                 for vs in moltype.virtual.vSites:
                     funct=functypes[vs['type']]
                     vsName=moltype.name+"_vs"+str(vs['id'])
@@ -338,6 +385,24 @@ class ddcMDpara():
                         atomI = atoms[int(i)]
                         vsStr = vsStr + "atomType" + str(count) + "=" + atomI['typename'] + "; "
                     vsStr = vsStr + "}\n"
+                    self.fileHandle.write(vsStr)
+                self.fileHandle.write("\n")
+                """
+                count = 0
+                for vs in moltype.virtual.vSites:
+                    funct=functypes[vs['type']]
+                    vsName=moltype.name+"_VS"+str(count)
+                    vsType=funct['type']
+                    vsStr=vsName+" CONSTRAINT{"
+                    for k, v in funct.items():
+                        if vsType == 'VSITE3OUT' and k=='c':
+                            v = v*0.1
+                        vsStr=vsStr + k + "=" +str(v) +"; "
+                    vsStr=vsStr + " offsets="
+                    for i in vs['idx']:
+                        vsStr = vsStr +str(i) + " "
+                    vsStr = vsStr + ";}\n"
+                    count = count + 1
                     self.fileHandle.write(vsStr)
                 self.fileHandle.write("\n")
 
@@ -515,7 +580,7 @@ def main():
     logger.info("Parse coordinate")
     #coordinates=TprCoors(tprLog, topology)
     #coordinates = GroCoors("start.gro")
-    coordinates = GroCoors("CG-em.gro")
+    coordinates = GroCoors("lipids-water-eq4.gro")
     logger.info("Generate martini.data")
     ddcmdPar=ddcMDpara(topology, parameter)
     ddcmdPar.toFile('martini.data')

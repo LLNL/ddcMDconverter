@@ -347,7 +347,7 @@ class Angles():
 
     def parse(self):
         for line in self.lines:
-            if 'ANGLES' in line or 'G96ANGLES' in line:
+            if 'ANGLES' in line:
                 strs=re.split('\(|\)', line)
                 if len(strs)!=3:
                     logger.warning("Incorrect bond format: " + line)
