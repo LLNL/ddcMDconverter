@@ -18,7 +18,7 @@ class MolBlock():
         self.moltypeName=''
         self.numMols=0
         self.numPosResxA=0
-        #self.posResxA =[]
+        self.posResxA =[]
         self.numPosResxB=0
         #self.posResxB =[]
         self.lines=[]
@@ -39,12 +39,13 @@ class MolBlock():
                     self.moltypeName='RAS_RAF'
             if '#molecules' in section:
                 self.numMols = int(line.split('=')[1])
+            if '#posres_xA' in section:
+                self.numPosResxA = int(line.split('=')[1])
+                nrecord=4
+                if self.numPosResxA>0:
+                    self.posResxA = self.lines[5:5+self.numPosResxA]
+                    nrecord = 5+self.numPosResxA
             """
-            self.numPosResxA = int(line.split('=')[1])
-            nrecord=4
-            if self.numPosResxA>0:
-                self.posResxA = self.lines[5:5+self.numPosResxA]
-                nrecord = 5+self.numPosResxA
             self.numPosResxB = int(self.lines[nrecord].split('=')[1])
             if self.numPosResxB > 0:
                 nrecord+=2
@@ -119,13 +120,26 @@ class Toplogy():
                     funcType['index'] = int(iStrs[1])
                 except:
                     logger.error("functype[...] = ... format is not correct")
-
-                for item in strs[1:]:
-                    dStrs=item.split('=')
-                    try:
-                        funcType[dStrs[0].strip()] = float(dStrs[1])
-                    except:
-                        logger.error("functype[] = , ... = ..., format is not correct: "+line)
+                if(funcType['type']=='POSRES'):
+                    logger.info("Parsing POSRES")
+                    pStrs=re.split('\(|\)', line)
+                    if(len(pStrs)< 4 and len(pStrs)!=9):
+                        logger.error("functype[ ... ] = POSRES ... format is not correct: " + line)
+                    else:
+                        fcStrs=pStrs[3].split(',')
+                        if(len(fcStrs)!=3):
+                            logger.error("functype[ ... ] = POSRES ... fcA =( , , ) format is not correct: " + line)
+                        else:
+                            funcType['fcx'] = 0.5 * float(fcStrs[0])
+                            funcType['fcy'] = 0.5 * float(fcStrs[1])
+                            funcType['fcz'] = 0.5 * float(fcStrs[2])
+                else:
+                    for item in strs[1:]:
+                        dStrs=item.split('=')
+                        try:
+                            funcType[dStrs[0].strip()] = float(dStrs[1])
+                        except:
+                            logger.error("functype[] = , ... = ..., format is not correct: "+line)
 
                 self.functype.append(funcType)
 

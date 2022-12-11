@@ -58,7 +58,7 @@ class MolType():
         self.sections={'name', 'atoms', 'cgs', 'excls', 'Bond','G96Bond',
                         'Harmonic', 'FENE','Restraint Pot.','Angle','G96Angle',
                         'Restricted', 'Proper', 'Ryckaert-Bell', 'Improper',
-                        'Tab. Dih.', 'Constraint', 'Constr. No Conn.',
+                        'Tab. Dih.', 'Constraint', 'Constr. No Conn.', 'Position Rest.',
                         'Virtual site 2', 'Virtual site 3', 'Virtual site 3fd',
                         'Virtual site 3fad', 'Virtual site 3out', 'Virtual site 4fd',
                         'Virtual site 4fdn', 'Virtual site N', 'COM Pull En', 'end'}
@@ -72,6 +72,7 @@ class MolType():
         self.angle=None
         self.dihedral=None
         self.constraint=None
+        self.restraint=None
         self.virtual = None
 
     def parse(self):
@@ -131,6 +132,12 @@ class MolType():
                 if not self.constraint:
                     self.constraint = Constraint()
                 self.constraint.lines.append(line)
+
+            if 'Position Rest.' in section:
+                if not self.restraint:
+                    self.restraint = Restraint()
+                self.restraint.lines.append(line)
+
             #'Virtual site 2', 'Virtual site 3', 'Virtual site 3fd',
             #'Virtual site 3fad', 'Virtual site 3out', 'Virtual site 4fd',
             #'Virtual site 4fdn', 'Virtual site N',
@@ -145,6 +152,7 @@ class MolType():
         self.angle.parse()
         self.dihedral.parse()
         self.constraint.parse()
+        self.restraint.parse()
         if self.virtual:
             self.virtual.parse()
         self.setGroup()
@@ -508,6 +516,23 @@ class Constraint():
                 for cons in consListSecond:
                     consListFirst.append(cons)
                 del self.consCluster[secondSave]
+
+class Restraint():
+    def __init__(self):
+        self.lines = []
+        self.restraints = []
+
+    def parse(self):
+        for line in self.lines:
+            if 'POSRES' in line:
+                strs = re.split('\(|\)', line)
+                if len(strs) != 3:
+                    logger.warning("Incorrect restraint format: " + line)
+                    continue
+                restraint = {}
+                restraint['type'] = int(strs[0].split('=')[1])
+                restraint['atom1'] = int(strs[2].split()[0])
+                self.restraints.append(restraint)
 
 class VirtualSite():
     def __init__(self):

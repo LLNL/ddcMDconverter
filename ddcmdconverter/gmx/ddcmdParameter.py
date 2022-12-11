@@ -486,6 +486,57 @@ class ddcMDobj():
                                   % (gid, speice, atom['group'], x, y, z, vx, vy, vz)
                         f.write(outLine)
 
+    def toRestraint(self, filename):
+        functypes = self.top.functype
+        box = self.top.box # use box from tpr.log not from gro
+        xbox = box[0][0]
+        ybox = box[1][1]
+        zbox = box[2][2]
+        func = 1
+        count=0
+        restraintCount=0
+        moltypes=self.par.moltypes
+        molID=-1
+        with open(filename, 'w') as f:
+            header = "restraint RESTRAINTLIST{\n  xbox = " + str(xbox) \
+                     + ";\n  ybox = " + str(ybox) \
+                     + ";\n  zbox = " + str(zbox) + ";\n"
+            outLine = ""
+            for molBlk in self.top.molBlks:
+                for i in range(molBlk.numMols):
+                    molID=molID+1
+                    moltype = moltypes[molBlk.moltypeID]
+                    assert molBlk.moltypeName == moltype.name, molBlk.moltypeName+" and "+moltype.name+" molBlk name doesn't match moltype name"
+                    if len(moltype.restraint.restraints)>0:
+                        for restraint in moltype.restraint.restraints:
+                            funct=functypes[restraint['type']]
+                            atomI = restraint['atom1']
+                            gid = (molID << 32) + atomI
+                            restraintLine = molBlk.posResxA[count+atomI]
+                            restrStrs = re.split('\{|\}', restraintLine)
+                            xyzStrs = restrStrs[1].split(',')
+                            xyz =[10*float(x) for x in xyzStrs] # convert nm to angstrom
+                            outLine = outLine + "r_" + str(restraintCount) \
+                                      + " RESTRAINTPARMS{gid=" + str(gid) \
+                                      + "; atomI=" + str(atomI) \
+                                      + "; func=" + str(func) \
+                                      + "; fcx=" + str(funct['fcx']) \
+                                      + "; fcy=" + str(funct['fcy']) \
+                                      + "; fcz=" + str(funct['fcz']) \
+                                      + "; x0=" + str(xyz[0] / xbox) \
+                                      + "; y0=" + str(xyz[1] / ybox) \
+                                      + "; z0=" + str(xyz[2] / zbox) \
+                                      + "; kb= 1.0 kJ*mol^-1*nm^-2; }\n"
+                            restraintCount = restraintCount + 1
+
+                        count = count + len(moltype.atomtypes.atoms)
+
+            header = header+"restraintList="
+            for i in range(restraintCount):
+                header = header + "r_" + str(i) +" "
+            header = header + ";\n}\n\n"
+            f.write(header)
+            f.write(outLine)
 
 class ddcMDinput():
     def __init__(self, topology, parameter, ddcmdpara):
@@ -606,6 +657,8 @@ def main():
     logger.info("Generate atoms#000000 and restart")
     ddcmdobj=ddcMDobj(topology, parameter, coordinates)
     ddcmdobj.toFile('atoms#000000')
+    logger.info("Generate restraint.data")
+    ddcmdobj.toRestraint("restraint.data")
     logger.info("Generate molecule.data")
     ddcmdinput=ddcMDinput(topology, parameter, ddcmdPar)
     ddcmdinput.tofile("molecule.data")
