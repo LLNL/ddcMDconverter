@@ -606,7 +606,7 @@ class ddcMDinput():
                     indexJ = cons['atom2']
                     func = functypes[cons['type']]
                     r0 = (func['dA'] + func['dB']) / 2
-                    cStr = cStr + cName + "  CONSTRAINT { type=bondLength; offsets=" + \
+                    cStr = cStr + "  CONSTRAINT { type=bondLength; offsets=" + \
                             str(indexI) +" " + str(indexJ) + ";" + \
                            " r0=" + str(r0) + " nm; }\n"
                     count = count + 1
