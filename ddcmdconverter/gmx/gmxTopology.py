@@ -56,7 +56,7 @@ class Toplogy():
         logger.info("Create Toplogy object")
         #'molblock', 'ffparams'
         self.sections = []
-        self.lines = tprLog.getTopology().split('\n')
+        self.lines = tprLog.getTopology()
         self.boxLines = tprLog.getBox().split('\n')
         self.box=[]
         self.name = ''

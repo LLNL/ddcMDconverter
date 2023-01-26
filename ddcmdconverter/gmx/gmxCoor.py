@@ -59,6 +59,7 @@ class GroCoors(Coordinates):
         box =[]
         coors=[]
         velocity=[]
+        count=-1
         with open(groFileName, 'r') as f:
             line=f.readline()
             line = f.readline()
@@ -66,7 +67,9 @@ class GroCoors(Coordinates):
             lines_gen = islice(f, numAtoms)
             hasVelocity = len(line) > 67
             for line in lines_gen:
-                idx = int(line[15:20]) - 1
+                #idx = int(line[15:20]) - 1
+                count=count+1
+                idx = count
                 x = 10 * float(line[20:28])
                 y = 10 * float(line[28:36])
                 z = 10 * float(line[36:44])

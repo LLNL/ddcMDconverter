@@ -25,12 +25,12 @@ class Parameter():
         self.sections = ['atomtypes', 'moltype', 'end']
         self.atomtypes=[]
         self.moltypes = []
-        self.lines = tprLog.getCmap().split('\n')
+        self.lines = tprLog.getCmap()
 
         self._parse()
 
     def _parse(self):
-        secIdx=0
+        secIdx=1
         secLen=len(self.sections[secIdx])
         count=0
         for line in self.lines:
@@ -43,14 +43,22 @@ class Parameter():
             if secIdx>1:
                 break
 
+        hasMoltype=False
         for line in self.lines[count-1:]:
+            #print(line)
+            #print("count", count, 'section', self.sections[secIdx])
             if line[3:10]=='moltype':
+                print(line)
+                hasMoltype=True
                 moltype=MolType()
                 self.moltypes.append(moltype)
-            moltype.lines.append(line)
+            if hasMoltype:
+                moltype.lines.append(line)
 
+        logger.info("Parse moltype ...")
         for moltype in self.moltypes:
             moltype.parse()
+            print(moltype.name)
 
 class MolType():
     def __init__(self):
@@ -146,40 +154,69 @@ class MolType():
                     self.virtual=VirtualSite()
                 self.virtual.lines.append(line)
 
+        logger.info("Parse atomtypes ...")
         self.atomtypes.parse()
         self.excls.parse()
+        logger.info("Parse bond ...")
         self.bond.parse()
+        logger.info("Parse angle ...")
         self.angle.parse()
+        logger.info("Parse dihedral ...")
         self.dihedral.parse()
+        logger.info("Parse constraint ...")
         self.constraint.parse()
+        logger.info("Parse restraint ...")
         self.restraint.parse()
+        logger.info("Parse virtual ...")
         if self.virtual:
             self.virtual.parse()
+        logger.info("Set group ...")
         self.setGroup()
 
     def setGroup(self):
+        logger.info("SetGroup set group...")
+        for atom in self.atomtypes.atoms:
+            atom['group']='group'
+
+        logger.info("SetGroup constraint ...")
+        for cons in self.constraint.constraints:
+            atom1=self.atomtypes.atoms[cons['atom1']]
+            atom1['group'] = 'free'
+            atom2=self.atomtypes.atoms[cons['atom2']]
+            atom2['group'] = 'free'
+
+        logger.info("SetGroup Virtual ...")
+        if self.virtual:
+            for vs in self.virtual.vSites:
+                vIdx=int(vs['idx'][0])
+                atom = self.atomtypes.atoms[vIdx]
+                atom['group'] = 'vsite'
+
+        '''
         consAtoms=[]
+        logger.info("SetGroup constraint ...")
         for cons in self.constraint.constraints:
             consAtoms.append(cons['atom1'])
             consAtoms.append(cons['atom2'])
 
+        logger.info("Setgroup constraint unique ...")
         uniqConsAtoms=[]
         for x in consAtoms:
             # check if exists in unique_list or not
             if x not in uniqConsAtoms:
                 uniqConsAtoms.append(x)
-
+        logger.info("Setgroup Virtual ...")
         vSiteAtoms=[]
         if self.virtual:
             for vs in self.virtual.vSites:
                 vIdxStr=vs['idx'][0]
                 vSiteAtoms.append(int(vIdxStr))
-
+        logger.info("Setgroup Virtual unique...")
         uniqVsAtoms=[]
         for x in vSiteAtoms:
             if x not in uniqVsAtoms:
                 uniqVsAtoms.append(x)
-
+        logger.info("Setgroup set group...")
         for atom in self.atomtypes.atoms:
             if atom['id'] in uniqConsAtoms:
                 atom['group']='free'
@@ -187,6 +224,7 @@ class MolType():
                 atom['group'] = 'vsite'
             else:
                 atom['group']='group'
+        '''
 
 class AtomTypes():
     def __init__(self):
@@ -233,6 +271,7 @@ class AtomTypes():
 
     def parse(self):
         count=0
+        logger.info("Parse atoms1 ... number line ="+str(len(self.lines)))
         for line in self.lines:
             count+=1
             if line[9:13] =='atom':
@@ -240,6 +279,8 @@ class AtomTypes():
                 self.atom1=self.lines[count:count+numAtoms1]
                 break
 
+        logger.info("numAtoms1 =" + str(numAtoms1))
+        logger.info("Parse atoms2 ...")
         count=count+numAtoms1
         for line in self.lines[count:]:
             count += 1
@@ -247,7 +288,8 @@ class AtomTypes():
                 numAtoms2=int(re.split('\(|\)', line)[1])
                 self.atom2=self.lines[count:count+numAtoms2]
                 break
-
+        logger.info("numAtoms2 =" + str(numAtoms2))
+        logger.info("Parse atoms3 ...")
         count = count + numAtoms2
         for line in self.lines[count:]:
             count += 1
@@ -255,13 +297,14 @@ class AtomTypes():
                 numAtoms3=int(re.split('\(|\)', line)[1])
                 self.atom3=self.lines[count:count+numAtoms3]
                 break
-
+        logger.info("numAtoms3 =" + str(numAtoms3))
         if numAtoms1 != numAtoms2:
             logger.error("Size of atom list 1 doesn't equal to 2")
 
         if numAtoms1 != numAtoms3:
             logger.error("Size of atom list 1 doesn't equal to type list")
 
+        logger.info("Mege dictionary ...")
         for i in range(numAtoms1):
             (idx1, vDict1) = self.toDictionary(self.atom1[i])
             (idx2, vDict2) = self.toDictionary(self.atom2[i])
@@ -275,6 +318,7 @@ class AtomTypes():
             mergeDict['typename'] = vDict3['name']
             self.atoms.append(mergeDict)
 
+        logger.info("Set atom id ...")
         #set atom id
         atomID = 0
         for atom in self.atoms:
@@ -395,6 +439,7 @@ class Constraint():
         self.consCluster=[]
 
     def parse(self):
+        logger.info("Constraint begin")
         for line in self.lines:
             if 'CONSTR' in line:
                 strs=re.split('\(|\)', line)
@@ -408,8 +453,9 @@ class Constraint():
                 cons['atom2'] = int(pair[1])
                 self.constraints.append(cons)
 
-        self.clusterConstraintOLD()
-
+        #logger.info("Constraint cluster begin")
+        #self.clusterConstraintOLD()
+        #logger.info("Constraint cluster end")
     def clusterConstraint(self):
         setCluster=[]
         for cons in self.constraints:

@@ -5,6 +5,7 @@ from ddcmdconverter.gmx.gmxTPRLog import TPRLog
 from ddcmdconverter.gmx.gmxCoor import TprCoors, GroCoors
 import math
 import re
+import os
 
 # set up logger
 LOGLEVEL = 1
@@ -71,7 +72,7 @@ class ddcMDpara():
             self.fileHandle.write("\tresType=" + str(0) + ";\n")
             self.fileHandle.write("\tresName=" + moltype.name + ";\n")
             isProtein=0
-            if moltype.name == 'RAS' or moltype.name =='RAF':
+            if moltype.name == 'RAS' or moltype.name =='RAF' or moltype.name == 'chromosome' or moltype.name =='ribosome' or 'syn' in moltype.name:
                 isProtein = 1
             self.fileHandle.write("\tisProtein=" + str(isProtein) + ";\n")
             numAtoms = len(moltype.atomtypes.atoms)
@@ -84,33 +85,33 @@ class ddcMDpara():
 
             if len(moltype.bond.bonds) > 0:
                 count=0
-                bondstr="\tbondList="
+                self.fileHandle.write("\tbondList=")
                 for bond in moltype.bond.bonds:
-                    bondstr=bondstr + moltype.name + "_b" +str(count)+" "
+                    self.fileHandle.write(moltype.name + "_b" +str(count)+" ")
                     bond['id']=count
                     count=count+1
-                bondstr=bondstr+";\n"
-                self.fileHandle.write(bondstr)
+                self.fileHandle.write(";\n")
+                #self.fileHandle.write(bondstr)
 
             if len(moltype.angle.angles) > 0:
                 count=0
-                anglestr = "\tangleList="
+                self.fileHandle.write("\tangleList=")
                 for angle in moltype.angle.angles:
-                    anglestr = anglestr + moltype.name + "_a" + str(count) + " "
+                    self.fileHandle.write(moltype.name + "_a" + str(count) + " ")
                     angle['id']=count
                     count = count + 1
-                anglestr = anglestr + ";\n"
-                self.fileHandle.write(anglestr)
+                self.fileHandle.write(";\n")
+                #self.fileHandle.write(anglestr)
 
             if len(moltype.dihedral.dihedrals) >0:
                 count=0
-                dihedralstr = "\tdihedralList="
+                self.fileHandle.write("\tdihedralList=")
                 for dihedral in moltype.dihedral.dihedrals:
-                    dihedralstr=dihedralstr+moltype.name+"_d" +str(count) +" "
+                    self.fileHandle.write(moltype.name+"_d" +str(count) +" ")
                     dihedral['id']=count
                     count = count + 1
-                dihedralstr = dihedralstr + ";\n"
-                self.fileHandle.write(dihedralstr)
+                self.fileHandle.write(";\n")
+                #self.fileHandle.write(dihedralstr)
 
             if moltype.name == "POPX":
                 self.fileHandle.write("\trestraintList=POPX_r0 ;\n")
@@ -130,12 +131,12 @@ class ddcMDpara():
 
             if len(moltype.excls.exclsions)>0:
                 count=0
-                exclusionStr="\texclusionList="
+                self.fileHandle.write("\texclusionList=")
                 for exclusion in moltype.excls.exclsions:
-                    exclusionStr =exclusionStr+moltype.name+"_e"+str(count) +" "
+                    self.fileHandle.write(moltype.name+"_e"+str(count) +" ")
                     count = count + 1
-                exclusionStr = exclusionStr + ";\n"
-                self.fileHandle.write(exclusionStr)
+                self.fileHandle.write(";\n")
+                #self.fileHandle.write(exclusionStr)
 
             if moltype.virtual and len(moltype.virtual.vSites)>0:
                 """
@@ -418,8 +419,11 @@ class ddcMDpara():
 
     def toFile(self, filename):
         with open(filename, 'w') as self.fileHandle:
+            logger.info('write martini.data header')
             self._writeHeader()
+            logger.info('write martini.data residues')
             self._writeResidues()
+            logger.info('write martini.data LJparms')
             self._writeLJPARMS()
 
 class ddcMDobj():
@@ -545,72 +549,78 @@ class ddcMDinput():
         self.ddc=ddcmdpara
 
     def tofile(self, filename):
+        molecLineFH=open('molecule_1.data', 'w')
+        moleSpecieFH=open('molecule_2.data', 'w')
+        speLineFH=open('molecule_3.data', 'w')
         functypes = self.top.functype
         types=self.ddc.types
-        molecLine = "moleculeClass MOLECULECLASS { molecules = "
-        moleSpecie = "\n"
-        speLine = "\n"
+        molecLineFH.write("moleculeClass MOLECULECLASS { molecules = ")
+        moleSpecieFH.write("\n")
+        speLineFH.write("\n")
         for moltype in self.par.moltypes:
             resName = moltype.name
             molName = resName + "x"
-            molecLine = molecLine + " " + molName
+            molecLineFH.write(" " + molName)
 
-            moleSpecie = moleSpecie + molName + " MOLECULE {ownershipSpecies = "
+            moleSpecieFH.write( molName + " MOLECULE {ownershipSpecies = ")
 
             count = 0
             for atom in moltype.atomtypes.atoms:
                 specie = molName + atom['name']
 
                 atomType = atom['typename']
-                speLine = speLine + specie + " SPECIES { type = ATOM ; charge =" + str(atom['q']) + "; id=" + str(
-                    types[atomType]['type']) + "; mass =" + str(atom['m']) + " M_p ; }\n"
+                speLineFH.write( specie + " SPECIES { type = ATOM ; charge =" + str(atom['q']) + "; id=" + str(
+                    types[atomType]['type']) + "; mass =" + str(atom['m']) + " M_p ; }\n")
 
                 if count == 0:
-                    moleSpecie = moleSpecie + specie + "; species = " + specie
+                    moleSpecieFH.write(specie + "; species = " + specie)
                 else:
-                    moleSpecie = moleSpecie + " " + specie
+                    moleSpecieFH.write(" " + specie)
                 count = count + 1
 
-            moleSpecie = moleSpecie + ";"
+            moleSpecieFH.write(";")
 
-            constraintStr = "\n\tconstraints="
-            if len(moltype.constraint.constraints) > 0:
+            hasCons=len(moltype.constraint.constraints) > 0
+            hasVsite=moltype.virtual and len(moltype.virtual.vSites) > 0
+
+            if hasCons or hasVsite:
+                moleSpecieFH.write("\n\tconstraints=")
+            if hasCons:
                 count = 0
-                for consCl in moltype.constraint.consCluster:
-                    for cons in consCl:
-                        cName = moltype.name + "_C" + str(count)
-                        constraintStr = constraintStr + cName + " "
-                        count = count + 1
+                for cons in moltype.constraint.constraints:
+                    cName = moltype.name + "_C" + str(count)
+                    moleSpecieFH.write(cName + " ")
+                    count = count + 1
 
-            if moltype.virtual and len(moltype.virtual.vSites) > 0:
+            if hasVsite:
                 count = 0
                 for vs in moltype.virtual.vSites:
                     vsName = moltype.name + "_VS" + str(count)
-                    constraintStr = constraintStr + vsName + " "
+                    moleSpecieFH.write(vsName + " ")
                     count = count + 1
 
-            constraintStr = constraintStr + ";"
-            if len(constraintStr) > 15:
-                moleSpecie = moleSpecie + constraintStr
+            if hasCons or hasVsite:
+                moleSpecieFH.write(";")
+            #if len(constraintStr) > 15:
+            #    moleSpecie = moleSpecie + constraintStr
 
-            moleSpecie = moleSpecie + "}\n"
+            moleSpecieFH.write("}\n")
 
             # constraint
             count = 0
-            cStr=""
-            for consCl in moltype.constraint.consCluster:
-                for cons in consCl:
-                    cName = moltype.name + "_C" + str(count)
-                    cStr = cStr + cName + " "
-                    indexI = cons['atom1']
-                    indexJ = cons['atom2']
-                    func = functypes[cons['type']]
-                    r0 = (func['dA'] + func['dB']) / 2
-                    cStr = cStr + "  CONSTRAINT { type=bondLength; offsets=" + \
-                            str(indexI) +" " + str(indexJ) + ";" + \
-                           " r0=" + str(r0) + " nm; }\n"
-                    count = count + 1
-            moleSpecie = moleSpecie+cStr
+            #cStr=""
+            for cons in moltype.constraint.constraints:
+                cName = moltype.name + "_C" + str(count)
+                moleSpecieFH.write(cName + " ")
+                indexI = cons['atom1']
+                indexJ = cons['atom2']
+                func = functypes[cons['type']]
+                r0 = (func['dA'] + func['dB']) / 2
+                moleSpecieFH.write("  CONSTRAINT { type=bondLength; offsets=" + \
+                        str(indexI) +" " + str(indexJ) + ";" + \
+                       " r0=" + str(r0) + " nm; }\n")
+                count = count + 1
+            #moleSpecie = moleSpecie+cStr
 
             #virtual site
             if moltype.virtual:
@@ -629,15 +639,19 @@ class ddcMDinput():
                         vsStr = vsStr +str(i) + " "
                     vsStr = vsStr + ";}\n"
                     count = count + 1
-                    moleSpecie = moleSpecie + vsStr
-                moleSpecie = moleSpecie + "\n"
+                    moleSpecieFH.write(vsStr)
+                moleSpecieFH.write("\n")
 
-        molecLine = molecLine + "; }\n"
+        molecLineFH.write("; }\n")
 
-        with open(filename, "w") as f:
-            f.write(molecLine)
-            f.write(moleSpecie)
-            f.write(speLine)
+        molecLineFH.close()
+        moleSpecieFH.close()
+        speLineFH.close()
+        os.system('cat molecule_1.data molecule_2.data molecule_3.data >' + filename )
+        #with open(filename, "w") as f:
+        #    f.write(molecLine)
+        #    f.write(moleSpecie)
+        #    f.write(speLine)
 
 
 def main():
@@ -647,18 +661,18 @@ def main():
     topology=Toplogy(tprLog)
     logger.info("Parse parameter")
     parameter=Parameter(tprLog)
+    logger.info("Generate martini.data")
+    ddcmdPar=ddcMDpara(topology, parameter)
+    ddcmdPar.toFile('martini.data')
     logger.info("Parse coordinate")
     #coordinates=TprCoors(tprLog, topology)
     #coordinates = GroCoors("start.gro")
     coordinates = GroCoors("prod.gro")
-    logger.info("Generate martini.data")
-    ddcmdPar=ddcMDpara(topology, parameter)
-    ddcmdPar.toFile('martini.data')
     logger.info("Generate atoms#000000 and restart")
     ddcmdobj=ddcMDobj(topology, parameter, coordinates)
     ddcmdobj.toFile('atoms#000000')
-    logger.info("Generate restraint.data")
-    ddcmdobj.toRestraint("restraint.data")
+    #logger.info("Generate restraint.data")
+    #ddcmdobj.toRestraint("restraint.data")
     logger.info("Generate molecule.data")
     ddcmdinput=ddcMDinput(topology, parameter, ddcmdPar)
     ddcmdinput.tofile("molecule.data")
