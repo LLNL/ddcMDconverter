@@ -15,6 +15,7 @@ setup(name='ddcmdconverter',
             'pdb2obj = ddcmdconverter.charmm.pdb2obj:main',
             'obj2pdb = ddcmdconverter.charmm.obj2pdb:main',
             'restraint = ddcmdconverter.martini.restraint:main',
+            'ddcmdconverter = ddcmdconverter.gmx.ddcmdParameter:main',
         ]
       },
       install_requires=[],
