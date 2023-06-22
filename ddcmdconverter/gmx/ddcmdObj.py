@@ -5,7 +5,7 @@ import re
 class MartiniData:
     def __init__(self, mfile):
         self.martinifile = mfile
-        self.keys = ['mass', 'atom', 'bond', 'cons', 'lj']
+        self.keys = ['mass', 'atom', 'bond', 'cons', 'lj', 'exclusion']
         self.data = {}
         for k in self.keys:
             self.data[k]=''
@@ -28,6 +28,8 @@ class MartiniData:
                     self.data['cons'] = self.data['cons'] + line
                 elif 'LJPARMS' in line:
                     self.data['lj'] = self.data['lj'] + line
+                elif 'EXCLUDEPARMS' in line:
+                    self.data['exclusion'] = self.data['exclusion'] + line
 
         for k in self.keys:
             lines = self.data[k].split('\n')
@@ -156,6 +158,26 @@ class MartiniData:
         cons = np.rec.fromarrays((consName_np, consAtomI_np, consAtomTypeI_np, consAtomJ_np, consAtomTypeJ_np, consFuc_np, consr0_np),
                                   names=('name', 'atomI', 'atomTypeI', 'atomJ', 'atomTypeJ', 'func', 'r0'))
 
+        exclusionName=[]
+        exclusionAtomI=[]
+        exclusionAtomTypeI=[]
+        exclusionAtomJ=[]
+        exclusionAtomTypeJ=[]
+        for val in self.objs['exclusion']:
+            exclusionName.append(val['name'])
+            exclusionAtomI.append(val['atomI'])
+            exclusionAtomTypeI.append(val['atomTypeI'])
+            exclusionAtomJ.append(val['atomJ'])
+            exclusionAtomTypeJ.append(val['atomTypeJ'])
+
+        exclusionName_np = np.array(exclusionName)
+        exclusionAtomI_np = np.array(exclusionAtomI)
+        exclusionAtomTypeI_np = np.array(exclusionAtomTypeI)
+        exclusionAtomJ_np = np.array(exclusionAtomJ)
+        exclusionAtomTypeJ_np = np.array(exclusionAtomTypeJ)
+        exclusion = np.rec.fromarrays((exclusionName_np, exclusionAtomI_np, exclusionAtomTypeI_np, exclusionAtomJ_np, exclusionAtomTypeJ_np),
+                                  names=('name', 'atomI', 'atomTypeI', 'atomJ', 'atomTypeJ'))
+
         ljName=[]
         ljAtomTypeI = []
         ljIndexI=[]
@@ -183,7 +205,7 @@ class MartiniData:
             (ljName_np, ljAtomTypeI_np, ljIndexI_np, ljAtomTypeJ_np, ljIndexJ_np, ljSigma_np, ljEps_np),
             names=('name', 'atomtypeI', 'indexI', 'atomtypeJ', 'indexJ', 'sigma', 'eps'))
 
-        np.savez(file, types=types, atoms=atoms, bonds=bonds, cons=cons, lj=ljs)
+        np.savez(file, types=types, atoms=atoms, bonds=bonds, cons=cons, exclusion=exclusion, lj=ljs)
 
 
 def main():

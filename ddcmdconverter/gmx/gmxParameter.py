@@ -58,7 +58,8 @@ class Parameter():
         logger.info("Parse moltype ...")
         for moltype in self.moltypes:
             moltype.parse()
-            print(moltype.name)
+            print(moltype.name, end =" ")
+        print(" ")
 
 class MolType():
     def __init__(self):

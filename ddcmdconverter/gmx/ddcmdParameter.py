@@ -6,6 +6,7 @@ from ddcmdconverter.gmx.gmxCoor import TprCoors, GroCoors
 import math
 import re
 import os
+import argparse
 
 # set up logger
 LOGLEVEL = 1
@@ -25,15 +26,23 @@ class ddcMDpara():
         self.types= {}
         self.gatherTypes()
         self.fileHandle = None
+        self.proteinList=["RAS", "RAF", "POY", "XZB", "WS4", "BVG", "JKI", "B2AR"]
 
     def gatherTypes(self):
         for moltype in self.par.moltypes:
             for atom in moltype.atomtypes.atoms:
                 self.types[atom['typename'].strip('"')]=atom
 
+    def add_proteinList(self, newProtList):
+        if len(newProtList)>0:
+            for prot in newProtList.split():
+                self.proteinList.append(prot)
+        logger.info("The current protein list is: ["+", ".join(self.proteinList)+"]")
+
     def _writeHeader(self):
         #print MMFF struct
         self.fileHandle.write("martini MMFF\n{\n")
+        self.fileHandle.write("\tversion =1;\n")
         # print residue list
         self.fileHandle.write("\tresiParms=")
 
@@ -64,6 +73,8 @@ class ddcMDpara():
         self.fileHandle.write("\n")
 
     def _writeResidues(self):
+        # TODO move proteinList to arg list of program
+
         functypes=self.top.functype
         resID=0
         for moltype in self.par.moltypes:
@@ -72,7 +83,7 @@ class ddcMDpara():
             self.fileHandle.write("\tresType=" + str(0) + ";\n")
             self.fileHandle.write("\tresName=" + moltype.name + ";\n")
             isProtein=0
-            if moltype.name == 'RAS' or moltype.name =='RAF' or moltype.name == 'chromosome' or moltype.name =='ribosome' or 'syn' in moltype.name:
+            if moltype.name in self.proteinList or moltype.name == 'CRS' or moltype.name =='RBS' or 'syn' in moltype.name:
                 isProtein = 1
             self.fileHandle.write("\tisProtein=" + str(isProtein) + ";\n")
             numAtoms = len(moltype.atomtypes.atoms)
@@ -223,19 +234,24 @@ class ddcMDpara():
                         ktheta=func['ctA']/2 # ddcMD uses 1/2 k
                         theta0=func['thA'] #
                     elif func['type'] =='RESTRANGLES':
-                        ktheta=func['kthetaA']/2 # ddcMD uses 1/2 k
-                        theta0=func['costheta0A']
+                        #TODO: `gmx dump -s topol.tpr > tpr.log` output wrong output wrong RESTRANGLES parameters.
+                        #TODO: After gromacs fix bug, the code show be changed back.
+                        #ktheta=func['kthetaA']/2 # ddcMD uses 1/2 k
+                        #theta0=func['costheta0A']
+                        ktheta=func['costheta0A']/2 # ddcMD uses 1/2 k
+                        theta0=func['kthetaA']
                 except:
                     print(moltype.name, indexI, indexJ, indexK, angle['type'], func)
                     continue
                 if func['type'] == 'ANGLES':
                     funcID = 1
-                    theta0 = theta0 * math.pi/180  # deg to rad
+                    #theta0 = theta0 * math.pi/180  # deg to rad
                 elif func['type'] == 'G96ANGLES':
                     funcID = 2
+                    theta0 = round(math.acos(theta0) * 180 / math.pi, 2) # convert to deg and round up to 2 decimal places
                 elif func['type'] == 'RESTRANGLES':
                     funcID = 10
-                    theta0 = theta0 * math.pi / 180  # deg to rad
+                    #theta0 = theta0 * math.pi / 180  # deg to rad
                 else:
                     funcID = 0
                 self.fileHandle.write(moltype.name + "_a"+str(angle['id'])+
@@ -243,9 +259,13 @@ class ddcMDpara():
                         "; atomJ="+str(indexJ)+
                         "; atomK=" + str(indexK) +
                         "; func="+ str(funcID) +
-                        "; ktheta="+str(ktheta)+
-                        " kJ*mol^-1; theta0="+str(theta0)+
-                        "; }\n")
+                        "; ktheta="+str(ktheta))
+                if(funcID==2 or funcID==10):
+                    self.fileHandle.write(" kJ*mol^-1;")
+                else:
+                    self.fileHandle.write(" kJ*mol^-1*rad^-2;")
+                self.fileHandle.write(" theta0="+str(theta0)+
+                        " deg; }\n")
 
             self.fileHandle.write("\n")
 
@@ -257,16 +277,18 @@ class ddcMDpara():
                 indexL = dihedral['atom4']
                 func=functypes[dihedral['type']]
 
+                unit="kJ*mol^-1"
                 if func['type'] == 'IDIHS': #IMPROPER
                     funcID = 2
                     kchi=(func['cxA']+func['cxB'])/4 # average and ddcMD IMPROPER uses 1/2 k
                     delta=(func['xiA']+func['xiB'])/2 # average
-                    delta = math.pi * delta / 180
+                    unit = "kJ*mol^-1*rad^-2"
+                    #delta = math.pi * delta / 180
                 elif func['type'] =='PDIHS': #TORSION
                     funcID = 1
                     kchi=(func['cpA']+func['cpB'])/2 # average and ddcMD TORSION uses k
                     delta=(func['phiA']+func['phiB'])/2 # average
-                    delta = -1 * math.pi * delta / 180  # deg to rad and ddcMD use opposite sign for dihedral
+                    #delta = math.pi * delta / 180  # deg to rad and ddcMD use opposite sign for dihedral
                 else:
                     logger.error("Dihedral type is neither IDIHS nor PDIHS, skipping")
                     raise
@@ -278,20 +300,20 @@ class ddcMDpara():
                         "; atomK=" + str(indexK) +
                         "; atomL=" + str(indexL) +
                         "; func=" + str(funcID) +
-                        "; kchi="+str(kchi)+
-                        " kJ*mol^-1; delta="+str(delta)+
-                        ";  n=1; }\n")
+                        "; kchi="+str(kchi) +
+                        " "+unit+"; delta="+str(delta)+
+                        " deg;  n=1; }\n")
 
             self.fileHandle.write("\n")
 
             #restraint for POPX
-            if moltype.name=="POPX":
-                for atom in moltype.atomtypes.atoms:
-                    if atom['name']=="PO4":
-                        self.fileHandle.write("POPX_r0 RESTRAINTPARMS{atomI="+str(atom['id'])+
-                                "; atomTypeI="+atom['typename']+
-                                "; func=1; fcx=0; fcy=0; fcz=2; kb= 1.0 kJ*mol^-1*nm^-2; }\n\n")
-                self.fileHandle.write("\n")
+            #if moltype.name=="POPX":
+            #    for atom in moltype.atomtypes.atoms:
+            #        if atom['name']=="PO4":
+            #            self.fileHandle.write("POPX_r0 RESTRAINTPARMS{atomI="+str(atom['id'])+
+            #                    "; atomTypeI="+atom['typename']+
+            #                    "; func=1; fcx=0; fcy=0; fcz=2; kb= 1.0 kJ*mol^-1*nm^-2; }\n\n")
+            #    self.fileHandle.write("\n")
 
             #constraint
             #CHOL_cl0 CONSLISTPARMS{ constraintSubList=CHOL_cl0_c0 CHOL_cl0_c1 CHOL_cl0_c2 CHOL_cl0_c3 CHOL_cl0_c4 CHOL_cl0_c5 ; }
@@ -629,6 +651,10 @@ class ddcMDinput():
                     funct=functypes[vs['type']]
                     vsName=moltype.name+"_VS"+str(count)
                     vsType=funct['type']
+                    if vsType =='VSITEN':
+                        num = len(vs['idx']) -1
+                        funct['type']='VSITE'+str(num)+'N'
+
                     vsStr=vsName+" CONSTRAINT{"
                     for k, v in funct.items():
                         if vsType == 'VSITE3OUT' and k=='c':
@@ -653,29 +679,57 @@ class ddcMDinput():
         #    f.write(moleSpecie)
         #    f.write(speLine)
 
+def getArgs():
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-t', '--intpr', action='store', dest='inTprFile', default="tpr.log",
+                        help='Input file uses Gromacs TPR log file (default=tpr.log).')
+    parser.add_argument('-g', '--ingro', action='store', dest='inGroFile', default="prod.gro",
+                        help='Input file uses Gromacs Gro file (default=prod.gro).')
+    parser.add_argument('-m', '--outm', action='store', dest='outMartiniFile', default="martini.data",
+                        help='Output martini.data file (default=martini.data).')
+    parser.add_argument('-l', '--outl', action='store', dest='outMoleculeFile', default="molecule.data",
+                        help='Output molecule.data file (default=molecule.data).')
+    parser.add_argument('-r', '--outr', action='store', dest='outRestraintFile', default="restraint.data",
+                        help='Output restraint.data file (default=restraint.data).')
+    parser.add_argument('-p', '--prot', action='store', dest='newProtList', default="",
+                        help='Output restraint.data file (default=RAS RAF POY XZB WS4 BVG JKI B2AR).')
+
+    args = parser.parse_args()
+
+    return args
 
 def main():
+    logger.info("Please run 'gmx dump -s topol.tpr > tpr.log' command if tpr.log input file is not available")
+    args = getArgs()
+    # 1. Parse tpr.log file
     logger.info("Parse tpr.log")
-    tprLog=TPRLog('tpr.log')
+    tprLog=TPRLog(args.inTprFile)
     logger.info("Parse topology")
     topology=Toplogy(tprLog)
     logger.info("Parse parameter")
     parameter=Parameter(tprLog)
+    # 2. Generate martini.data file
     logger.info("Generate martini.data")
     ddcmdPar=ddcMDpara(topology, parameter)
-    ddcmdPar.toFile('martini.data')
+    ddcmdPar.add_proteinList(args.newProtList)
+    ddcmdPar.toFile(args.outMartiniFile)
+    # 3. Parse Gromacs coordinate file
     logger.info("Parse coordinate")
     #coordinates=TprCoors(tprLog, topology)
     #coordinates = GroCoors("start.gro")
-    coordinates = GroCoors("prod.gro")
+    coordinates = GroCoors(args.inGroFile)
+    # 4. Generate ddcMD coordinate file
     logger.info("Generate atoms#000000 and restart")
     ddcmdobj=ddcMDobj(topology, parameter, coordinates)
     ddcmdobj.toFile('atoms#000000')
-    #logger.info("Generate restraint.data")
-    #ddcmdobj.toRestraint("restraint.data")
+    # 5. Generate ddcMD restraint file
+    logger.info("Generate restraint.data")
+    ddcmdobj.toRestraint(args.outRestraintFile)
+    # 6. Generate ddcMD molecule file
     logger.info("Generate molecule.data")
     ddcmdinput=ddcMDinput(topology, parameter, ddcmdPar)
-    ddcmdinput.tofile("molecule.data")
+    ddcmdinput.tofile(args.outMoleculeFile)
     logger.info("End")
 
 if __name__ == '__main__':
