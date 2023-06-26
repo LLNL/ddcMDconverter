@@ -48,7 +48,7 @@ class Parameter():
             #print(line)
             #print("count", count, 'section', self.sections[secIdx])
             if line[3:10]=='moltype':
-                print(line)
+                #print(line)
                 hasMoltype=True
                 moltype=MolType()
                 self.moltypes.append(moltype)

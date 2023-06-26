@@ -1,6 +1,6 @@
 import logging
 import re
-from gmxParameter import getSecName
+from ddcmdconverter.gmx.gmxParameter import getSecName
 
 LOGLEVEL =2
 LOG_FMT = '%(asctime)s - %(name)s:%(funcName)s:%(lineno)s - %(levelname)s - %(message)s'
