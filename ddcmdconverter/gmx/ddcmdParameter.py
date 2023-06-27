@@ -234,12 +234,12 @@ class ddcMDpara():
                         ktheta=func['ctA']/2 # ddcMD uses 1/2 k
                         theta0=func['thA'] #
                     elif func['type'] =='RESTRANGLES':
-                        #TODO: `gmx dump -s topol.tpr > tpr.log` output wrong output wrong RESTRANGLES parameters.
-                        #TODO: After gromacs fix bug, the code show be changed back.
-                        #ktheta=func['kthetaA']/2 # ddcMD uses 1/2 k
-                        #theta0=func['costheta0A']
-                        ktheta=func['costheta0A']/2 # ddcMD uses 1/2 k
-                        theta0=func['kthetaA']
+                        #FIXED: `gmx dump -s topol.tpr > tpr.log` output wrong output wrong RESTRANGLES parameters.
+                        #FIXED: After gromacs fix bug, the code show be changed back.
+                        ktheta=func['kthetaA']/2 # ddcMD uses 1/2 k
+                        theta0=func['costheta0A']
+                        #ktheta=func['costheta0A']/2 # ddcMD uses 1/2 k
+                        #theta0=func['kthetaA']
                 except:
                     print(moltype.name, indexI, indexJ, indexK, angle['type'], func)
                     continue
