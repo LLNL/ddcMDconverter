@@ -1,7 +1,7 @@
 import logging
 from ddcmdconverter.gmx.gmxTopology import Toplogy
 from ddcmdconverter.gmx.gmxParameter import Parameter
-from gmxParameter import getSecName
+from ddcmdconverter.gmx.gmxParameter import getSecName
 from itertools import islice
 import re
 
