@@ -236,10 +236,10 @@ class ddcMDpara():
                     elif func['type'] =='RESTRANGLES':
                         #FIXED: `gmx dump -s topol.tpr > tpr.log` output wrong output wrong RESTRANGLES parameters.
                         #FIXED: After gromacs fix bug, the code show be changed back.
-                        ktheta=func['kthetaA']/2 # ddcMD uses 1/2 k
-                        theta0=func['costheta0A']
-                        #ktheta=func['costheta0A']/2 # ddcMD uses 1/2 k
-                        #theta0=func['kthetaA']
+                        #ktheta=func['kthetaA']/2 # ddcMD uses 1/2 k
+                        #theta0=func['costheta0A']
+                        ktheta=func['costheta0A']/2 # ddcMD uses 1/2 k
+                        theta0=func['kthetaA']
                 except:
                     print(moltype.name, indexI, indexJ, indexK, angle['type'], func)
                     continue
@@ -519,7 +519,6 @@ class ddcMDobj():
         ybox = box[1][1]
         zbox = box[2][2]
         func = 1
-        count=0
         restraintCount=0
         moltypes=self.par.moltypes
         molID=-1
@@ -529,6 +528,7 @@ class ddcMDobj():
                      + ";\n  zbox = " + str(zbox) + ";\n"
             outLine = ""
             for molBlk in self.top.molBlks:
+                count = 0
                 for i in range(molBlk.numMols):
                     molID=molID+1
                     moltype = moltypes[molBlk.moltypeID]
@@ -554,6 +554,7 @@ class ddcMDobj():
                                       + "; z0=" + str(xyz[2] / zbox) \
                                       + "; kb= 1.0 kJ*mol^-1*nm^-2; }\n"
                             restraintCount = restraintCount + 1
+                            #print(outLine)
 
                         count = count + len(moltype.atomtypes.atoms)
 
