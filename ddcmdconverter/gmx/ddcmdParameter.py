@@ -292,6 +292,14 @@ class ddcMDpara():
                     kchi=(func['cpA']+func['cpB'])/2 # average and ddcMD TORSION uses k
                     delta=(func['phiA']+func['phiB'])/2 # average
                     #delta = math.pi * delta / 180  # deg to rad and ddcMD use opposite sign for dihedral
+                elif func['type'] == 'CBTDIHS':  # CBT DIHEDRAL
+                    funcID = 3
+                    kchi=func['kphi']
+                    ca0 = func['cbtcA[0]']
+                    ca1 = func['cbtcA[1]']
+                    ca2 = func['cbtcA[2]']
+                    ca3 = func['cbtcA[3]']
+                    ca4 = func['cbtcA[4]']
                 else:
                     logger.error("Dihedral type is neither IDIHS nor PDIHS, skipping")
                     raise
@@ -304,8 +312,15 @@ class ddcMDpara():
                         "; atomL=" + str(indexL) +
                         "; func=" + str(funcID) +
                         "; kchi="+str(kchi) +
-                        " "+unit+"; delta="+str(delta)+
-                        " deg;  n=1; }\n")
+                        " "+unit)
+                if funcID==1 or funcID==2:
+                    self.fileHandle.write("; delta="+str(delta)+" deg;  n=1; }\n")
+                elif funcID==3:
+                    self.fileHandle.write("; ca0=" + str(ca0) + "; ca1=" + str(ca1) +
+                                          "; ca2=" + str(ca2) + "; ca3=" + str(ca3) +
+                                          "; ca4=" + str(ca4) + "; }\n")
+                else:
+                    self.fileHandle.write("; }\n")
 
             self.fileHandle.write("\n")
 
