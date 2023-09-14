@@ -33,10 +33,10 @@ class MolBlock():
                 (id, name)=line.split('=')[1].split()
                 self.moltypeID = int(id)
                 self.moltypeName = name.strip('"').strip('+').strip('-')
-                if 'KRAS' in self.moltypeName:
-                    self.moltypeName='RAS'
-                if 'RAF' in self.moltypeName:
-                    self.moltypeName='RAS_RAF'
+                #if 'KRAS' in self.moltypeName:
+                #    self.moltypeName='RAS'
+                #if 'RAF' in self.moltypeName:
+                #    self.moltypeName='RAS_RAF'
             if '#molecules' in section:
                 self.numMols = int(line.split('=')[1])
             if '#posres_xA' in section:
@@ -97,7 +97,7 @@ class Toplogy():
             if 'ffparams' in section:
                 ffparamsLines.append(line)
 
-        for line in ffparamsLines:
+        for indx, line in enumerate(ffparamsLines):
             section=""
             secName=getSecName(line, level=2)
             if secName:
@@ -108,6 +108,8 @@ class Toplogy():
                 self.ntypes = int(line.split('=')[1])
             if 'functype' in line:
                 funcType={}
+                if 'CBTDIHS' in line:
+                    line=line[:-1]+ffparamsLines[indx+1]
                 strs=line.split(',')
                 try:
                     fStrs=strs[0].split('=')

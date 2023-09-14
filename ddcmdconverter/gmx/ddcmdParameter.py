@@ -48,10 +48,10 @@ class ddcMDpara():
 
         for moltype in self.par.moltypes:
             # rename RAS and RAS/RAF
-            if 'KRAS' in moltype.name:
-                moltype.name = 'RAS'
-            if 'RAF' in moltype.name:
-                moltype.name = 'RAF'
+            #if 'KRAS' in moltype.name:
+            #    moltype.name = 'RAS'
+            #if 'RAF' in moltype.name:
+            #    moltype.name = 'RAF'
             self.fileHandle.write(moltype.name+" ")
         self.fileHandle.write(";\n")
         # print atom type
@@ -275,7 +275,10 @@ class ddcMDpara():
                 indexJ = dihedral['atom2']
                 indexK = dihedral['atom3']
                 indexL = dihedral['atom4']
-                func=functypes[dihedral['type']]
+                try:
+                    func=functypes[dihedral['type']]
+                except IndexError:
+                    print("Index Out of Bound.")
 
                 unit="kJ*mol^-1"
                 if func['type'] == 'IDIHS': #IMPROPER

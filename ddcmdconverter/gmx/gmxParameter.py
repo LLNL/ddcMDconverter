@@ -14,6 +14,8 @@ logger.addHandler(sh)
 
 def getSecName(line, level=2):
     idx=3*level
+    if len(line)>0 and line[0] == ',':
+        return None
     if line[idx:idx+1] == " " or line[0:idx] != " "*idx:
         return None
     else:
