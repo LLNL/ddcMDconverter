@@ -1,0 +1,51 @@
+#include "/Users/ozturk1/Desktop/ff/martini3-lipids-master/top/martini_v3.0.0.itp"
+#include "/Users/ozturk1/Desktop/ff/martini3-lipids-master/top/martini_v3.0_ffbonded_dev_v15.itp"
+#include "/Users/ozturk1/Desktop/ff/martini3-lipids-master/top/martini_v3.0_ceramides_dev_v15.itp"
+#include "/Users/ozturk1/Desktop/ff/martini3-lipids-master/top/martini_v3.0_phospholipids_PA_dev_v15.itp"
+#include "/Users/ozturk1/Desktop/ff/martini3-lipids-master/top/martini_v3.0_phospholipids_PC_dev_v15.itp"
+#include "/Users/ozturk1/Desktop/ff/martini3-lipids-master/top/martini_v3.0_phospholipids_PE_dev_v15.itp"
+#include "/Users/ozturk1/Desktop/ff/martini3-lipids-master/top/martini_v3.0_phospholipids_PG_dev_v15.itp"
+#include "/Users/ozturk1/Desktop/ff/martini3-lipids-master/top/martini_v3.0_phospholipids_PS_dev_v15.itp"
+#include "/Users/ozturk1/Desktop/ff/martini3-lipids-master/top/martini_v3.0_phospholipids_PI_dev_v15.itp"
+#include "/Users/ozturk1/Desktop/ff/martini3-lipids-master/top/martini_v3.0_phospholipids_SM_dev_v15.itp"
+#include "/Users/ozturk1/Desktop/ff/martini3-lipids-master/top/martini_v3.0_phospholipids_other_dev_v15.itp"
+#include "/Users/ozturk1/Desktop/ff/martini3-lipids-master/top/martini_v3.0_sterols_dev_v16.itp"
+#include "/Users/ozturk1/Desktop/ff/martini3-lipids-master/top/martini_v3.0.0_solvents_v1.itp"
+#include "/Users/ozturk1/Desktop/ff/martini3-lipids-master/top/martini_v3.0.0_ions_v1.itp"
+
+#include "molecule_0.itp"
+
+[ system ]
+;name
+B2AR (2RH1) in Mix8
+
+[ molecules ]
+molecule_0    1
+; X: 30.000 (39 bins) Y: 30.000 (39 bins) in upper leaflet
+; X: 30.000 (39 bins) Y: 30.000 (39 bins) in lower leaflet
+; 1498 lipids in upper leaflet, 1431 lipids in lower leaflet
+; NDX Solute 1 771
+; Charge of protein: 5.000000
+; NDX Membrane 772 35033
+; Charge of membrane: -354.000000
+; Total charge: -349.000000
+; NDX Solvent 35034 88544
+; NDX System 1 88544
+; "I mean, the good stuff is just INSANE" --Julia Ormond
+POPX           364
+PAPC           181
+POPE            29
+DLPE            91
+SSM            362
+CHOL           468
+POPC           198
+PAPC           107
+POPE            77
+DLPE           230
+SSM            154
+CHOL           400
+PAPS           230
+SAP6            31
+W            52011
+NA             924
+CL             576

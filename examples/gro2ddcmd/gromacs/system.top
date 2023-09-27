@@ -1,0 +1,54 @@
+; Include forcefield parameters
+; The actual location of these files might be different on your computer!
+#include "../../../resources/Martini/martini_v2.1-dna.itp"
+#include "../../../resources/Martini/martini_v2.0_ions.itp"
+#include "../../../resources/Martini/martini_v2.0_DPPC_01.itp"
+#include "../../../resources/Martini/martini_v2.0_POPC_02.itp"
+#include "../../../resources/Martini/martini_v2.0_DOPC_02.itp"
+#include "../../../resources/Martini/martini_v2.0_DIPC_01.itp"
+#include "../../../resources/Martini/martini_v2.0_PAPC_01.itp"
+#include "../../../resources/Martini/martini_v2.0_CHOL_02.itp"
+#include "../../../resources/Martini/martini_v2.0_POPE_02.itp"
+#include "../../../resources/Martini/martini_v2.0_DOPE_02.itp"
+#include "../../../resources/Martini/martini_v2.0_DIPE_01.itp"
+#include "../../../resources/Martini/martini_v2.0_PAPE_01.itp"
+#include "../../../resources/Martini/martini_v2.0_DAPE_01.itp"
+#include "../../../resources/Martini/martini_v2.0_DPSM_01.itp"
+#include "../../../resources/Martini/martini_v2.0_DBSM_01.itp"
+#include "../../../resources/Martini/martini_v2.0_POPS_02.itp"
+#include "../../../resources/Martini/martini_v2.0_PAPS_01.itp"
+#include "../../../resources/Martini/martini_v2.0_PAP6_02.itp"
+#include "../../../resources/Martini/DOPX_Martini_v2.0_lipid.itp"
+#include "../../../resources/Martini/POPX_Martini_v2.0_lipid.itp"
+#include "../../../resources/Martini/KRAS-GTP-04-HVR-best-guess-M22-CYFpos.itp"
+#include "../../../resources/Martini/KRAS-GTP-04-HVR-best-guess-M22-PULL-CYFpos.itp"
+
+[ system ]
+; name
+lipids-sim
+
+[ molecules ]
+; name  number
+; X: 31.000 (40 lipids) Y: 31.000 (40 lipids)
+; 1600 lipids in upper leaflet, 1599 lipids in lower leaflet
+; Charge of protein: 2.000000
+; Charge of membrane: -398.000000
+; Total charge: -396.000000
+POPX           389
+PAPC           194
+POPE            33
+DIPE            97
+DPSM           387
+CHOL           500
+POPC           206
+PAPC           112
+POPE            80
+DIPE           239
+DPSM           160
+PAPS           238
+PAP6            32
+CHOL           414
+KRAS          1
+W            99474
+NA            1498
+CL            1100

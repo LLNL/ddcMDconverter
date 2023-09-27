@@ -1,0 +1,85 @@
+;;;;;; Martini lipid topology for cholesterol
+;
+; Description:
+;   A Martini model for cholesterol.
+; Parameterization:
+;   See Marrink et al. 2008. for original cholesterol. Here the original cholesterol is updated based on the update shape
+;   from Manuel et al. 2015, but this module dose not use virtual sites as in Manuel et al. 2015. This model was updated for
+;   Ingolfsson et al. 2020, see SI for a short description.
+; Reference(s):
+;   Ingolfsson et al. Machine Learning-driven Multiscale Modeling Reveals Lipid-Dependent Dynamics of RAS Signaling Proteins.
+;   2020, pre-print DOI:10.21203/rs.3.rs-50842/v1
+;   M.N. Melo, H.I. Ingólfsson, S.J. Marrink. Parameters for Martini sterols and hopanoids based on a virtual-site description
+;   JCP 143:243152, 2015. doi.org/10.1063/1.4937783
+;   S.J. Marrink, A.H. de Vries, A.E. Mark. Coarse grained model for semi-quantitative lipid simulations. JPC-B, 108:750-760,
+;   2004. doi:10.1021/jp036508g
+;   S.J. Marrink, H.J. Risselada, S. Yefimov, D.P. Tieleman, A.H. de Vries. The MARTINI force field: coarse grained model for
+;   biomolecular simulations. JPC-B, 111:7812-7824, 2007. doi:10.1021/jp071097f
+;   S.J. Marrink, A.H. de Vries, T.A. Harroun, J. Katsaras, S.R. Wassall. Cholesterol shows preference for the interior of
+;   polyunsaturated lipid membranes. JACS, 130:10-11, 2008. doi:10.1021/ja076641c
+;
+
+[moleculetype] 	; This topology is stable with an integration timestep of 30 fs.
+; molname 	nrexcl
+  CHOL 		1
+
+[atoms]
+; id 	type 	resnr 	residu 	atom 	cgnr 	charge
+  1 	SP1 	1 	CHOL 	ROH 	1 	0
+  2 	SC1 	1 	CHOL 	R1 	2 	0
+  3 	SC3 	1 	CHOL 	R2 	3 	0
+  4 	SC1 	1 	CHOL 	R3 	4 	0
+  5 	SC1 	1 	CHOL 	R4 	5 	0
+  6 	SC1 	1 	CHOL 	R5 	6 	0
+  7 	SC1 	1 	CHOL 	C1 	7 	0
+  8 	C1 	1 	CHOL 	C2 	8 	0
+
+[bonds]
+; i j 	funct 	length 	force.c.
+;  1 2 	1 	0.242 	20000
+  1 2 	1 	0.2830 	20000 ; Extend further out very aprox.
+;  2 3 	1 	0.260 	20000
+  2 3 	1 	0.2763 	20000 ; Extend further out very aprox.
+;  2 4 	1 	0.341 	20000
+  2 4 	1 	0.3643 	20000 ; Extend further out very aprox.
+;  4 6 	1 	0.213 	20000
+  4 6 	1 	0.2396 	20000 ; Extend further out very aprox.
+  4 7 	1 	0.544 	20000
+;  5 6 	1 	0.203 	20000
+  5 6 	1 	0.2152 	20000 ; Extend further out very aprox. put as 1.06
+;  6 7 	1 	0.368 	20000
+  6 7 	1 	0.3814 	20000 ; Extend further out very aprox.
+  7 8 	1 	0.425 	1250
+
+[constraints]
+; i j 	funct 	length ; cholesterol frame constraint
+  1 3 	1 	0.493
+  1 4 	1 	0.604
+  3 4 	1 	0.272
+  3 5 	1 	0.346
+  4 5 	1 	0.294
+  5 7 	1 	0.406
+
+[angles]
+; i j k 	funct 	angle 	force.c.
+  4 7 8 	2 	180.0   25.0
+
+[dihedrals]
+; i j k l 	funct 	angle 	force.c.  ; multiple dihedrals work better
+  1 3 5 7 	2 	0.0 	100.0
+  1 3 5 4 	2 	0.0 	100.0
+  1 4 5 3 	2 	0.0 	100.0
+  4 7 5 3 	2 	0.0 	100.0
+  3 5 7 4 	2 	0.0 	100.0
+  2 1 3 4 	2 	-45.0 	300.0
+  2 4 3 1 	2 	45.0 	300.0
+  6 4 5 7 	2 	-45.0 	300.0
+  6 7 5 4 	2 	45.0 	300.0
+
+[exclusions]
+   1 2 3 4 5 6 7
+   2 3 4 5 6 7
+   3 4 5 6 7
+   4 5 6 7
+   5 6 7
+   6 7

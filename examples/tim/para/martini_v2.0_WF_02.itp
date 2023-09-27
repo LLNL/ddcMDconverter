@@ -1,0 +1,10 @@
+;;;;;; ANTIFREEZE (prevents freezing of water)
+
+[ moleculetype ]
+; molname    nrexcl
+  WF         1
+
+[ atoms ]
+;id     type    resnr   residu  atom    cgnr    charge
+ 1  BP4     1   WF  WF  1   0
+

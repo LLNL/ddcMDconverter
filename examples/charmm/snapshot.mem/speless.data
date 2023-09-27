@@ -1,0 +1,279 @@
+system SYSTEM
+{species =
+        POPCxN 
+      POPCxC11 
+      POPCxC12 
+      POPCxC13 
+      POPCxC14 
+      POPCxH11 
+      POPCxH12 
+      POPCxH21 
+      POPCxH22 
+      POPCxH23 
+      POPCxH31 
+      POPCxH32 
+      POPCxH33 
+      POPCxH41 
+      POPCxH42 
+      POPCxH43 
+      POPCxC15 
+      POPCxH51 
+      POPCxH52 
+       POPCxP1 
+       POPCxO3 
+       POPCxO4 
+       POPCxO1 
+       POPCxO2 
+       POPCxC1 
+       POPCxHA 
+       POPCxHB 
+       POPCxC2 
+       POPCxHS 
+      POPCxO21 
+      POPCxC21 
+      POPCxO22 
+      POPCxC22 
+      POPCxH2R 
+      POPCxH2S 
+       POPCxC3 
+       POPCxHX 
+       POPCxHY 
+      POPCxO31 
+      POPCxC31 
+      POPCxO32 
+      POPCxC32 
+      POPCxH2X 
+      POPCxH2Y 
+      POPCxC23 
+      POPCxH3R 
+      POPCxH3S 
+      POPCxC24 
+      POPCxH4R 
+      POPCxH4S 
+      POPCxC25 
+      POPCxH5R 
+      POPCxH5S 
+      POPCxC26 
+      POPCxH6R 
+      POPCxH6S 
+      POPCxC27 
+      POPCxH7R 
+      POPCxH7S 
+      POPCxC28 
+      POPCxH8R 
+      POPCxH8S 
+      POPCxC29 
+      POPCxH91 
+     POPCxC210 
+     POPCxH101 
+     POPCxC211 
+     POPCxH11R 
+     POPCxH11S 
+     POPCxC212 
+     POPCxH12R 
+     POPCxH12S 
+     POPCxC213 
+     POPCxH13R 
+     POPCxH13S 
+     POPCxC214 
+     POPCxH14R 
+     POPCxH14S 
+     POPCxC215 
+     POPCxH15R 
+     POPCxH15S 
+     POPCxC216 
+     POPCxH16R 
+     POPCxH16S 
+     POPCxC217 
+     POPCxH17R 
+     POPCxH17S 
+     POPCxC218 
+     POPCxH18R 
+     POPCxH18S 
+     POPCxH18T 
+      POPCxC33 
+      POPCxH3X 
+      POPCxH3Y 
+      POPCxC34 
+      POPCxH4X 
+      POPCxH4Y 
+      POPCxC35 
+      POPCxH5X 
+      POPCxH5Y 
+      POPCxC36 
+      POPCxH6X 
+      POPCxH6Y 
+      POPCxC37 
+      POPCxH7X 
+      POPCxH7Y 
+      POPCxC38 
+      POPCxH8X 
+      POPCxH8Y 
+      POPCxC39 
+      POPCxH9X 
+      POPCxH9Y 
+     POPCxC310 
+     POPCxH10X 
+     POPCxH10Y 
+     POPCxC311 
+     POPCxH11X 
+     POPCxH11Y 
+     POPCxC312 
+     POPCxH12X 
+     POPCxH12Y 
+     POPCxC313 
+     POPCxH13X 
+     POPCxH13Y 
+     POPCxC314 
+     POPCxH14X 
+     POPCxH14Y 
+     POPCxC315 
+     POPCxH15X 
+     POPCxH15Y 
+     POPCxC316 
+     POPCxH16X 
+     POPCxH16Y 
+     POPCxH16Z 
+      TIP3xOH2 
+       TIP3xH1 
+       TIP3xH2 
+   ;
+}
+
+     POPCxN SPECIES { type = ATOM ; charge = -0.600000 ; mass = 14.007000 M_p ; }
+   POPCxC11 SPECIES { type = ATOM ; charge = -0.100000 ; mass = 12.011000 M_p ; }
+   POPCxC12 SPECIES { type = ATOM ; charge = -0.350000 ; mass = 12.011000 M_p ; }
+   POPCxC13 SPECIES { type = ATOM ; charge = -0.350000 ; mass = 12.011000 M_p ; }
+   POPCxC14 SPECIES { type = ATOM ; charge = -0.350000 ; mass = 12.011000 M_p ; }
+   POPCxH11 SPECIES { type = ATOM ; charge = 0.250000 ; mass = 1.008000 M_p ; }
+   POPCxH12 SPECIES { type = ATOM ; charge = 0.250000 ; mass = 1.008000 M_p ; }
+   POPCxH21 SPECIES { type = ATOM ; charge = 0.250000 ; mass = 1.008000 M_p ; }
+   POPCxH22 SPECIES { type = ATOM ; charge = 0.250000 ; mass = 1.008000 M_p ; }
+   POPCxH23 SPECIES { type = ATOM ; charge = 0.250000 ; mass = 1.008000 M_p ; }
+   POPCxH31 SPECIES { type = ATOM ; charge = 0.250000 ; mass = 1.008000 M_p ; }
+   POPCxH32 SPECIES { type = ATOM ; charge = 0.250000 ; mass = 1.008000 M_p ; }
+   POPCxH33 SPECIES { type = ATOM ; charge = 0.250000 ; mass = 1.008000 M_p ; }
+   POPCxH41 SPECIES { type = ATOM ; charge = 0.250000 ; mass = 1.008000 M_p ; }
+   POPCxH42 SPECIES { type = ATOM ; charge = 0.250000 ; mass = 1.008000 M_p ; }
+   POPCxH43 SPECIES { type = ATOM ; charge = 0.250000 ; mass = 1.008000 M_p ; }
+   POPCxC15 SPECIES { type = ATOM ; charge = -0.080000 ; mass = 12.011000 M_p ; }
+   POPCxH51 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxH52 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    POPCxP1 SPECIES { type = ATOM ; charge = 1.500000 ; mass = 30.974000 M_p ; }
+    POPCxO3 SPECIES { type = ATOM ; charge = -0.780000 ; mass = 15.999400 M_p ; }
+    POPCxO4 SPECIES { type = ATOM ; charge = -0.780000 ; mass = 15.999400 M_p ; }
+    POPCxO1 SPECIES { type = ATOM ; charge = -0.570000 ; mass = 15.999400 M_p ; }
+    POPCxO2 SPECIES { type = ATOM ; charge = -0.570000 ; mass = 15.999400 M_p ; }
+    POPCxC1 SPECIES { type = ATOM ; charge = -0.080000 ; mass = 12.011000 M_p ; }
+    POPCxHA SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    POPCxHB SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    POPCxC2 SPECIES { type = ATOM ; charge = 0.040000 ; mass = 12.011000 M_p ; }
+    POPCxHS SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxO21 SPECIES { type = ATOM ; charge = -0.340000 ; mass = 15.999400 M_p ; }
+   POPCxC21 SPECIES { type = ATOM ; charge = 0.630000 ; mass = 12.011000 M_p ; }
+   POPCxO22 SPECIES { type = ATOM ; charge = -0.520000 ; mass = 15.999400 M_p ; }
+   POPCxC22 SPECIES { type = ATOM ; charge = -0.080000 ; mass = 12.011000 M_p ; }
+   POPCxH2R SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxH2S SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    POPCxC3 SPECIES { type = ATOM ; charge = -0.050000 ; mass = 12.011000 M_p ; }
+    POPCxHX SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    POPCxHY SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxO31 SPECIES { type = ATOM ; charge = -0.340000 ; mass = 15.999400 M_p ; }
+   POPCxC31 SPECIES { type = ATOM ; charge = 0.630000 ; mass = 12.011000 M_p ; }
+   POPCxO32 SPECIES { type = ATOM ; charge = -0.520000 ; mass = 15.999400 M_p ; }
+   POPCxC32 SPECIES { type = ATOM ; charge = -0.080000 ; mass = 12.011000 M_p ; }
+   POPCxH2X SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxH2Y SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxC23 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+   POPCxH3R SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxH3S SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxC24 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+   POPCxH4R SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxH4S SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxC25 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+   POPCxH5R SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxH5S SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxC26 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+   POPCxH6R SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxH6S SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxC27 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+   POPCxH7R SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxH7S SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxC28 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+   POPCxH8R SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxH8S SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxC29 SPECIES { type = ATOM ; charge = -0.150000 ; mass = 12.011000 M_p ; }
+   POPCxH91 SPECIES { type = ATOM ; charge = 0.150000 ; mass = 1.008000 M_p ; }
+  POPCxC210 SPECIES { type = ATOM ; charge = -0.150000 ; mass = 12.011000 M_p ; }
+  POPCxH101 SPECIES { type = ATOM ; charge = 0.150000 ; mass = 1.008000 M_p ; }
+  POPCxC211 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+  POPCxH11R SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxH11S SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxC212 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+  POPCxH12R SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxH12S SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxC213 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+  POPCxH13R SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxH13S SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxC214 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+  POPCxH14R SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxH14S SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxC215 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+  POPCxH15R SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxH15S SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxC216 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+  POPCxH16R SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxH16S SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxC217 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+  POPCxH17R SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxH17S SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxC218 SPECIES { type = ATOM ; charge = -0.270000 ; mass = 12.011000 M_p ; }
+  POPCxH18R SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxH18S SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxH18T SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxC33 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+   POPCxH3X SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxH3Y SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxC34 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+   POPCxH4X SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxH4Y SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxC35 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+   POPCxH5X SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxH5Y SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxC36 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+   POPCxH6X SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxH6Y SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxC37 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+   POPCxH7X SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxH7Y SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxC38 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+   POPCxH8X SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxH8Y SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxC39 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+   POPCxH9X SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   POPCxH9Y SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxC310 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+  POPCxH10X SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxH10Y SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxC311 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+  POPCxH11X SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxH11Y SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxC312 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+  POPCxH12X SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxH12Y SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxC313 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+  POPCxH13X SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxH13Y SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxC314 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+  POPCxH14X SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxH14Y SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxC315 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+  POPCxH15X SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxH15Y SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxC316 SPECIES { type = ATOM ; charge = -0.270000 ; mass = 12.011000 M_p ; }
+  POPCxH16X SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxH16Y SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+  POPCxH16Z SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   TIP3xOH2 SPECIES { type = ATOM ; charge = -0.834000 ; mass = 15.999400 M_p ; }
+    TIP3xH1 SPECIES { type = ATOM ; charge = 0.417000 ; mass = 1.008000 M_p ; }
+    TIP3xH2 SPECIES { type = ATOM ; charge = 0.417000 ; mass = 1.008000 M_p ; }

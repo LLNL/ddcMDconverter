@@ -1,0 +1,36 @@
+particle FILEHEADER {type=MULTILINE; datatype=VARRECORDASCII; checksum=NONE;
+loop=0; time=0.000000;
+nfiles=1; nrecord=24; nfields=10;
+field_names=id class type group rx ry rz vx vy vz;
+field_types=u s s s f f f f f f;
+h=    64.00000000000000      0.00000000000000      0.00000000000000
+       0.00000000000000     64.00000000000000      0.00000000000000
+       0.00000000000000      0.00000000000000     64.00000000000000;
+groups = group ;
+types = ATOM ;
+} 
+
+             0 ATOM       GLYnN group                 0.000                 0.000                 0.000                 0.000                 0.000                 0.000
+             1 ATOM     GLYnHT1 group                -0.472                -0.003                 0.900                 0.000                 0.000                 0.000
+             2 ATOM     GLYnHT2 group                -0.339                 0.853                -0.435                 0.000                 0.000                 0.000
+             3 ATOM     GLYnHT3 group                -0.339                -0.853                -0.435                 0.000                 0.000                 0.000
+             4 ATOM      GLYnCA group                 1.447                 0.000                 0.000                 0.000                 0.000                 0.000
+             5 ATOM     GLYnHA1 group                 1.799                -0.896                -0.522                 0.000                 0.000                 0.000
+             6 ATOM     GLYnHA2 group                 1.800                 0.893                -0.524                 0.000                 0.000                 0.000
+           256 ATOM       GLYnC group                 1.968                 0.000                 1.433                 0.000                 0.000                 0.000
+           257 ATOM       GLYnO group                 3.160                -0.071                 1.723                 0.000                 0.000                 0.000
+         65536 ATOM       GLYxN group                 1.109                 0.081                 2.459                 0.000                 0.000                 0.000
+         65537 ATOM      GLYxHN group                -0.147                 0.352                 2.112                 0.000                 0.000                 0.000
+         65538 ATOM      GLYxCA group                 1.604                 0.081                 3.818                 0.000                 0.000                 0.000
+         65539 ATOM     GLYxHA1 group                 1.294                 1.011                 4.306                 0.000                 0.000                 0.000
+         65540 ATOM     GLYxHA2 group                 1.174                -0.773                 4.350                 0.000                 0.000                 0.000
+         65792 ATOM       GLYxC group                 3.126                -0.021                 3.820                 0.000                 0.000                 0.000
+         65793 ATOM       GLYxO group                 3.809                 0.030                 4.839                 0.000                 0.000                 0.000
+        131072 ATOM       GLYcN group                 3.788                -0.174                 2.665                 0.000                 0.000                 0.000
+        131073 ATOM      GLYcHN group                 4.087                 0.303                 1.219                 0.000                 0.000                 0.000
+        131074 ATOM      GLYcCA group                 5.232                -0.270                 2.666                 0.000                 0.000                 0.000
+        131075 ATOM     GLYcHA1 group                 5.521                -1.233                 2.231                 0.000                 0.000                 0.000
+        131076 ATOM     GLYcHA2 group                 5.640                 0.544                 2.061                 0.000                 0.000                 0.000
+        131328 ATOM       GLYcC group                 5.760                -0.169                 4.093                 0.000                 0.000                 0.000
+        131329 ATOM     GLYcOT1 group                 6.946                -0.292                 4.389                 0.000                 0.000                 0.000
+        131330 ATOM     GLYcOT2 group                 4.844                 0.069                 5.058                 0.000                 0.000                 0.000

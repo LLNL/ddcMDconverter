@@ -1,0 +1,18 @@
+#include "../resources/martini_v2.1-dna.itp"
+#include "../resources/martini_v2.0_ions.itp"
+#include "../resources/martini_v2.0_POPC_02.itp"
+#include "../resources/martini_v2.0_CHOL_02.itp"
+
+[ system ]
+; name
+INSANE! Membrane UpperLeaflet>POPC:CHOL=7.0:3.0 LowerLeaflet>POPC:CHOL=7.0:3.0
+
+[ molecules ]
+; name  number
+POPC           118
+CHOL            50
+POPC           118
+CHOL            50
+W             9004
+NA             99
+CL             99

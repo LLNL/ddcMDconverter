@@ -1,0 +1,13 @@
+; Include forcefield parameters
+; The actual location of these files might be different on your computer!
+#include "martini_v2.1-dna.itp"
+#include "martini_v2.0_ions.itp"
+#include "martini_v2.0_CHOL_01-fix.itp"
+
+[ system ]
+; name
+lipids-sim
+
+[ molecules ]
+; name  number
+CHOL             1

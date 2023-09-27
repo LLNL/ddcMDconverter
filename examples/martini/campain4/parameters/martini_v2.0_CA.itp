@@ -1,0 +1,16 @@
+;;;;;; HYDRATED CALCIUM ION
+;
+; Warning: this is untested, and likely not very realistic description of
+; a calcium ion. For a proper description of calcium, the solvation free
+; energy should be increased. This could be achieved in an ad-hoc manner
+; through increasing of the LJ well depth for water-calcium interactions.
+
+[moleculetype]
+; molname   nrexcl
+  CA+       1
+
+[atoms]
+;id     type    resnr   residu  atom    cgnr    charge
+ 1  Qd  1   ION     CA+     1   2.0
+
+

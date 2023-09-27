@@ -1,0 +1,45 @@
+system SYSTEM
+{species =
+         ALAnN 
+       ALAnHT1 
+       ALAnHT2 
+       ALAnHT3 
+        ALAnCA 
+        ALAnHA 
+        ALAnCB 
+       ALAnHB1 
+       ALAnHB2 
+       ALAnHB3 
+         ALAnC 
+         ALAnO 
+         GLYcN 
+        GLYcHN 
+        GLYcCA 
+       GLYcHA1 
+       GLYcHA2 
+         GLYcC 
+       GLYcOT1 
+       GLYcOT2 
+   ;
+}
+
+      ALAnN SPECIES { type = ATOM ; charge = -0.300000 ; mass = 14.007000 M_p ; }
+    ALAnHT1 SPECIES { type = ATOM ; charge = 0.330000 ; mass = 1.008000 M_p ; }
+    ALAnHT2 SPECIES { type = ATOM ; charge = 0.330000 ; mass = 1.008000 M_p ; }
+    ALAnHT3 SPECIES { type = ATOM ; charge = 0.330000 ; mass = 1.008000 M_p ; }
+     ALAnCA SPECIES { type = ATOM ; charge = 0.210000 ; mass = 12.011000 M_p ; }
+     ALAnHA SPECIES { type = ATOM ; charge = 0.100000 ; mass = 1.008000 M_p ; }
+     ALAnCB SPECIES { type = ATOM ; charge = -0.270000 ; mass = 12.011000 M_p ; }
+    ALAnHB1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    ALAnHB2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    ALAnHB3 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+      ALAnC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      ALAnO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      GLYcN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     GLYcHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     GLYcCA SPECIES { type = ATOM ; charge = -0.020000 ; mass = 12.011000 M_p ; }
+    GLYcHA1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    GLYcHA2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+      GLYcC SPECIES { type = ATOM ; charge = 0.340000 ; mass = 12.011000 M_p ; }
+    GLYcOT1 SPECIES { type = ATOM ; charge = -0.670000 ; mass = 15.999000 M_p ; }
+    GLYcOT2 SPECIES { type = ATOM ; charge = -0.670000 ; mass = 15.999000 M_p ; }

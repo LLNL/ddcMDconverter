@@ -1,0 +1,12 @@
+
+******* HPM paragraph started at  Fri Apr 30 01:57:01 2021 with loop=0******
+******* type=MARTINI;excludePotentialTerm=0;use_transform=0;cutoff=11.0 Angstrom;rcoulomb=11.0 Angstrom;epsilon_r=15;epsilon_rf=-1;function=lennardjones;parmfile=martini.data; ******
+******* type=RESTRAINT;parmfile=restraint.data; ******
+
+******* HPM paragraph started at  Fri Apr 30 02:00:47 2021 with loop=0******
+******* type=MARTINI;excludePotentialTerm=0;use_transform=0;cutoff=11.0 Angstrom;rcoulomb=11.0 Angstrom;epsilon_r=15;epsilon_rf=-1;function=lennardjones;parmfile=martini.data; ******
+******* type=RESTRAINT;parmfile=restraint.data; ******
+
+******* HPM paragraph started at  Fri Apr 30 02:01:51 2021 with loop=0******
+******* type=MARTINI;excludePotentialTerm=0;use_transform=0;cutoff=11.0 Angstrom;rcoulomb=11.0 Angstrom;epsilon_r=15;epsilon_rf=-1;function=lennardjones;parmfile=martini.data; ******
+******* type=RESTRAINT;parmfile=restraint.data; ******

@@ -1,0 +1,25 @@
+; Include forcefield parameters
+; The actual location of these files might be different on your computer!
+#include "martini_v3.0.4.itp"
+#include "martini_v3.0_sterols.itp"
+#include "martini_v3.0_solvents.itp"
+#include "martini_v3.0_ions.itp"
+
+[ system ]
+; name
+lipids-sim
+
+[ molecules ]
+; name  number
+; X: 1.000 (1 bins) Y: 1.000 (1 bins) in upper leaflet
+; X: 1.000 (1 bins) Y: 1.000 (1 bins) in lower leaflet
+; 1 lipids in upper leaflet, 1 lipids in lower leaflet
+; NDX Solute 1 0
+; Charge of protein: 0.000000
+; NDX Membrane 1 16
+; Charge of membrane: 0.000000
+; Total charge: 0.000000
+; NDX Solvent 17 0
+; NDX System 1 16
+; "I mean, the good stuff is just INSANE" --Julia Ormond
+CHOL             1

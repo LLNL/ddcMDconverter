@@ -1,0 +1,60 @@
+Default inputs:  itpList martini.data
+###########   RAS   ###########
+Remove constraints:  0
+Original total bonds:  1189
+Remove bonds:  0
+Final total number of bonds:  1189
+(420, 421, 422, 2, 120., 15., b'')
+###########   RAS_RAF   ###########
+Remove constraints:  0
+Original total bonds:  2015
+Remove bonds:  0
+Final total number of bonds:  2015
+(254, 257, 258, 2, 100., 25., b'LYS(C)-CYS(T) SBB')
+###########   POPX   ###########
+Original total bonds:  11
+Remove bonds:  0
+Final total number of bonds:  11
+###########   CHOL   ###########
+Remove constraints:  0
+Original total bonds:  8
+Remove bonds:  0
+Final total number of bonds:  8
+###########   CL   ###########
+###########   DIPE   ###########
+Original total bonds:  11
+Remove bonds:  0
+Final total number of bonds:  11
+###########   DPSM   ###########
+Original total bonds:  10
+Remove bonds:  0
+Final total number of bonds:  10
+###########   NA   ###########
+###########   PAP6   ###########
+Remove constraints:  0
+Original total bonds:  12
+Remove bonds:  0
+Final total number of bonds:  12
+###########   PAPC   ###########
+Original total bonds:  12
+Remove bonds:  0
+Final total number of bonds:  12
+###########   PAPS   ###########
+Original total bonds:  12
+Remove bonds:  0
+Final total number of bonds:  12
+###########   POPC   ###########
+Original total bonds:  11
+Remove bonds:  0
+Final total number of bonds:  11
+###########   POPE   ###########
+Original total bonds:  11
+Remove bonds:  0
+Final total number of bonds:  11
+###########   POPS   ###########
+Original total bonds:  11
+Remove bonds:  0
+Final total number of bonds:  11
+###########   W   ###########
+###########   MG   ###########
+###########   ZN2   ###########

@@ -1,0 +1,183 @@
+martini MMFF
+{
+resiParms=POPX POPC W WF ;
+atomTypeList=Q0 P4 Na Qa BP4 C3 C1 ;
+ljParms=Q0_Q0 Q0_Na Q0_C3 Q0_C1 Q0_P4 Q0_Qa Q0_BP4 Na_Na Na_C3 Na_C1 Na_P4 Na_Qa Na_BP4 C3_C3 C3_C1 C3_P4 C3_Qa C3_BP4 C1_C1 C1_P4 C1_Qa C1_BP4 P4_P4 P4_Qa P4_BP4 Qa_Qa Qa_BP4 BP4_BP4 ;
+}
+
+Q0 MASSPARMS { atomType=Q0; atomTypeID=0; mass=72.0M_p ; }
+P4 MASSPARMS { atomType=P4; atomTypeID=1; mass=72.0M_p ; }
+Na MASSPARMS { atomType=Na; atomTypeID=2; mass=72.0M_p ; }
+Qa MASSPARMS { atomType=Qa; atomTypeID=3; mass=72.0M_p ; }
+BP4 MASSPARMS { atomType=BP4; atomTypeID=4; mass=72.0M_p ; }
+C3 MASSPARMS { atomType=C3; atomTypeID=5; mass=72.0M_p ; }
+C1 MASSPARMS { atomType=C1; atomTypeID=6; mass=72.0M_p ; }
+
+POPX RESIPARMS
+{
+  resID=1;
+  resType=0;
+  resName=POPX;
+  charge=0.0;
+  groupList=POPX_g0;
+  bondList=POPX_b0 POPX_b1 POPX_b2 POPX_b3 POPX_b4 POPX_b5 POPX_b6 POPX_b7 POPX_b8 POPX_b9 POPX_b10 ;
+  restraintList=POPX_r0 ;
+  angleList=POPX_a0 POPX_a1 POPX_a2 POPX_a3 POPX_a4 POPX_a5 POPX_a6 POPX_a7 ;
+  centerAtom=0;
+}
+
+POPX_g0 GROUPPARMS{
+  groupID=0;
+  atomList=POPX_NC3 POPX_PO4 POPX_GL1 POPX_GL2 POPX_C1A POPX_D2A POPX_C3A POPX_C4A POPX_C1B POPX_C2B POPX_C3B POPX_C4B ;
+}
+
+POPX_NC3 ATOMPARMS{atomID=0; atomName=NC3; atomType=Q0; atomTypeID=0; charge=1.0; mass=72.0 M_p ; }
+POPX_PO4 ATOMPARMS{atomID=1; atomName=PO4; atomType=Qa; atomTypeID=3; charge=-1.0; mass=72.0 M_p ; }
+POPX_GL1 ATOMPARMS{atomID=2; atomName=GL1; atomType=Na; atomTypeID=2; charge=0.0; mass=72.0 M_p ; }
+POPX_GL2 ATOMPARMS{atomID=3; atomName=GL2; atomType=Na; atomTypeID=2; charge=0.0; mass=72.0 M_p ; }
+POPX_C1A ATOMPARMS{atomID=4; atomName=C1A; atomType=C1; atomTypeID=6; charge=0.0; mass=72.0 M_p ; }
+POPX_D2A ATOMPARMS{atomID=5; atomName=D2A; atomType=C3; atomTypeID=5; charge=0.0; mass=72.0 M_p ; }
+POPX_C3A ATOMPARMS{atomID=6; atomName=C3A; atomType=C1; atomTypeID=6; charge=0.0; mass=72.0 M_p ; }
+POPX_C4A ATOMPARMS{atomID=7; atomName=C4A; atomType=C1; atomTypeID=6; charge=0.0; mass=72.0 M_p ; }
+POPX_C1B ATOMPARMS{atomID=8; atomName=C1B; atomType=C1; atomTypeID=6; charge=0.0; mass=72.0 M_p ; }
+POPX_C2B ATOMPARMS{atomID=9; atomName=C2B; atomType=C1; atomTypeID=6; charge=0.0; mass=72.0 M_p ; }
+POPX_C3B ATOMPARMS{atomID=10; atomName=C3B; atomType=C1; atomTypeID=6; charge=0.0; mass=72.0 M_p ; }
+POPX_C4B ATOMPARMS{atomID=11; atomName=C4B; atomType=C1; atomTypeID=6; charge=0.0; mass=72.0 M_p ; }
+
+POPX_b0 BONDPARMS{atomI=0; atomTypeI=Q0; atomJ=1; atomTypeJ=Qa; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.47 nm; }
+POPX_b1 BONDPARMS{atomI=1; atomTypeI=Qa; atomJ=2; atomTypeJ=Na; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.47 nm; }
+POPX_b2 BONDPARMS{atomI=2; atomTypeI=Na; atomJ=3; atomTypeJ=Na; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.37 nm; }
+POPX_b3 BONDPARMS{atomI=2; atomTypeI=Na; atomJ=4; atomTypeJ=C1; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.47 nm; }
+POPX_b4 BONDPARMS{atomI=4; atomTypeI=C1; atomJ=5; atomTypeJ=C3; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.47 nm; }
+POPX_b5 BONDPARMS{atomI=5; atomTypeI=C3; atomJ=6; atomTypeJ=C1; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.47 nm; }
+POPX_b6 BONDPARMS{atomI=6; atomTypeI=C1; atomJ=7; atomTypeJ=C1; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.47 nm; }
+POPX_b7 BONDPARMS{atomI=3; atomTypeI=Na; atomJ=8; atomTypeJ=C1; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.47 nm; }
+POPX_b8 BONDPARMS{atomI=8; atomTypeI=C1; atomJ=9; atomTypeJ=C1; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.47 nm; }
+POPX_b9 BONDPARMS{atomI=9; atomTypeI=C1; atomJ=10; atomTypeJ=C1; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.47 nm; }
+POPX_b10 BONDPARMS{atomI=10; atomTypeI=C1; atomJ=11; atomTypeJ=C1; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.47 nm; }
+
+POPX_r0 RESTRAINTPARMS{atomI=1; atomTypeI=Qa; func=1; fcx=0; fcy=0; fcz=2; kb= 1.0 kJ*mol^-1*nm^-2; }
+
+POPX_a0 ANGLEPARMS{atomI=1; atomJ=2; atomK=3; func=2; theta0=-0.5; ktheta=12.5 kJ*mol^-1; }
+POPX_a1 ANGLEPARMS{atomI=1; atomJ=2; atomK=4; func=2; theta0=-1.0; ktheta=12.5 kJ*mol^-1; }
+POPX_a2 ANGLEPARMS{atomI=2; atomJ=4; atomK=5; func=2; theta0=-1.0; ktheta=12.5 kJ*mol^-1; }
+POPX_a3 ANGLEPARMS{atomI=4; atomJ=5; atomK=6; func=2; theta0=-0.5; ktheta=22.5 kJ*mol^-1; }
+POPX_a4 ANGLEPARMS{atomI=5; atomJ=6; atomK=7; func=2; theta0=-1.0; ktheta=12.5 kJ*mol^-1; }
+POPX_a5 ANGLEPARMS{atomI=3; atomJ=8; atomK=9; func=2; theta0=-1.0; ktheta=12.5 kJ*mol^-1; }
+POPX_a6 ANGLEPARMS{atomI=8; atomJ=9; atomK=10; func=2; theta0=-1.0; ktheta=12.5 kJ*mol^-1; }
+POPX_a7 ANGLEPARMS{atomI=9; atomJ=10; atomK=11; func=2; theta0=-1.0; ktheta=12.5 kJ*mol^-1; }
+
+POPC RESIPARMS
+{
+  resID=2;
+  resType=0;
+  resName=POPC;
+  charge=0.0;
+  groupList=POPC_g0;
+  bondList=POPC_b0 POPC_b1 POPC_b2 POPC_b3 POPC_b4 POPC_b5 POPC_b6 POPC_b7 POPC_b8 POPC_b9 POPC_b10 ;
+  angleList=POPC_a0 POPC_a1 POPC_a2 POPC_a3 POPC_a4 POPC_a5 POPC_a6 POPC_a7 ;
+  centerAtom=0;
+}
+
+POPC_g0 GROUPPARMS{
+  groupID=0;
+  atomList=POPC_NC3 POPC_PO4 POPC_GL1 POPC_GL2 POPC_C1A POPC_D2A POPC_C3A POPC_C4A POPC_C1B POPC_C2B POPC_C3B POPC_C4B ;
+}
+
+POPC_NC3 ATOMPARMS{atomID=0; atomName=NC3; atomType=Q0; atomTypeID=0; charge=1.0; mass=72.0 M_p ; }
+POPC_PO4 ATOMPARMS{atomID=1; atomName=PO4; atomType=Qa; atomTypeID=3; charge=-1.0; mass=72.0 M_p ; }
+POPC_GL1 ATOMPARMS{atomID=2; atomName=GL1; atomType=Na; atomTypeID=2; charge=0.0; mass=72.0 M_p ; }
+POPC_GL2 ATOMPARMS{atomID=3; atomName=GL2; atomType=Na; atomTypeID=2; charge=0.0; mass=72.0 M_p ; }
+POPC_C1A ATOMPARMS{atomID=4; atomName=C1A; atomType=C1; atomTypeID=6; charge=0.0; mass=72.0 M_p ; }
+POPC_D2A ATOMPARMS{atomID=5; atomName=D2A; atomType=C3; atomTypeID=5; charge=0.0; mass=72.0 M_p ; }
+POPC_C3A ATOMPARMS{atomID=6; atomName=C3A; atomType=C1; atomTypeID=6; charge=0.0; mass=72.0 M_p ; }
+POPC_C4A ATOMPARMS{atomID=7; atomName=C4A; atomType=C1; atomTypeID=6; charge=0.0; mass=72.0 M_p ; }
+POPC_C1B ATOMPARMS{atomID=8; atomName=C1B; atomType=C1; atomTypeID=6; charge=0.0; mass=72.0 M_p ; }
+POPC_C2B ATOMPARMS{atomID=9; atomName=C2B; atomType=C1; atomTypeID=6; charge=0.0; mass=72.0 M_p ; }
+POPC_C3B ATOMPARMS{atomID=10; atomName=C3B; atomType=C1; atomTypeID=6; charge=0.0; mass=72.0 M_p ; }
+POPC_C4B ATOMPARMS{atomID=11; atomName=C4B; atomType=C1; atomTypeID=6; charge=0.0; mass=72.0 M_p ; }
+
+POPC_b0 BONDPARMS{atomI=0; atomTypeI=Q0; atomJ=1; atomTypeJ=Qa; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.47 nm; }
+POPC_b1 BONDPARMS{atomI=1; atomTypeI=Qa; atomJ=2; atomTypeJ=Na; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.47 nm; }
+POPC_b2 BONDPARMS{atomI=2; atomTypeI=Na; atomJ=3; atomTypeJ=Na; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.37 nm; }
+POPC_b3 BONDPARMS{atomI=2; atomTypeI=Na; atomJ=4; atomTypeJ=C1; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.47 nm; }
+POPC_b4 BONDPARMS{atomI=4; atomTypeI=C1; atomJ=5; atomTypeJ=C3; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.47 nm; }
+POPC_b5 BONDPARMS{atomI=5; atomTypeI=C3; atomJ=6; atomTypeJ=C1; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.47 nm; }
+POPC_b6 BONDPARMS{atomI=6; atomTypeI=C1; atomJ=7; atomTypeJ=C1; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.47 nm; }
+POPC_b7 BONDPARMS{atomI=3; atomTypeI=Na; atomJ=8; atomTypeJ=C1; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.47 nm; }
+POPC_b8 BONDPARMS{atomI=8; atomTypeI=C1; atomJ=9; atomTypeJ=C1; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.47 nm; }
+POPC_b9 BONDPARMS{atomI=9; atomTypeI=C1; atomJ=10; atomTypeJ=C1; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.47 nm; }
+POPC_b10 BONDPARMS{atomI=10; atomTypeI=C1; atomJ=11; atomTypeJ=C1; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.47 nm; }
+
+POPC_a0 ANGLEPARMS{atomI=1; atomJ=2; atomK=3; func=2; theta0=-0.5; ktheta=12.5 kJ*mol^-1; }
+POPC_a1 ANGLEPARMS{atomI=1; atomJ=2; atomK=4; func=2; theta0=-1.0; ktheta=12.5 kJ*mol^-1; }
+POPC_a2 ANGLEPARMS{atomI=2; atomJ=4; atomK=5; func=2; theta0=-1.0; ktheta=12.5 kJ*mol^-1; }
+POPC_a3 ANGLEPARMS{atomI=4; atomJ=5; atomK=6; func=2; theta0=-0.5; ktheta=22.5 kJ*mol^-1; }
+POPC_a4 ANGLEPARMS{atomI=5; atomJ=6; atomK=7; func=2; theta0=-1.0; ktheta=12.5 kJ*mol^-1; }
+POPC_a5 ANGLEPARMS{atomI=3; atomJ=8; atomK=9; func=2; theta0=-1.0; ktheta=12.5 kJ*mol^-1; }
+POPC_a6 ANGLEPARMS{atomI=8; atomJ=9; atomK=10; func=2; theta0=-1.0; ktheta=12.5 kJ*mol^-1; }
+POPC_a7 ANGLEPARMS{atomI=9; atomJ=10; atomK=11; func=2; theta0=-1.0; ktheta=12.5 kJ*mol^-1; }
+
+W RESIPARMS
+{
+  resID=3;
+  resType=0;
+  resName=W;
+  charge=0.0;
+  groupList=W_g0;
+  centerAtom=0;
+}
+
+W_g0 GROUPPARMS{
+  groupID=0;
+  atomList=W_W ;
+}
+
+W_W ATOMPARMS{atomID=0; atomName=W; atomType=P4; atomTypeID=1; charge=0.0; mass=72.0 M_p ; }
+
+WF RESIPARMS
+{
+  resID=4;
+  resType=0;
+  resName=WF;
+  charge=0.0;
+  groupList=WF_g0;
+  centerAtom=0;
+}
+
+WF_g0 GROUPPARMS{
+  groupID=0;
+  atomList=WF_WF ;
+}
+
+WF_WF ATOMPARMS{atomID=0; atomName=WF; atomType=BP4; atomTypeID=4; charge=0.0; mass=72.0 M_p ; }
+
+Q0_Q0 LJPARMS{atomtypeI=Q0; indexI=0; atomtypeJ=Q0; indexJ=0; sigma=0.47 nm; eps=3.5 kJ*mol^-1;}
+Q0_Na LJPARMS{atomtypeI=Q0; indexI=0; atomtypeJ=Na; indexJ=2; sigma=0.47 nm; eps=4.0 kJ*mol^-1;}
+Q0_C3 LJPARMS{atomtypeI=Q0; indexI=0; atomtypeJ=C3; indexJ=5; sigma=0.47 nm; eps=2.3 kJ*mol^-1;}
+Q0_C1 LJPARMS{atomtypeI=Q0; indexI=0; atomtypeJ=C1; indexJ=6; sigma=0.62 nm; eps=2.0 kJ*mol^-1;}
+Q0_P4 LJPARMS{atomtypeI=Q0; indexI=0; atomtypeJ=P4; indexJ=1; sigma=0.47 nm; eps=5.6 kJ*mol^-1;}
+Q0_Qa LJPARMS{atomtypeI=Q0; indexI=0; atomtypeJ=Qa; indexJ=3; sigma=0.47 nm; eps=4.5 kJ*mol^-1;}
+Q0_BP4 LJPARMS{atomtypeI=Q0; indexI=0; atomtypeJ=BP4; indexJ=4; sigma=0.47 nm; eps=5.6 kJ*mol^-1;}
+Na_Na LJPARMS{atomtypeI=Na; indexI=2; atomtypeJ=Na; indexJ=2; sigma=0.47 nm; eps=4.0 kJ*mol^-1;}
+Na_C3 LJPARMS{atomtypeI=Na; indexI=2; atomtypeJ=C3; indexJ=5; sigma=0.47 nm; eps=2.7 kJ*mol^-1;}
+Na_C1 LJPARMS{atomtypeI=Na; indexI=2; atomtypeJ=C1; indexJ=6; sigma=0.47 nm; eps=2.7 kJ*mol^-1;}
+Na_P4 LJPARMS{atomtypeI=Na; indexI=2; atomtypeJ=P4; indexJ=1; sigma=0.47 nm; eps=4.0 kJ*mol^-1;}
+Na_Qa LJPARMS{atomtypeI=Na; indexI=2; atomtypeJ=Qa; indexJ=3; sigma=0.47 nm; eps=4.0 kJ*mol^-1;}
+Na_BP4 LJPARMS{atomtypeI=Na; indexI=2; atomtypeJ=BP4; indexJ=4; sigma=0.47 nm; eps=4.0 kJ*mol^-1;}
+C3_C3 LJPARMS{atomtypeI=C3; indexI=5; atomtypeJ=C3; indexJ=5; sigma=0.47 nm; eps=3.5 kJ*mol^-1;}
+C3_C1 LJPARMS{atomtypeI=C3; indexI=5; atomtypeJ=C1; indexJ=6; sigma=0.47 nm; eps=3.5 kJ*mol^-1;}
+C3_P4 LJPARMS{atomtypeI=C3; indexI=5; atomtypeJ=P4; indexJ=1; sigma=0.47 nm; eps=2.7 kJ*mol^-1;}
+C3_Qa LJPARMS{atomtypeI=C3; indexI=5; atomtypeJ=Qa; indexJ=3; sigma=0.47 nm; eps=2.3 kJ*mol^-1;}
+C3_BP4 LJPARMS{atomtypeI=C3; indexI=5; atomtypeJ=BP4; indexJ=4; sigma=0.47 nm; eps=2.7 kJ*mol^-1;}
+C1_C1 LJPARMS{atomtypeI=C1; indexI=6; atomtypeJ=C1; indexJ=6; sigma=0.47 nm; eps=3.5 kJ*mol^-1;}
+C1_P4 LJPARMS{atomtypeI=C1; indexI=6; atomtypeJ=P4; indexJ=1; sigma=0.47 nm; eps=2.0 kJ*mol^-1;}
+C1_Qa LJPARMS{atomtypeI=C1; indexI=6; atomtypeJ=Qa; indexJ=3; sigma=0.62 nm; eps=2.0 kJ*mol^-1;}
+C1_BP4 LJPARMS{atomtypeI=C1; indexI=6; atomtypeJ=BP4; indexJ=4; sigma=0.47 nm; eps=2.0 kJ*mol^-1;}
+P4_P4 LJPARMS{atomtypeI=P4; indexI=1; atomtypeJ=P4; indexJ=1; sigma=0.47 nm; eps=5.0 kJ*mol^-1;}
+P4_Qa LJPARMS{atomtypeI=P4; indexI=1; atomtypeJ=Qa; indexJ=3; sigma=0.47 nm; eps=5.6 kJ*mol^-1;}
+P4_BP4 LJPARMS{atomtypeI=P4; indexI=1; atomtypeJ=BP4; indexJ=4; sigma=0.57 nm; eps=5.6 kJ*mol^-1;}
+Qa_Qa LJPARMS{atomtypeI=Qa; indexI=3; atomtypeJ=Qa; indexJ=3; sigma=0.47 nm; eps=5.0 kJ*mol^-1;}
+Qa_BP4 LJPARMS{atomtypeI=Qa; indexI=3; atomtypeJ=BP4; indexJ=4; sigma=0.47 nm; eps=5.6 kJ*mol^-1;}
+BP4_BP4 LJPARMS{atomtypeI=BP4; indexI=4; atomtypeJ=BP4; indexJ=4; sigma=0.47 nm; eps=5.0 kJ*mol^-1;}
+

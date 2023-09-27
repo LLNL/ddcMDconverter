@@ -1,0 +1,747 @@
+system SYSTEM
+{species =
+         ALAxN 
+        ALAxHN 
+        ALAxCA 
+        ALAxHA 
+        ALAxCB 
+       ALAxHB1 
+       ALAxHB2 
+       ALAxHB3 
+         ALAxC 
+         ALAxO 
+         ARGxN 
+        ARGxHN 
+        ARGxCA 
+        ARGxHA 
+        ARGxCB 
+       ARGxHB1 
+       ARGxHB2 
+        ARGxCG 
+       ARGxHG1 
+       ARGxHG2 
+        ARGxCD 
+       ARGxHD1 
+       ARGxHD2 
+        ARGxNE 
+        ARGxHE 
+        ARGxCZ 
+       ARGxNH1 
+      ARGxHH11 
+      ARGxHH12 
+       ARGxNH2 
+      ARGxHH21 
+      ARGxHH22 
+         ARGxC 
+         ARGxO 
+         ARGcN 
+        ARGcHN 
+        ARGcCA 
+        ARGcHA 
+        ARGcCB 
+       ARGcHB1 
+       ARGcHB2 
+        ARGcCG 
+       ARGcHG1 
+       ARGcHG2 
+        ARGcCD 
+       ARGcHD1 
+       ARGcHD2 
+        ARGcNE 
+        ARGcHE 
+        ARGcCZ 
+       ARGcNH1 
+      ARGcHH11 
+      ARGcHH12 
+       ARGcNH2 
+      ARGcHH21 
+      ARGcHH22 
+         ARGcC 
+       ARGcOT1 
+       ARGcOT2 
+         ASNxN 
+        ASNxHN 
+        ASNxCA 
+        ASNxHA 
+        ASNxCB 
+       ASNxHB1 
+       ASNxHB2 
+        ASNxCG 
+       ASNxOD1 
+       ASNxND2 
+      ASNxHD21 
+      ASNxHD22 
+         ASNxC 
+         ASNxO 
+         ASPxN 
+        ASPxHN 
+        ASPxCA 
+        ASPxHA 
+        ASPxCB 
+       ASPxHB1 
+       ASPxHB2 
+        ASPxCG 
+       ASPxOD1 
+       ASPxOD2 
+         ASPxC 
+         ASPxO 
+         CYSxN 
+        CYSxHN 
+        CYSxCA 
+        CYSxHA 
+        CYSxCB 
+       CYSxHB1 
+       CYSxHB2 
+        CYSxSG 
+       CYSxHG1 
+         CYSxC 
+         CYSxO 
+         GLNxN 
+        GLNxHN 
+        GLNxCA 
+        GLNxHA 
+        GLNxCB 
+       GLNxHB1 
+       GLNxHB2 
+        GLNxCG 
+       GLNxHG1 
+       GLNxHG2 
+        GLNxCD 
+       GLNxOE1 
+       GLNxNE2 
+      GLNxHE21 
+      GLNxHE22 
+         GLNxC 
+         GLNxO 
+         GLUxN 
+        GLUxHN 
+        GLUxCA 
+        GLUxHA 
+        GLUxCB 
+       GLUxHB1 
+       GLUxHB2 
+        GLUxCG 
+       GLUxHG1 
+       GLUxHG2 
+        GLUxCD 
+       GLUxOE1 
+       GLUxOE2 
+         GLUxC 
+         GLUxO 
+         GLYxN 
+        GLYxHN 
+        GLYxCA 
+       GLYxHA1 
+       GLYxHA2 
+         GLYxC 
+         GLYxO 
+         HSDxN 
+        HSDxHN 
+        HSDxCA 
+        HSDxHA 
+        HSDxCB 
+       HSDxHB1 
+       HSDxHB2 
+       HSDxND1 
+       HSDxHD1 
+        HSDxCG 
+       HSDxCE1 
+       HSDxHE1 
+       HSDxNE2 
+       HSDxCD2 
+       HSDxHD2 
+         HSDxC 
+         HSDxO 
+         ILExN 
+        ILExHN 
+        ILExCA 
+        ILExHA 
+        ILExCB 
+        ILExHB 
+       ILExCG2 
+      ILExHG21 
+      ILExHG22 
+      ILExHG23 
+       ILExCG1 
+      ILExHG11 
+      ILExHG12 
+        ILExCD 
+       ILExHD1 
+       ILExHD2 
+       ILExHD3 
+         ILExC 
+         ILExO 
+         LEUxN 
+        LEUxHN 
+        LEUxCA 
+        LEUxHA 
+        LEUxCB 
+       LEUxHB1 
+       LEUxHB2 
+        LEUxCG 
+        LEUxHG 
+       LEUxCD1 
+      LEUxHD11 
+      LEUxHD12 
+      LEUxHD13 
+       LEUxCD2 
+      LEUxHD21 
+      LEUxHD22 
+      LEUxHD23 
+         LEUxC 
+         LEUxO 
+         LYSxN 
+        LYSxHN 
+        LYSxCA 
+        LYSxHA 
+        LYSxCB 
+       LYSxHB1 
+       LYSxHB2 
+        LYSxCG 
+       LYSxHG1 
+       LYSxHG2 
+        LYSxCD 
+       LYSxHD1 
+       LYSxHD2 
+        LYSxCE 
+       LYSxHE1 
+       LYSxHE2 
+        LYSxNZ 
+       LYSxHZ1 
+       LYSxHZ2 
+       LYSxHZ3 
+         LYSxC 
+         LYSxO 
+         METxN 
+        METxHN 
+        METxCA 
+        METxHA 
+        METxCB 
+       METxHB1 
+       METxHB2 
+        METxCG 
+       METxHG1 
+       METxHG2 
+        METxSD 
+        METxCE 
+       METxHE1 
+       METxHE2 
+       METxHE3 
+         METxC 
+         METxO 
+         METnN 
+       METnHT1 
+       METnHT2 
+       METnHT3 
+        METnCA 
+        METnHA 
+        METnCB 
+       METnHB1 
+       METnHB2 
+        METnCG 
+       METnHG1 
+       METnHG2 
+        METnSD 
+        METnCE 
+       METnHE1 
+       METnHE2 
+       METnHE3 
+         METnC 
+         METnO 
+         PHExN 
+        PHExHN 
+        PHExCA 
+        PHExHA 
+        PHExCB 
+       PHExHB1 
+       PHExHB2 
+        PHExCG 
+       PHExCD1 
+       PHExHD1 
+       PHExCE1 
+       PHExHE1 
+        PHExCZ 
+        PHExHZ 
+       PHExCD2 
+       PHExHD2 
+       PHExCE2 
+       PHExHE2 
+         PHExC 
+         PHExO 
+         PROxN 
+        PROxCD 
+       PROxHD1 
+       PROxHD2 
+        PROxCA 
+        PROxHA 
+        PROxCB 
+       PROxHB1 
+       PROxHB2 
+        PROxCG 
+       PROxHG1 
+       PROxHG2 
+         PROxC 
+         PROxO 
+         SERxN 
+        SERxHN 
+        SERxCA 
+        SERxHA 
+        SERxCB 
+       SERxHB1 
+       SERxHB2 
+        SERxOG 
+       SERxHG1 
+         SERxC 
+         SERxO 
+         THRxN 
+        THRxHN 
+        THRxCA 
+        THRxHA 
+        THRxCB 
+        THRxHB 
+       THRxOG1 
+       THRxHG1 
+       THRxCG2 
+      THRxHG21 
+      THRxHG22 
+      THRxHG23 
+         THRxC 
+         THRxO 
+         TRPxN 
+        TRPxHN 
+        TRPxCA 
+        TRPxHA 
+        TRPxCB 
+       TRPxHB1 
+       TRPxHB2 
+        TRPxCG 
+       TRPxCD1 
+       TRPxHD1 
+       TRPxNE1 
+       TRPxHE1 
+       TRPxCE2 
+       TRPxCD2 
+       TRPxCE3 
+       TRPxHE3 
+       TRPxCZ3 
+       TRPxHZ3 
+       TRPxCZ2 
+       TRPxHZ2 
+       TRPxCH2 
+       TRPxHH2 
+         TRPxC 
+         TRPxO 
+         TYRxN 
+        TYRxHN 
+        TYRxCA 
+        TYRxHA 
+        TYRxCB 
+       TYRxHB1 
+       TYRxHB2 
+        TYRxCG 
+       TYRxCD1 
+       TYRxHD1 
+       TYRxCE1 
+       TYRxHE1 
+        TYRxCZ 
+        TYRxOH 
+        TYRxHH 
+       TYRxCD2 
+       TYRxHD2 
+       TYRxCE2 
+       TYRxHE2 
+         TYRxC 
+         TYRxO 
+         VALxN 
+        VALxHN 
+        VALxCA 
+        VALxHA 
+        VALxCB 
+        VALxHB 
+       VALxCG1 
+      VALxHG11 
+      VALxHG12 
+      VALxHG13 
+       VALxCG2 
+      VALxHG21 
+      VALxHG22 
+      VALxHG23 
+         VALxC 
+         VALxO 
+      TIP3xOH2 
+       TIP3xH1 
+       TIP3xH2 
+   ;
+}
+
+      ALAxN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     ALAxHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     ALAxCA SPECIES { type = ATOM ; charge = 0.070000 ; mass = 12.011000 M_p ; }
+     ALAxHA SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     ALAxCB SPECIES { type = ATOM ; charge = -0.270000 ; mass = 12.011000 M_p ; }
+    ALAxHB1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    ALAxHB2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    ALAxHB3 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+      ALAxC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      ALAxO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      ARGxN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     ARGxHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     ARGxCA SPECIES { type = ATOM ; charge = 0.070000 ; mass = 12.011000 M_p ; }
+     ARGxHA SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     ARGxCB SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+    ARGxHB1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    ARGxHB2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     ARGxCG SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+    ARGxHG1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    ARGxHG2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     ARGxCD SPECIES { type = ATOM ; charge = 0.200000 ; mass = 12.011000 M_p ; }
+    ARGxHD1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    ARGxHD2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     ARGxNE SPECIES { type = ATOM ; charge = -0.700000 ; mass = 14.007000 M_p ; }
+     ARGxHE SPECIES { type = ATOM ; charge = 0.440000 ; mass = 1.008000 M_p ; }
+     ARGxCZ SPECIES { type = ATOM ; charge = 0.640000 ; mass = 12.011000 M_p ; }
+    ARGxNH1 SPECIES { type = ATOM ; charge = -0.800000 ; mass = 14.007000 M_p ; }
+   ARGxHH11 SPECIES { type = ATOM ; charge = 0.460000 ; mass = 1.008000 M_p ; }
+   ARGxHH12 SPECIES { type = ATOM ; charge = 0.460000 ; mass = 1.008000 M_p ; }
+    ARGxNH2 SPECIES { type = ATOM ; charge = -0.800000 ; mass = 14.007000 M_p ; }
+   ARGxHH21 SPECIES { type = ATOM ; charge = 0.460000 ; mass = 1.008000 M_p ; }
+   ARGxHH22 SPECIES { type = ATOM ; charge = 0.460000 ; mass = 1.008000 M_p ; }
+      ARGxC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      ARGxO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      ARGcN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     ARGcHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     ARGcCA SPECIES { type = ATOM ; charge = 0.070000 ; mass = 12.011000 M_p ; }
+     ARGcHA SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     ARGcCB SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+    ARGcHB1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    ARGcHB2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     ARGcCG SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+    ARGcHG1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    ARGcHG2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     ARGcCD SPECIES { type = ATOM ; charge = 0.200000 ; mass = 12.011000 M_p ; }
+    ARGcHD1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    ARGcHD2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     ARGcNE SPECIES { type = ATOM ; charge = -0.700000 ; mass = 14.007000 M_p ; }
+     ARGcHE SPECIES { type = ATOM ; charge = 0.440000 ; mass = 1.008000 M_p ; }
+     ARGcCZ SPECIES { type = ATOM ; charge = 0.640000 ; mass = 12.011000 M_p ; }
+    ARGcNH1 SPECIES { type = ATOM ; charge = -0.800000 ; mass = 14.007000 M_p ; }
+   ARGcHH11 SPECIES { type = ATOM ; charge = 0.460000 ; mass = 1.008000 M_p ; }
+   ARGcHH12 SPECIES { type = ATOM ; charge = 0.460000 ; mass = 1.008000 M_p ; }
+    ARGcNH2 SPECIES { type = ATOM ; charge = -0.800000 ; mass = 14.007000 M_p ; }
+   ARGcHH21 SPECIES { type = ATOM ; charge = 0.460000 ; mass = 1.008000 M_p ; }
+   ARGcHH22 SPECIES { type = ATOM ; charge = 0.460000 ; mass = 1.008000 M_p ; }
+      ARGcC SPECIES { type = ATOM ; charge = 0.340000 ; mass = 12.011000 M_p ; }
+    ARGcOT1 SPECIES { type = ATOM ; charge = -0.670000 ; mass = 15.999000 M_p ; }
+    ARGcOT2 SPECIES { type = ATOM ; charge = -0.670000 ; mass = 15.999000 M_p ; }
+      ASNxN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     ASNxHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     ASNxCA SPECIES { type = ATOM ; charge = 0.070000 ; mass = 12.011000 M_p ; }
+     ASNxHA SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     ASNxCB SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+    ASNxHB1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    ASNxHB2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     ASNxCG SPECIES { type = ATOM ; charge = 0.550000 ; mass = 12.011000 M_p ; }
+    ASNxOD1 SPECIES { type = ATOM ; charge = -0.550000 ; mass = 15.999000 M_p ; }
+    ASNxND2 SPECIES { type = ATOM ; charge = -0.620000 ; mass = 14.007000 M_p ; }
+   ASNxHD21 SPECIES { type = ATOM ; charge = 0.320000 ; mass = 1.008000 M_p ; }
+   ASNxHD22 SPECIES { type = ATOM ; charge = 0.300000 ; mass = 1.008000 M_p ; }
+      ASNxC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      ASNxO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      ASPxN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     ASPxHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     ASPxCA SPECIES { type = ATOM ; charge = 0.070000 ; mass = 12.011000 M_p ; }
+     ASPxHA SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     ASPxCB SPECIES { type = ATOM ; charge = -0.280000 ; mass = 12.011000 M_p ; }
+    ASPxHB1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    ASPxHB2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     ASPxCG SPECIES { type = ATOM ; charge = 0.620000 ; mass = 12.011000 M_p ; }
+    ASPxOD1 SPECIES { type = ATOM ; charge = -0.760000 ; mass = 15.999000 M_p ; }
+    ASPxOD2 SPECIES { type = ATOM ; charge = -0.760000 ; mass = 15.999000 M_p ; }
+      ASPxC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      ASPxO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      CYSxN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     CYSxHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     CYSxCA SPECIES { type = ATOM ; charge = 0.070000 ; mass = 12.011000 M_p ; }
+     CYSxHA SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     CYSxCB SPECIES { type = ATOM ; charge = -0.110000 ; mass = 12.011000 M_p ; }
+    CYSxHB1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    CYSxHB2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     CYSxSG SPECIES { type = ATOM ; charge = -0.230000 ; mass = 32.060000 M_p ; }
+    CYSxHG1 SPECIES { type = ATOM ; charge = 0.160000 ; mass = 1.008000 M_p ; }
+      CYSxC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      CYSxO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      GLNxN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     GLNxHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     GLNxCA SPECIES { type = ATOM ; charge = 0.070000 ; mass = 12.011000 M_p ; }
+     GLNxHA SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     GLNxCB SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+    GLNxHB1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    GLNxHB2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     GLNxCG SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+    GLNxHG1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    GLNxHG2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     GLNxCD SPECIES { type = ATOM ; charge = 0.550000 ; mass = 12.011000 M_p ; }
+    GLNxOE1 SPECIES { type = ATOM ; charge = -0.550000 ; mass = 15.999000 M_p ; }
+    GLNxNE2 SPECIES { type = ATOM ; charge = -0.620000 ; mass = 14.007000 M_p ; }
+   GLNxHE21 SPECIES { type = ATOM ; charge = 0.320000 ; mass = 1.008000 M_p ; }
+   GLNxHE22 SPECIES { type = ATOM ; charge = 0.300000 ; mass = 1.008000 M_p ; }
+      GLNxC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      GLNxO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      GLUxN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     GLUxHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     GLUxCA SPECIES { type = ATOM ; charge = 0.070000 ; mass = 12.011000 M_p ; }
+     GLUxHA SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     GLUxCB SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+    GLUxHB1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    GLUxHB2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     GLUxCG SPECIES { type = ATOM ; charge = -0.280000 ; mass = 12.011000 M_p ; }
+    GLUxHG1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    GLUxHG2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     GLUxCD SPECIES { type = ATOM ; charge = 0.620000 ; mass = 12.011000 M_p ; }
+    GLUxOE1 SPECIES { type = ATOM ; charge = -0.760000 ; mass = 15.999000 M_p ; }
+    GLUxOE2 SPECIES { type = ATOM ; charge = -0.760000 ; mass = 15.999000 M_p ; }
+      GLUxC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      GLUxO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      GLYxN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     GLYxHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     GLYxCA SPECIES { type = ATOM ; charge = -0.020000 ; mass = 12.011000 M_p ; }
+    GLYxHA1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    GLYxHA2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+      GLYxC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      GLYxO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      HSDxN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     HSDxHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     HSDxCA SPECIES { type = ATOM ; charge = 0.070000 ; mass = 12.011000 M_p ; }
+     HSDxHA SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     HSDxCB SPECIES { type = ATOM ; charge = -0.090000 ; mass = 12.011000 M_p ; }
+    HSDxHB1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    HSDxHB2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    HSDxND1 SPECIES { type = ATOM ; charge = -0.360000 ; mass = 14.007000 M_p ; }
+    HSDxHD1 SPECIES { type = ATOM ; charge = 0.320000 ; mass = 1.008000 M_p ; }
+     HSDxCG SPECIES { type = ATOM ; charge = -0.050000 ; mass = 12.011000 M_p ; }
+    HSDxCE1 SPECIES { type = ATOM ; charge = 0.250000 ; mass = 12.011000 M_p ; }
+    HSDxHE1 SPECIES { type = ATOM ; charge = 0.130000 ; mass = 1.008000 M_p ; }
+    HSDxNE2 SPECIES { type = ATOM ; charge = -0.700000 ; mass = 14.007000 M_p ; }
+    HSDxCD2 SPECIES { type = ATOM ; charge = 0.220000 ; mass = 12.011000 M_p ; }
+    HSDxHD2 SPECIES { type = ATOM ; charge = 0.100000 ; mass = 1.008000 M_p ; }
+      HSDxC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      HSDxO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      ILExN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     ILExHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     ILExCA SPECIES { type = ATOM ; charge = 0.070000 ; mass = 12.011000 M_p ; }
+     ILExHA SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     ILExCB SPECIES { type = ATOM ; charge = -0.090000 ; mass = 12.011000 M_p ; }
+     ILExHB SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    ILExCG2 SPECIES { type = ATOM ; charge = -0.270000 ; mass = 12.011000 M_p ; }
+   ILExHG21 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   ILExHG22 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   ILExHG23 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    ILExCG1 SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+   ILExHG11 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   ILExHG12 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     ILExCD SPECIES { type = ATOM ; charge = -0.270000 ; mass = 12.011000 M_p ; }
+    ILExHD1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    ILExHD2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    ILExHD3 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+      ILExC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      ILExO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      LEUxN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     LEUxHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     LEUxCA SPECIES { type = ATOM ; charge = 0.070000 ; mass = 12.011000 M_p ; }
+     LEUxHA SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     LEUxCB SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+    LEUxHB1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    LEUxHB2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     LEUxCG SPECIES { type = ATOM ; charge = -0.090000 ; mass = 12.011000 M_p ; }
+     LEUxHG SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    LEUxCD1 SPECIES { type = ATOM ; charge = -0.270000 ; mass = 12.011000 M_p ; }
+   LEUxHD11 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   LEUxHD12 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   LEUxHD13 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    LEUxCD2 SPECIES { type = ATOM ; charge = -0.270000 ; mass = 12.011000 M_p ; }
+   LEUxHD21 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   LEUxHD22 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   LEUxHD23 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+      LEUxC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      LEUxO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      LYSxN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     LYSxHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     LYSxCA SPECIES { type = ATOM ; charge = 0.070000 ; mass = 12.011000 M_p ; }
+     LYSxHA SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     LYSxCB SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+    LYSxHB1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    LYSxHB2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     LYSxCG SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+    LYSxHG1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    LYSxHG2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     LYSxCD SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+    LYSxHD1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    LYSxHD2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     LYSxCE SPECIES { type = ATOM ; charge = 0.210000 ; mass = 12.011000 M_p ; }
+    LYSxHE1 SPECIES { type = ATOM ; charge = 0.050000 ; mass = 1.008000 M_p ; }
+    LYSxHE2 SPECIES { type = ATOM ; charge = 0.050000 ; mass = 1.008000 M_p ; }
+     LYSxNZ SPECIES { type = ATOM ; charge = -0.300000 ; mass = 14.007000 M_p ; }
+    LYSxHZ1 SPECIES { type = ATOM ; charge = 0.330000 ; mass = 1.008000 M_p ; }
+    LYSxHZ2 SPECIES { type = ATOM ; charge = 0.330000 ; mass = 1.008000 M_p ; }
+    LYSxHZ3 SPECIES { type = ATOM ; charge = 0.330000 ; mass = 1.008000 M_p ; }
+      LYSxC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      LYSxO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      METxN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     METxHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     METxCA SPECIES { type = ATOM ; charge = 0.070000 ; mass = 12.011000 M_p ; }
+     METxHA SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     METxCB SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+    METxHB1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    METxHB2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     METxCG SPECIES { type = ATOM ; charge = -0.140000 ; mass = 12.011000 M_p ; }
+    METxHG1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    METxHG2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     METxSD SPECIES { type = ATOM ; charge = -0.090000 ; mass = 32.060000 M_p ; }
+     METxCE SPECIES { type = ATOM ; charge = -0.220000 ; mass = 12.011000 M_p ; }
+    METxHE1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    METxHE2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    METxHE3 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+      METxC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      METxO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      METnN SPECIES { type = ATOM ; charge = -0.300000 ; mass = 14.007000 M_p ; }
+    METnHT1 SPECIES { type = ATOM ; charge = 0.330000 ; mass = 1.008000 M_p ; }
+    METnHT2 SPECIES { type = ATOM ; charge = 0.330000 ; mass = 1.008000 M_p ; }
+    METnHT3 SPECIES { type = ATOM ; charge = 0.330000 ; mass = 1.008000 M_p ; }
+     METnCA SPECIES { type = ATOM ; charge = 0.210000 ; mass = 12.011000 M_p ; }
+     METnHA SPECIES { type = ATOM ; charge = 0.100000 ; mass = 1.008000 M_p ; }
+     METnCB SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+    METnHB1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    METnHB2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     METnCG SPECIES { type = ATOM ; charge = -0.140000 ; mass = 12.011000 M_p ; }
+    METnHG1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    METnHG2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     METnSD SPECIES { type = ATOM ; charge = -0.090000 ; mass = 32.060000 M_p ; }
+     METnCE SPECIES { type = ATOM ; charge = -0.220000 ; mass = 12.011000 M_p ; }
+    METnHE1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    METnHE2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    METnHE3 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+      METnC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      METnO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      PHExN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     PHExHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     PHExCA SPECIES { type = ATOM ; charge = 0.070000 ; mass = 12.011000 M_p ; }
+     PHExHA SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     PHExCB SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+    PHExHB1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    PHExHB2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     PHExCG SPECIES { type = ATOM ; charge = 0.000000 ; mass = 12.011000 M_p ; }
+    PHExCD1 SPECIES { type = ATOM ; charge = -0.115000 ; mass = 12.011000 M_p ; }
+    PHExHD1 SPECIES { type = ATOM ; charge = 0.115000 ; mass = 1.008000 M_p ; }
+    PHExCE1 SPECIES { type = ATOM ; charge = -0.115000 ; mass = 12.011000 M_p ; }
+    PHExHE1 SPECIES { type = ATOM ; charge = 0.115000 ; mass = 1.008000 M_p ; }
+     PHExCZ SPECIES { type = ATOM ; charge = -0.115000 ; mass = 12.011000 M_p ; }
+     PHExHZ SPECIES { type = ATOM ; charge = 0.115000 ; mass = 1.008000 M_p ; }
+    PHExCD2 SPECIES { type = ATOM ; charge = -0.115000 ; mass = 12.011000 M_p ; }
+    PHExHD2 SPECIES { type = ATOM ; charge = 0.115000 ; mass = 1.008000 M_p ; }
+    PHExCE2 SPECIES { type = ATOM ; charge = -0.115000 ; mass = 12.011000 M_p ; }
+    PHExHE2 SPECIES { type = ATOM ; charge = 0.115000 ; mass = 1.008000 M_p ; }
+      PHExC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      PHExO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      PROxN SPECIES { type = ATOM ; charge = -0.290000 ; mass = 14.007000 M_p ; }
+     PROxCD SPECIES { type = ATOM ; charge = 0.000000 ; mass = 12.011000 M_p ; }
+    PROxHD1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    PROxHD2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     PROxCA SPECIES { type = ATOM ; charge = 0.020000 ; mass = 12.011000 M_p ; }
+     PROxHA SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     PROxCB SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+    PROxHB1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    PROxHB2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     PROxCG SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+    PROxHG1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    PROxHG2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+      PROxC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      PROxO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      SERxN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     SERxHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     SERxCA SPECIES { type = ATOM ; charge = 0.070000 ; mass = 12.011000 M_p ; }
+     SERxHA SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     SERxCB SPECIES { type = ATOM ; charge = 0.050000 ; mass = 12.011000 M_p ; }
+    SERxHB1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    SERxHB2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     SERxOG SPECIES { type = ATOM ; charge = -0.660000 ; mass = 15.999000 M_p ; }
+    SERxHG1 SPECIES { type = ATOM ; charge = 0.430000 ; mass = 1.008000 M_p ; }
+      SERxC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      SERxO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      THRxN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     THRxHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     THRxCA SPECIES { type = ATOM ; charge = 0.070000 ; mass = 12.011000 M_p ; }
+     THRxHA SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     THRxCB SPECIES { type = ATOM ; charge = 0.140000 ; mass = 12.011000 M_p ; }
+     THRxHB SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    THRxOG1 SPECIES { type = ATOM ; charge = -0.660000 ; mass = 15.999000 M_p ; }
+    THRxHG1 SPECIES { type = ATOM ; charge = 0.430000 ; mass = 1.008000 M_p ; }
+    THRxCG2 SPECIES { type = ATOM ; charge = -0.270000 ; mass = 12.011000 M_p ; }
+   THRxHG21 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   THRxHG22 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   THRxHG23 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+      THRxC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      THRxO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      TRPxN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     TRPxHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     TRPxCA SPECIES { type = ATOM ; charge = 0.070000 ; mass = 12.011000 M_p ; }
+     TRPxHA SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     TRPxCB SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+    TRPxHB1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    TRPxHB2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     TRPxCG SPECIES { type = ATOM ; charge = -0.030000 ; mass = 12.011000 M_p ; }
+    TRPxCD1 SPECIES { type = ATOM ; charge = -0.150000 ; mass = 12.011000 M_p ; }
+    TRPxHD1 SPECIES { type = ATOM ; charge = 0.220000 ; mass = 1.008000 M_p ; }
+    TRPxNE1 SPECIES { type = ATOM ; charge = -0.510000 ; mass = 14.007000 M_p ; }
+    TRPxHE1 SPECIES { type = ATOM ; charge = 0.370000 ; mass = 1.008000 M_p ; }
+    TRPxCE2 SPECIES { type = ATOM ; charge = 0.240000 ; mass = 12.011000 M_p ; }
+    TRPxCD2 SPECIES { type = ATOM ; charge = 0.110000 ; mass = 12.011000 M_p ; }
+    TRPxCE3 SPECIES { type = ATOM ; charge = -0.250000 ; mass = 12.011000 M_p ; }
+    TRPxHE3 SPECIES { type = ATOM ; charge = 0.170000 ; mass = 1.008000 M_p ; }
+    TRPxCZ3 SPECIES { type = ATOM ; charge = -0.200000 ; mass = 12.011000 M_p ; }
+    TRPxHZ3 SPECIES { type = ATOM ; charge = 0.140000 ; mass = 1.008000 M_p ; }
+    TRPxCZ2 SPECIES { type = ATOM ; charge = -0.270000 ; mass = 12.011000 M_p ; }
+    TRPxHZ2 SPECIES { type = ATOM ; charge = 0.160000 ; mass = 1.008000 M_p ; }
+    TRPxCH2 SPECIES { type = ATOM ; charge = -0.140000 ; mass = 12.011000 M_p ; }
+    TRPxHH2 SPECIES { type = ATOM ; charge = 0.140000 ; mass = 1.008000 M_p ; }
+      TRPxC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      TRPxO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      TYRxN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     TYRxHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     TYRxCA SPECIES { type = ATOM ; charge = 0.070000 ; mass = 12.011000 M_p ; }
+     TYRxHA SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     TYRxCB SPECIES { type = ATOM ; charge = -0.180000 ; mass = 12.011000 M_p ; }
+    TYRxHB1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    TYRxHB2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     TYRxCG SPECIES { type = ATOM ; charge = 0.000000 ; mass = 12.011000 M_p ; }
+    TYRxCD1 SPECIES { type = ATOM ; charge = -0.115000 ; mass = 12.011000 M_p ; }
+    TYRxHD1 SPECIES { type = ATOM ; charge = 0.115000 ; mass = 1.008000 M_p ; }
+    TYRxCE1 SPECIES { type = ATOM ; charge = -0.115000 ; mass = 12.011000 M_p ; }
+    TYRxHE1 SPECIES { type = ATOM ; charge = 0.115000 ; mass = 1.008000 M_p ; }
+     TYRxCZ SPECIES { type = ATOM ; charge = 0.110000 ; mass = 12.011000 M_p ; }
+     TYRxOH SPECIES { type = ATOM ; charge = -0.540000 ; mass = 15.999000 M_p ; }
+     TYRxHH SPECIES { type = ATOM ; charge = 0.430000 ; mass = 1.008000 M_p ; }
+    TYRxCD2 SPECIES { type = ATOM ; charge = -0.115000 ; mass = 12.011000 M_p ; }
+    TYRxHD2 SPECIES { type = ATOM ; charge = 0.115000 ; mass = 1.008000 M_p ; }
+    TYRxCE2 SPECIES { type = ATOM ; charge = -0.115000 ; mass = 12.011000 M_p ; }
+    TYRxHE2 SPECIES { type = ATOM ; charge = 0.115000 ; mass = 1.008000 M_p ; }
+      TYRxC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      TYRxO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      VALxN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     VALxHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     VALxCA SPECIES { type = ATOM ; charge = 0.070000 ; mass = 12.011000 M_p ; }
+     VALxHA SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+     VALxCB SPECIES { type = ATOM ; charge = -0.090000 ; mass = 12.011000 M_p ; }
+     VALxHB SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    VALxCG1 SPECIES { type = ATOM ; charge = -0.270000 ; mass = 12.011000 M_p ; }
+   VALxHG11 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   VALxHG12 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   VALxHG13 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    VALxCG2 SPECIES { type = ATOM ; charge = -0.270000 ; mass = 12.011000 M_p ; }
+   VALxHG21 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   VALxHG22 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+   VALxHG23 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+      VALxC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      VALxO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+   TIP3xOH2 SPECIES { type = ATOM ; charge = -0.834000 ; mass = 15.999400 M_p ; }
+    TIP3xH1 SPECIES { type = ATOM ; charge = 0.417000 ; mass = 1.008000 M_p ; }
+    TIP3xH2 SPECIES { type = ATOM ; charge = 0.417000 ; mass = 1.008000 M_p ; }

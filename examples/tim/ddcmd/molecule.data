@@ -1,0 +1,930 @@
+
+simulate SIMULATE
+{
+    type = MD;
+    system=system;
+   integrator=nglf;
+   deltaloop=10000;
+    maxloop =1000000;
+   dt = 20;
+   printrate=100;
+   snapshotrate=0;
+   checkpointrate=50000;
+   nLoopDigits=12;
+   //gidFormat=hex;
+    printinfo=printinfo;
+    heap=heap;
+    ddc = ddc;
+    analysis = writeCharmm;
+}
+
+accelerator ACCELERATOR
+{
+   type=CUDA;
+   maxPagesPerParticle = 1;
+}
+
+energyInfo ENERGYINFO{}
+heap HEAP { size = 1000 ;}
+
+ddc DDC { updateRate=20; }
+
+printinfo PRINTINFO
+{
+  PRESSURE=bar;
+  VOLUME = Ang^3;
+  TEMPERATURE = K;
+  ENERGY = kJ/mol;
+  TIME = ns;
+  printStress=0;
+  printMolecularPressure=1;
+}
+
+martini  POTENTIAL
+{
+   type = MARTINI;
+   excludePotentialTerm=0;
+   use_transform=0;
+   cutoff=11.0 Angstrom;
+   rcoulomb=11.0 Angstrom; epsilon_r=15; epsilon_rf=-1;
+   function=lennardjones;
+   parmfile=martini.data;
+}
+
+restraint POTENTIAL { type=RESTRAINT; parmfile=restraint.data; }
+
+nglf INTEGRATOR { type=NGLFCONSTRAINTGPULANGEVIN; T=310K; P0 = 1.0 bar; beta = 3.0e-4/bar; tauBarostat = 1.0 ps;}
+
+system SYSTEM
+{
+   type = NORMAL;
+   potential = martini restraint ;
+   neighbor=nbr;
+   groups= group free ;
+   random = lcg64;
+   box = box;
+   collection=collection;
+   moleculeClass = moleculeClass;
+   nConstraints=5866;
+}
+
+
+box BOX { type=ORTHORHOMBIC; pbc=7; }
+
+nbr NEIGHBOR { type = NORMAL; deltaR=4.0000; minBoxSide=6; }
+
+group GROUP { type = LANGEVIN; Teq=310K; tau=1ps; useDefault=0;}
+free GROUP { type = LANGEVIN; Teq=310K; tau=1ps; useDefault=0;}
+
+lcg64 RANDOM {type = LCG64;randomizeSeed=1;}
+
+//martini ANALYSIS { type =  PAIRCORRELATION; eval_rate=100; delta_r =0.05; length=40; outputrate=1; }
+//vcm ANALYSIS { type =  vcmWrite; outputrate=1; }
+writeCharmm  ANALYSIS { type = subsetWrite; outputrate=1000; format=binaryCharmm; }
+
+moleculeClass MOLECULECLASS { molecules =  GPCR_inactivex POPXx CHOLx DIPEx DPSMx PAP6x PAPCx PAPSx POPEx POPCx POPSx Wx WFx NAx CLx; }
+
+GPCR_inactivex MOLECULE {ownershipSpecies = GPCR_inactivexP0; species = GPCR_inactivexP0 GPCR_inactivexP1 GPCR_inactivexP2 GPCR_inactivexP3 GPCR_inactivexP4 GPCR_inactivexP5 GPCR_inactivexP6 GPCR_inactivexP7 GPCR_inactivexP8 GPCR_inactivexP9 GPCR_inactivexP10 GPCR_inactivexP11 GPCR_inactivexP12 GPCR_inactivexP13 GPCR_inactivexP14 GPCR_inactivexP15 GPCR_inactivexP16 GPCR_inactivexP17 GPCR_inactivexP18 GPCR_inactivexP19 GPCR_inactivexP20 GPCR_inactivexP21 GPCR_inactivexP22 GPCR_inactivexP23 GPCR_inactivexP24 GPCR_inactivexP25 GPCR_inactivexP26 GPCR_inactivexP27 GPCR_inactivexP28 GPCR_inactivexP29 GPCR_inactivexP30 GPCR_inactivexP31 GPCR_inactivexP32 GPCR_inactivexP33 GPCR_inactivexP34 GPCR_inactivexP35 GPCR_inactivexP36 GPCR_inactivexP37 GPCR_inactivexP38 GPCR_inactivexP39 GPCR_inactivexP40 GPCR_inactivexP41 GPCR_inactivexP42 GPCR_inactivexP43 GPCR_inactivexP44 GPCR_inactivexP45 GPCR_inactivexP46 GPCR_inactivexP47 GPCR_inactivexP48 GPCR_inactivexP49 GPCR_inactivexP50 GPCR_inactivexP51 GPCR_inactivexP52 GPCR_inactivexP53 GPCR_inactivexP54 GPCR_inactivexP55 GPCR_inactivexP56 GPCR_inactivexP57 GPCR_inactivexP58 GPCR_inactivexP59 GPCR_inactivexP60 GPCR_inactivexP61 GPCR_inactivexP62 GPCR_inactivexP63 GPCR_inactivexP64 GPCR_inactivexP65 GPCR_inactivexP66 GPCR_inactivexP67 GPCR_inactivexP68 GPCR_inactivexP69 GPCR_inactivexP70 GPCR_inactivexP71 GPCR_inactivexP72 GPCR_inactivexP73 GPCR_inactivexP74 GPCR_inactivexP75 GPCR_inactivexP76 GPCR_inactivexP77 GPCR_inactivexP78 GPCR_inactivexP79 GPCR_inactivexP80 GPCR_inactivexP81 GPCR_inactivexP82 GPCR_inactivexP83 GPCR_inactivexP84 GPCR_inactivexP85 GPCR_inactivexP86 GPCR_inactivexP87 GPCR_inactivexP88 GPCR_inactivexP89 GPCR_inactivexP90 GPCR_inactivexP91 GPCR_inactivexP92 GPCR_inactivexP93 GPCR_inactivexP94 GPCR_inactivexP95 GPCR_inactivexP96 GPCR_inactivexP97 GPCR_inactivexP98 GPCR_inactivexP99 GPCR_inactivexP100 GPCR_inactivexP101 GPCR_inactivexP102 GPCR_inactivexP103 GPCR_inactivexP104 GPCR_inactivexP105 GPCR_inactivexP106 GPCR_inactivexP107 GPCR_inactivexP108 GPCR_inactivexP109 GPCR_inactivexP110 GPCR_inactivexP111 GPCR_inactivexP112 GPCR_inactivexP113 GPCR_inactivexP114 GPCR_inactivexP115 GPCR_inactivexP116 GPCR_inactivexP117 GPCR_inactivexP118 GPCR_inactivexP119 GPCR_inactivexP120 GPCR_inactivexP121 GPCR_inactivexP122 GPCR_inactivexP123 GPCR_inactivexP124 GPCR_inactivexP125 GPCR_inactivexP126 GPCR_inactivexP127 GPCR_inactivexP128 GPCR_inactivexP129 GPCR_inactivexP130 GPCR_inactivexP131 GPCR_inactivexP132 GPCR_inactivexP133 GPCR_inactivexP134 GPCR_inactivexP135 GPCR_inactivexP136 GPCR_inactivexP137 GPCR_inactivexP138 GPCR_inactivexP139 GPCR_inactivexP140 GPCR_inactivexP141 GPCR_inactivexP142 GPCR_inactivexP143 GPCR_inactivexP144 GPCR_inactivexP145 GPCR_inactivexP146 GPCR_inactivexP147 GPCR_inactivexP148 GPCR_inactivexP149 GPCR_inactivexP150 GPCR_inactivexP151 GPCR_inactivexP152 GPCR_inactivexP153 GPCR_inactivexP154 GPCR_inactivexP155 GPCR_inactivexP156 GPCR_inactivexP157 GPCR_inactivexP158 GPCR_inactivexP159 GPCR_inactivexP160 GPCR_inactivexP161 GPCR_inactivexP162 GPCR_inactivexP163 GPCR_inactivexP164 GPCR_inactivexP165 GPCR_inactivexP166 GPCR_inactivexP167 GPCR_inactivexP168 GPCR_inactivexP169 GPCR_inactivexP170 GPCR_inactivexP171 GPCR_inactivexP172 GPCR_inactivexP173 GPCR_inactivexP174 GPCR_inactivexP175 GPCR_inactivexP176 GPCR_inactivexP177 GPCR_inactivexP178 GPCR_inactivexP179 GPCR_inactivexP180 GPCR_inactivexP181 GPCR_inactivexP182 GPCR_inactivexP183 GPCR_inactivexP184 GPCR_inactivexP185 GPCR_inactivexP186 GPCR_inactivexP187 GPCR_inactivexP188 GPCR_inactivexP189 GPCR_inactivexP190 GPCR_inactivexP191 GPCR_inactivexP192 GPCR_inactivexP193 GPCR_inactivexP194 GPCR_inactivexP195 GPCR_inactivexP196 GPCR_inactivexP197 GPCR_inactivexP198 GPCR_inactivexP199 GPCR_inactivexP200 GPCR_inactivexP201 GPCR_inactivexP202 GPCR_inactivexP203 GPCR_inactivexP204 GPCR_inactivexP205 GPCR_inactivexP206 GPCR_inactivexP207 GPCR_inactivexP208 GPCR_inactivexP209 GPCR_inactivexP210 GPCR_inactivexP211 GPCR_inactivexP212 GPCR_inactivexP213 GPCR_inactivexP214 GPCR_inactivexP215 GPCR_inactivexP216 GPCR_inactivexP217 GPCR_inactivexP218 GPCR_inactivexP219 GPCR_inactivexP220 GPCR_inactivexP221 GPCR_inactivexP222 GPCR_inactivexP223 GPCR_inactivexP224 GPCR_inactivexP225 GPCR_inactivexP226 GPCR_inactivexP227 GPCR_inactivexP228 GPCR_inactivexP229 GPCR_inactivexP230 GPCR_inactivexP231 GPCR_inactivexP232 GPCR_inactivexP233 GPCR_inactivexP234 GPCR_inactivexP235 GPCR_inactivexP236 GPCR_inactivexP237 GPCR_inactivexP238 GPCR_inactivexP239 GPCR_inactivexP240 GPCR_inactivexP241 GPCR_inactivexP242 GPCR_inactivexP243 GPCR_inactivexP244 GPCR_inactivexP245 GPCR_inactivexP246 GPCR_inactivexP247 GPCR_inactivexP248 GPCR_inactivexP249 GPCR_inactivexP250 GPCR_inactivexP251 GPCR_inactivexP252 GPCR_inactivexP253 GPCR_inactivexP254 GPCR_inactivexP255 GPCR_inactivexP256 GPCR_inactivexP257 GPCR_inactivexP258 GPCR_inactivexP259 GPCR_inactivexP260 GPCR_inactivexP261 GPCR_inactivexP262 GPCR_inactivexP263 GPCR_inactivexP264 GPCR_inactivexP265 GPCR_inactivexP266 GPCR_inactivexP267 GPCR_inactivexP268 GPCR_inactivexP269 GPCR_inactivexP270 GPCR_inactivexP271 GPCR_inactivexP272 GPCR_inactivexP273 GPCR_inactivexP274 GPCR_inactivexP275 GPCR_inactivexP276 GPCR_inactivexP277 GPCR_inactivexP278 GPCR_inactivexP279 GPCR_inactivexP280 GPCR_inactivexP281 GPCR_inactivexP282 GPCR_inactivexP283 GPCR_inactivexP284 GPCR_inactivexP285 GPCR_inactivexP286 GPCR_inactivexP287 GPCR_inactivexP288 GPCR_inactivexP289 GPCR_inactivexP290 GPCR_inactivexP291 GPCR_inactivexP292 GPCR_inactivexP293 GPCR_inactivexP294 GPCR_inactivexP295 GPCR_inactivexP296 GPCR_inactivexP297 GPCR_inactivexP298 GPCR_inactivexP299 GPCR_inactivexP300 GPCR_inactivexP301 GPCR_inactivexP302 GPCR_inactivexP303 GPCR_inactivexP304 GPCR_inactivexP305 GPCR_inactivexP306 GPCR_inactivexP307 GPCR_inactivexP308 GPCR_inactivexP309 GPCR_inactivexP310 GPCR_inactivexP311 GPCR_inactivexP312 GPCR_inactivexP313 GPCR_inactivexP314 GPCR_inactivexP315 GPCR_inactivexP316 GPCR_inactivexP317 GPCR_inactivexP318 GPCR_inactivexP319 GPCR_inactivexP320 GPCR_inactivexP321 GPCR_inactivexP322 GPCR_inactivexP323 GPCR_inactivexP324 GPCR_inactivexP325 GPCR_inactivexP326 GPCR_inactivexP327 GPCR_inactivexP328 GPCR_inactivexP329 GPCR_inactivexP330 GPCR_inactivexP331 GPCR_inactivexP332 GPCR_inactivexP333 GPCR_inactivexP334 GPCR_inactivexP335 GPCR_inactivexP336 GPCR_inactivexP337 GPCR_inactivexP338 GPCR_inactivexP339 GPCR_inactivexP340 GPCR_inactivexP341 GPCR_inactivexP342 GPCR_inactivexP343 GPCR_inactivexP344 GPCR_inactivexP345 GPCR_inactivexP346 GPCR_inactivexP347 GPCR_inactivexP348 GPCR_inactivexP349 GPCR_inactivexP350 GPCR_inactivexP351 GPCR_inactivexP352 GPCR_inactivexP353 GPCR_inactivexP354 GPCR_inactivexP355 GPCR_inactivexP356 GPCR_inactivexP357 GPCR_inactivexP358 GPCR_inactivexP359 GPCR_inactivexP360 GPCR_inactivexP361 GPCR_inactivexP362 GPCR_inactivexP363 GPCR_inactivexP364 GPCR_inactivexP365 GPCR_inactivexP366 GPCR_inactivexP367 GPCR_inactivexP368 GPCR_inactivexP369 GPCR_inactivexP370 GPCR_inactivexP371 GPCR_inactivexP372 GPCR_inactivexP373 GPCR_inactivexP374 GPCR_inactivexP375 GPCR_inactivexP376 GPCR_inactivexP377 GPCR_inactivexP378 GPCR_inactivexP379 GPCR_inactivexP380 GPCR_inactivexP381 GPCR_inactivexP382 GPCR_inactivexP383 GPCR_inactivexP384 GPCR_inactivexP385 GPCR_inactivexP386 GPCR_inactivexP387 GPCR_inactivexP388 GPCR_inactivexP389 GPCR_inactivexP390 GPCR_inactivexP391 GPCR_inactivexP392 GPCR_inactivexP393 GPCR_inactivexP394 GPCR_inactivexP395 GPCR_inactivexP396 GPCR_inactivexP397 GPCR_inactivexP398 GPCR_inactivexP399 GPCR_inactivexP400 GPCR_inactivexP401 GPCR_inactivexP402 GPCR_inactivexP403 GPCR_inactivexP404 GPCR_inactivexP405 GPCR_inactivexP406 GPCR_inactivexP407 GPCR_inactivexP408 GPCR_inactivexP409 GPCR_inactivexP410 GPCR_inactivexP411 GPCR_inactivexP412 GPCR_inactivexP413 GPCR_inactivexP414 GPCR_inactivexP415 GPCR_inactivexP416 GPCR_inactivexP417 GPCR_inactivexP418 GPCR_inactivexP419 GPCR_inactivexP420 GPCR_inactivexP421 GPCR_inactivexP422 GPCR_inactivexP423 GPCR_inactivexP424 GPCR_inactivexP425 GPCR_inactivexP426 GPCR_inactivexP427 GPCR_inactivexP428 GPCR_inactivexP429 GPCR_inactivexP430 GPCR_inactivexP431 GPCR_inactivexP432 GPCR_inactivexP433 GPCR_inactivexP434 GPCR_inactivexP435 GPCR_inactivexP436 GPCR_inactivexP437 GPCR_inactivexP438 GPCR_inactivexP439 GPCR_inactivexP440 GPCR_inactivexP441 GPCR_inactivexP442 GPCR_inactivexP443 GPCR_inactivexP444 GPCR_inactivexP445 GPCR_inactivexP446 GPCR_inactivexP447 GPCR_inactivexP448 GPCR_inactivexP449 GPCR_inactivexP450 GPCR_inactivexP451 GPCR_inactivexP452 GPCR_inactivexP453 GPCR_inactivexP454 GPCR_inactivexP455 GPCR_inactivexP456 GPCR_inactivexP457 GPCR_inactivexP458 GPCR_inactivexP459 GPCR_inactivexP460 GPCR_inactivexP461 GPCR_inactivexP462 GPCR_inactivexP463 GPCR_inactivexP464 GPCR_inactivexP465 GPCR_inactivexP466 GPCR_inactivexP467 GPCR_inactivexP468 GPCR_inactivexP469 GPCR_inactivexP470 GPCR_inactivexP471 GPCR_inactivexP472 GPCR_inactivexP473 GPCR_inactivexP474 GPCR_inactivexP475 GPCR_inactivexP476 GPCR_inactivexP477 GPCR_inactivexP478 GPCR_inactivexP479 GPCR_inactivexP480 GPCR_inactivexP481 GPCR_inactivexP482 GPCR_inactivexP483 GPCR_inactivexP484 GPCR_inactivexP485 GPCR_inactivexP486 GPCR_inactivexP487 GPCR_inactivexP488 GPCR_inactivexP489 GPCR_inactivexP490 GPCR_inactivexP491 GPCR_inactivexP492 GPCR_inactivexP493 GPCR_inactivexP494 GPCR_inactivexP495 GPCR_inactivexP496 GPCR_inactivexP497 GPCR_inactivexP498 GPCR_inactivexP499 GPCR_inactivexP500 GPCR_inactivexP501 GPCR_inactivexP502 GPCR_inactivexP503 GPCR_inactivexP504 GPCR_inactivexP505 GPCR_inactivexP506 GPCR_inactivexP507 GPCR_inactivexP508 GPCR_inactivexP509 GPCR_inactivexP510 GPCR_inactivexP511 GPCR_inactivexP512 GPCR_inactivexP513 GPCR_inactivexP514 GPCR_inactivexP515 GPCR_inactivexP516 GPCR_inactivexP517 GPCR_inactivexP518 GPCR_inactivexP519 GPCR_inactivexP520 GPCR_inactivexP521 GPCR_inactivexP522 GPCR_inactivexP523 GPCR_inactivexP524 GPCR_inactivexP525 GPCR_inactivexP526 GPCR_inactivexP527 GPCR_inactivexP528 GPCR_inactivexP529 GPCR_inactivexP530 GPCR_inactivexP531 GPCR_inactivexP532 GPCR_inactivexP533 GPCR_inactivexP534 GPCR_inactivexP535 GPCR_inactivexP536 GPCR_inactivexP537 GPCR_inactivexP538 GPCR_inactivexP539 GPCR_inactivexP540 GPCR_inactivexP541 GPCR_inactivexP542 GPCR_inactivexP543 GPCR_inactivexP544 GPCR_inactivexP545 GPCR_inactivexP546 GPCR_inactivexP547 GPCR_inactivexP548 GPCR_inactivexP549 GPCR_inactivexP550 GPCR_inactivexP551 GPCR_inactivexP552 GPCR_inactivexP553 GPCR_inactivexP554 GPCR_inactivexP555 GPCR_inactivexP556 GPCR_inactivexP557 GPCR_inactivexP558 GPCR_inactivexP559 GPCR_inactivexP560 GPCR_inactivexP561 GPCR_inactivexP562 GPCR_inactivexP563 GPCR_inactivexP564 GPCR_inactivexP565 GPCR_inactivexP566 GPCR_inactivexP567 GPCR_inactivexP568 GPCR_inactivexP569 GPCR_inactivexP570 GPCR_inactivexP571 GPCR_inactivexP572 GPCR_inactivexP573 GPCR_inactivexP574 GPCR_inactivexP575 GPCR_inactivexP576 GPCR_inactivexP577 GPCR_inactivexP578 GPCR_inactivexP579 GPCR_inactivexP580 GPCR_inactivexP581 GPCR_inactivexP582 GPCR_inactivexP583 GPCR_inactivexP584 GPCR_inactivexP585 GPCR_inactivexP586 GPCR_inactivexP587 GPCR_inactivexP588 GPCR_inactivexP589 GPCR_inactivexP590 GPCR_inactivexP591 GPCR_inactivexP592 GPCR_inactivexP593 GPCR_inactivexP594 GPCR_inactivexP595 GPCR_inactivexP596 GPCR_inactivexP597 GPCR_inactivexP598 GPCR_inactivexP599 GPCR_inactivexP600 GPCR_inactivexP601 GPCR_inactivexP602 GPCR_inactivexP603 GPCR_inactivexP604 GPCR_inactivexP605 GPCR_inactivexP606 GPCR_inactivexP607 GPCR_inactivexP608 GPCR_inactivexP609 GPCR_inactivexP610 GPCR_inactivexP611 GPCR_inactivexP612 GPCR_inactivexP613 GPCR_inactivexP614 GPCR_inactivexP615 GPCR_inactivexP616 GPCR_inactivexP617 GPCR_inactivexP618 GPCR_inactivexP619 GPCR_inactivexP620 GPCR_inactivexP621 GPCR_inactivexP622 GPCR_inactivexP623 GPCR_inactivexP624 GPCR_inactivexP625 GPCR_inactivexP626 GPCR_inactivexP627 GPCR_inactivexP628 GPCR_inactivexP629 GPCR_inactivexP630 GPCR_inactivexP631 GPCR_inactivexP632 GPCR_inactivexP633 GPCR_inactivexP634 GPCR_inactivexP635 GPCR_inactivexP636 GPCR_inactivexP637 GPCR_inactivexP638 GPCR_inactivexP639 GPCR_inactivexP640 GPCR_inactivexP641 GPCR_inactivexP642 GPCR_inactivexP643 GPCR_inactivexP644 GPCR_inactivexP645 GPCR_inactivexP646 GPCR_inactivexP647 GPCR_inactivexP648 GPCR_inactivexP649 GPCR_inactivexP650 GPCR_inactivexP651 GPCR_inactivexP652 GPCR_inactivexP653 GPCR_inactivexP654 GPCR_inactivexP655 GPCR_inactivexP656 GPCR_inactivexP657 GPCR_inactivexP658 GPCR_inactivexP659 GPCR_inactivexP660 GPCR_inactivexP661 GPCR_inactivexP662 GPCR_inactivexP663 GPCR_inactivexP664 GPCR_inactivexP665 GPCR_inactivexP666 GPCR_inactivexP667 GPCR_inactivexP668 GPCR_inactivexP669 GPCR_inactivexP670 GPCR_inactivexP671 GPCR_inactivexP672 GPCR_inactivexP673 GPCR_inactivexP674 GPCR_inactivexP675 GPCR_inactivexP676 GPCR_inactivexP677 GPCR_inactivexP678 GPCR_inactivexP679 GPCR_inactivexP680 GPCR_inactivexP681 GPCR_inactivexP682 GPCR_inactivexP683 GPCR_inactivexP684 GPCR_inactivexP685 GPCR_inactivexP686 GPCR_inactivexP687 GPCR_inactivexP688 GPCR_inactivexP689 GPCR_inactivexP690 GPCR_inactivexP691 GPCR_inactivexP692 GPCR_inactivexP693 GPCR_inactivexP694 GPCR_inactivexP695 GPCR_inactivexP696 GPCR_inactivexP697 GPCR_inactivexP698 GPCR_inactivexP699 GPCR_inactivexP700 GPCR_inactivexP701;}
+POPXx MOLECULE {ownershipSpecies = POPXxNC3; species = POPXxNC3 POPXxPO4 POPXxGL1 POPXxGL2 POPXxC1A POPXxD2A POPXxC3A POPXxC4A POPXxC1B POPXxC2B POPXxC3B POPXxC4B;}
+CHOLx MOLECULE {ownershipSpecies = CHOLxROH; species = CHOLxROH CHOLxR1 CHOLxR2 CHOLxR3 CHOLxR4 CHOLxR5 CHOLxC1 CHOLxC2;}
+DIPEx MOLECULE {ownershipSpecies = DIPExNH3; species = DIPExNH3 DIPExPO4 DIPExGL1 DIPExGL2 DIPExC1A DIPExD2A DIPExD3A DIPExC4A DIPExC1B DIPExD2B DIPExD3B DIPExC4B;}
+DPSMx MOLECULE {ownershipSpecies = DPSMxNC3; species = DPSMxNC3 DPSMxPO4 DPSMxAM1 DPSMxAM2 DPSMxT1A DPSMxC2A DPSMxC3A DPSMxC1B DPSMxC2B DPSMxC3B DPSMxC4B;}
+PAP6x MOLECULE {ownershipSpecies = PAP6xC1; species = PAP6xC1 PAP6xC2 PAP6xC3 PAP6xPO4 PAP6xP4 PAP6xP5 PAP6xGL1 PAP6xGL2 PAP6xD1A PAP6xD2A PAP6xD3A PAP6xD4A PAP6xC5A PAP6xC1B PAP6xC2B PAP6xC3B PAP6xC4B;}
+PAPCx MOLECULE {ownershipSpecies = PAPCxNC3; species = PAPCxNC3 PAPCxPO4 PAPCxGL1 PAPCxGL2 PAPCxD1A PAPCxD2A PAPCxD3A PAPCxD4A PAPCxC5A PAPCxC1B PAPCxC2B PAPCxC3B PAPCxC4B;}
+PAPSx MOLECULE {ownershipSpecies = PAPSxCNO; species = PAPSxCNO PAPSxPO4 PAPSxGL1 PAPSxGL2 PAPSxD1A PAPSxD2A PAPSxD3A PAPSxD4A PAPSxC5A PAPSxC1B PAPSxC2B PAPSxC3B PAPSxC4B;}
+POPEx MOLECULE {ownershipSpecies = POPExNH3; species = POPExNH3 POPExPO4 POPExGL1 POPExGL2 POPExC1A POPExD2A POPExC3A POPExC4A POPExC1B POPExC2B POPExC3B POPExC4B;}
+POPCx MOLECULE {ownershipSpecies = POPCxNC3; species = POPCxNC3 POPCxPO4 POPCxGL1 POPCxGL2 POPCxC1A POPCxD2A POPCxC3A POPCxC4A POPCxC1B POPCxC2B POPCxC3B POPCxC4B;}
+POPSx MOLECULE {ownershipSpecies = POPSxCNO; species = POPSxCNO POPSxPO4 POPSxGL1 POPSxGL2 POPSxC1A POPSxD2A POPSxC3A POPSxC4A POPSxC1B POPSxC2B POPSxC3B POPSxC4B;}
+Wx MOLECULE {ownershipSpecies = WxW; species = WxW;}
+WFx MOLECULE {ownershipSpecies = WFxWF; species = WFxWF;}
+NAx MOLECULE {ownershipSpecies = NAxNA; species = NAxNA;}
+CLx MOLECULE {ownershipSpecies = CLxCL; species = CLxCL;}
+
+GPCR_inactivexP0 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP1 SPECIES { type = ATOM ; charge =0.0; id=1; mass =72.0 M_p ; }
+GPCR_inactivexP2 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP3 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+GPCR_inactivexP4 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP5 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP6 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP7 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP8 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+GPCR_inactivexP9 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP10 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+GPCR_inactivexP11 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP12 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP13 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP14 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP15 SPECIES { type = ATOM ; charge =0.0; id=8; mass =45.0 M_p ; }
+GPCR_inactivexP16 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP17 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP18 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP19 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP20 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP21 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP22 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP23 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP24 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP25 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP26 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP27 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP28 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP29 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP30 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP31 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP32 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP33 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP34 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP35 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP36 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP37 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP38 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP39 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP40 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP41 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP42 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP43 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP44 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP45 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP46 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP47 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP48 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP49 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP50 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP51 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP52 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP53 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP54 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP55 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP56 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP57 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP58 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP59 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP60 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP61 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP62 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP63 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP64 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP65 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP66 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP67 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP68 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP69 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+GPCR_inactivexP70 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP71 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP72 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP73 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP74 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP75 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP76 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+GPCR_inactivexP77 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP78 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP79 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP80 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP81 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP82 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP83 SPECIES { type = ATOM ; charge =0.0; id=1; mass =72.0 M_p ; }
+GPCR_inactivexP84 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP85 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP86 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP87 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP88 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP89 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP90 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP91 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP92 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP93 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP94 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP95 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP96 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP97 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP98 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP99 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP100 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP101 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP102 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP103 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP104 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP105 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP106 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP107 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP108 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP109 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP110 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP111 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP112 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP113 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+GPCR_inactivexP114 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP115 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP116 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP117 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP118 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP119 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP120 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP121 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP122 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP123 SPECIES { type = ATOM ; charge =0.0; id=1; mass =72.0 M_p ; }
+GPCR_inactivexP124 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP125 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP126 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP127 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP128 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP129 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+GPCR_inactivexP130 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP131 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP132 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP133 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP134 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP135 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP136 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP137 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP138 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP139 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP140 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP141 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP142 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP143 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP144 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP145 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP146 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP147 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+GPCR_inactivexP148 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+GPCR_inactivexP149 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP150 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP151 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP152 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP153 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP154 SPECIES { type = ATOM ; charge =0.0; id=8; mass =45.0 M_p ; }
+GPCR_inactivexP155 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP156 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP157 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP158 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP159 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP160 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP161 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP162 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP163 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP164 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP165 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP166 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP167 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP168 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP169 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP170 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP171 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP172 SPECIES { type = ATOM ; charge =0.0; id=8; mass =45.0 M_p ; }
+GPCR_inactivexP173 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP174 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP175 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP176 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP177 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP178 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+GPCR_inactivexP179 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP180 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP181 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP182 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP183 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP184 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP185 SPECIES { type = ATOM ; charge =0.0; id=8; mass =45.0 M_p ; }
+GPCR_inactivexP186 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP187 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP188 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP189 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP190 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP191 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP192 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP193 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP194 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP195 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+GPCR_inactivexP196 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP197 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP198 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP199 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP200 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP201 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP202 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP203 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP204 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP205 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP206 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP207 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP208 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP209 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP210 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP211 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP212 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+GPCR_inactivexP213 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP214 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP215 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP216 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP217 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP218 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP219 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP220 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP221 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP222 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP223 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP224 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP225 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP226 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP227 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+GPCR_inactivexP228 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP229 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP230 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP231 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP232 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP233 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP234 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP235 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP236 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP237 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP238 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP239 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP240 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP241 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP242 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP243 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP244 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP245 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP246 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP247 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+GPCR_inactivexP248 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP249 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP250 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP251 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP252 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP253 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+GPCR_inactivexP254 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP255 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+GPCR_inactivexP256 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP257 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP258 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP259 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP260 SPECIES { type = ATOM ; charge =0.0; id=1; mass =72.0 M_p ; }
+GPCR_inactivexP261 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP262 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP263 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP264 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP265 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP266 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP267 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP268 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP269 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP270 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+GPCR_inactivexP271 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP272 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP273 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP274 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP275 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+GPCR_inactivexP276 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP277 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP278 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP279 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP280 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP281 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP282 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP283 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP284 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP285 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP286 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP287 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP288 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP289 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP290 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP291 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP292 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP293 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP294 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP295 SPECIES { type = ATOM ; charge =0.0; id=8; mass =45.0 M_p ; }
+GPCR_inactivexP296 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP297 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP298 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP299 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP300 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP301 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP302 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP303 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP304 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP305 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP306 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP307 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP308 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP309 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP310 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP311 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP312 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP313 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP314 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP315 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP316 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP317 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP318 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+GPCR_inactivexP319 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP320 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP321 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP322 SPECIES { type = ATOM ; charge =0.0; id=1; mass =72.0 M_p ; }
+GPCR_inactivexP323 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+GPCR_inactivexP324 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP325 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+GPCR_inactivexP326 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP327 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP328 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP329 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+GPCR_inactivexP330 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP331 SPECIES { type = ATOM ; charge =0.0; id=8; mass =45.0 M_p ; }
+GPCR_inactivexP332 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP333 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP334 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+GPCR_inactivexP335 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP336 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP337 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP338 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP339 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP340 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP341 SPECIES { type = ATOM ; charge =0.0; id=1; mass =72.0 M_p ; }
+GPCR_inactivexP342 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP343 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP344 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP345 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP346 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP347 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP348 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP349 SPECIES { type = ATOM ; charge =0.0; id=1; mass =72.0 M_p ; }
+GPCR_inactivexP350 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP351 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+GPCR_inactivexP352 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP353 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP354 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP355 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP356 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP357 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP358 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP359 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP360 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP361 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP362 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP363 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP364 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP365 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP366 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+GPCR_inactivexP367 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+GPCR_inactivexP368 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+GPCR_inactivexP369 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP370 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP371 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP372 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP373 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP374 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP375 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+GPCR_inactivexP376 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP377 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP378 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP379 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP380 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP381 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP382 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP383 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP384 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP385 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP386 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP387 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP388 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP389 SPECIES { type = ATOM ; charge =0.0; id=1; mass =72.0 M_p ; }
+GPCR_inactivexP390 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP391 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP392 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP393 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP394 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP395 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP396 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP397 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP398 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP399 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP400 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP401 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP402 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP403 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP404 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP405 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP406 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP407 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP408 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP409 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP410 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP411 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP412 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP413 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP414 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP415 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP416 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP417 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP418 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP419 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP420 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+GPCR_inactivexP421 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP422 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP423 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP424 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP425 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP426 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP427 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP428 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP429 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP430 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP431 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP432 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP433 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP434 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP435 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP436 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP437 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP438 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP439 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP440 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP441 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP442 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP443 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP444 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP445 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP446 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP447 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP448 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP449 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP450 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP451 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP452 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP453 SPECIES { type = ATOM ; charge =0.0; id=1; mass =72.0 M_p ; }
+GPCR_inactivexP454 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP455 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+GPCR_inactivexP456 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP457 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP458 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+GPCR_inactivexP459 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP460 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP461 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP462 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP463 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP464 SPECIES { type = ATOM ; charge =0.0; id=1; mass =72.0 M_p ; }
+GPCR_inactivexP465 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP466 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP467 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP468 SPECIES { type = ATOM ; charge =0.0; id=1; mass =72.0 M_p ; }
+GPCR_inactivexP469 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP470 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+GPCR_inactivexP471 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP472 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP473 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP474 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP475 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+GPCR_inactivexP476 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP477 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+GPCR_inactivexP478 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP479 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP480 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP481 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP482 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+GPCR_inactivexP483 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP484 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP485 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP486 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP487 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP488 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP489 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP490 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP491 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP492 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP493 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP494 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP495 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP496 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP497 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP498 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP499 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP500 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP501 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP502 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP503 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP504 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP505 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP506 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP507 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP508 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP509 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP510 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP511 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+GPCR_inactivexP512 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP513 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP514 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP515 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP516 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP517 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP518 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP519 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP520 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP521 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP522 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+GPCR_inactivexP523 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP524 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP525 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+GPCR_inactivexP526 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP527 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP528 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP529 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP530 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP531 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+GPCR_inactivexP532 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP533 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP534 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP535 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP536 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP537 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+GPCR_inactivexP538 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP539 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP540 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP541 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP542 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP543 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP544 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP545 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP546 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP547 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP548 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP549 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP550 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP551 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP552 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP553 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP554 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP555 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP556 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP557 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP558 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP559 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP560 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP561 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP562 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP563 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP564 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP565 SPECIES { type = ATOM ; charge =0.0; id=8; mass =45.0 M_p ; }
+GPCR_inactivexP566 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP567 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP568 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP569 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP570 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP571 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+GPCR_inactivexP572 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP573 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP574 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP575 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP576 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP577 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP578 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP579 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP580 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP581 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP582 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP583 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP584 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP585 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP586 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP587 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP588 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP589 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP590 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP591 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP592 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP593 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP594 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP595 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP596 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP597 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP598 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP599 SPECIES { type = ATOM ; charge =0.0; id=1; mass =72.0 M_p ; }
+GPCR_inactivexP600 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+GPCR_inactivexP601 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+GPCR_inactivexP602 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+GPCR_inactivexP603 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP604 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP605 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP606 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP607 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP608 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP609 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP610 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP611 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP612 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+GPCR_inactivexP613 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP614 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP615 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+GPCR_inactivexP616 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP617 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP618 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP619 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP620 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP621 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP622 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP623 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP624 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP625 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP626 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP627 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP628 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP629 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP630 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP631 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP632 SPECIES { type = ATOM ; charge =0.0; id=8; mass =45.0 M_p ; }
+GPCR_inactivexP633 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP634 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP635 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP636 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP637 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP638 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP639 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP640 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP641 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP642 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP643 SPECIES { type = ATOM ; charge =0.0; id=6; mass =72.0 M_p ; }
+GPCR_inactivexP644 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP645 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP646 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP647 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP648 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP649 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+GPCR_inactivexP650 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP651 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP652 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP653 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+GPCR_inactivexP654 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP655 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP656 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+GPCR_inactivexP657 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+GPCR_inactivexP658 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP659 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+GPCR_inactivexP660 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP661 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP662 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP663 SPECIES { type = ATOM ; charge =0.0; id=7; mass =45.0 M_p ; }
+GPCR_inactivexP664 SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+GPCR_inactivexP665 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP666 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP667 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP668 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP669 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP670 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP671 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+GPCR_inactivexP672 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP673 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+GPCR_inactivexP674 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP675 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+GPCR_inactivexP676 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP677 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP678 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP679 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP680 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+GPCR_inactivexP681 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP682 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+GPCR_inactivexP683 SPECIES { type = ATOM ; charge =0.0; id=4; mass =72.0 M_p ; }
+GPCR_inactivexP684 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP685 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP686 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP687 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP688 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP689 SPECIES { type = ATOM ; charge =0.0; id=9; mass =45.0 M_p ; }
+GPCR_inactivexP690 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP691 SPECIES { type = ATOM ; charge =0.0; id=1; mass =72.0 M_p ; }
+GPCR_inactivexP692 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP693 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+GPCR_inactivexP694 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+GPCR_inactivexP695 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP696 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+GPCR_inactivexP697 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+GPCR_inactivexP698 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+GPCR_inactivexP699 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+GPCR_inactivexP700 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+GPCR_inactivexP701 SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+POPXxNC3 SPECIES { type = ATOM ; charge =1.0; id=17; mass =72.0 M_p ; }
+POPXxPO4 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+POPXxGL1 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+POPXxGL2 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+POPXxC1A SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPXxD2A SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+POPXxC3A SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPXxC4A SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPXxC1B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPXxC2B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPXxC3B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPXxC4B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+CHOLxROH SPECIES { type = ATOM ; charge =0.0; id=15; mass =45.0 M_p ; }
+CHOLxR1 SPECIES { type = ATOM ; charge =0.0; id=19; mass =45.0 M_p ; }
+CHOLxR2 SPECIES { type = ATOM ; charge =0.0; id=20; mass =45.0 M_p ; }
+CHOLxR3 SPECIES { type = ATOM ; charge =0.0; id=19; mass =45.0 M_p ; }
+CHOLxR4 SPECIES { type = ATOM ; charge =0.0; id=19; mass =45.0 M_p ; }
+CHOLxR5 SPECIES { type = ATOM ; charge =0.0; id=19; mass =45.0 M_p ; }
+CHOLxC1 SPECIES { type = ATOM ; charge =0.0; id=19; mass =45.0 M_p ; }
+CHOLxC2 SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+DIPExNH3 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+DIPExPO4 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+DIPExGL1 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+DIPExGL2 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+DIPExC1A SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+DIPExD2A SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+DIPExD3A SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+DIPExC4A SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+DIPExC1B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+DIPExD2B SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+DIPExD3B SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+DIPExC4B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+DPSMxNC3 SPECIES { type = ATOM ; charge =1.0; id=17; mass =72.0 M_p ; }
+DPSMxPO4 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+DPSMxAM1 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+DPSMxAM2 SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+DPSMxT1A SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+DPSMxC2A SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+DPSMxC3A SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+DPSMxC1B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+DPSMxC2B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+DPSMxC3B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+DPSMxC4B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+PAP6xC1 SPECIES { type = ATOM ; charge =0.0; id=12; mass =72.0 M_p ; }
+PAP6xC2 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+PAP6xC3 SPECIES { type = ATOM ; charge =0.0; id=1; mass =72.0 M_p ; }
+PAP6xPO4 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+PAP6xP4 SPECIES { type = ATOM ; charge =-2.0; id=2; mass =72.0 M_p ; }
+PAP6xP5 SPECIES { type = ATOM ; charge =-2.0; id=2; mass =72.0 M_p ; }
+PAP6xGL1 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+PAP6xGL2 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+PAP6xD1A SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+PAP6xD2A SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+PAP6xD3A SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+PAP6xD4A SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+PAP6xC5A SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+PAP6xC1B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+PAP6xC2B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+PAP6xC3B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+PAP6xC4B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+PAPCxNC3 SPECIES { type = ATOM ; charge =1.0; id=17; mass =72.0 M_p ; }
+PAPCxPO4 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+PAPCxGL1 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+PAPCxGL2 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+PAPCxD1A SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+PAPCxD2A SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+PAPCxD3A SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+PAPCxD4A SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+PAPCxC5A SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+PAPCxC1B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+PAPCxC2B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+PAPCxC3B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+PAPCxC4B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+PAPSxCNO SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+PAPSxPO4 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+PAPSxGL1 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+PAPSxGL2 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+PAPSxD1A SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+PAPSxD2A SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+PAPSxD3A SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+PAPSxD4A SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+PAPSxC5A SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+PAPSxC1B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+PAPSxC2B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+PAPSxC3B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+PAPSxC4B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPExNH3 SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+POPExPO4 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+POPExGL1 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+POPExGL2 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+POPExC1A SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPExD2A SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+POPExC3A SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPExC4A SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPExC1B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPExC2B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPExC3B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPExC4B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPCxNC3 SPECIES { type = ATOM ; charge =1.0; id=17; mass =72.0 M_p ; }
+POPCxPO4 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+POPCxGL1 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+POPCxGL2 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+POPCxC1A SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPCxD2A SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+POPCxC3A SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPCxC4A SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPCxC1B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPCxC2B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPCxC3B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPCxC4B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPSxCNO SPECIES { type = ATOM ; charge =0.0; id=0; mass =72.0 M_p ; }
+POPSxPO4 SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }
+POPSxGL1 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+POPSxGL2 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+POPSxC1A SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPSxD2A SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+POPSxC3A SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPSxC4A SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPSxC1B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPSxC2B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPSxC3B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+POPSxC4B SPECIES { type = ATOM ; charge =0.0; id=18; mass =72.0 M_p ; }
+WxW SPECIES { type = ATOM ; charge =0.0; id=1; mass =72.0 M_p ; }
+WFxWF SPECIES { type = ATOM ; charge =0.0; id=22; mass =72.0 M_p ; }
+NAxNA SPECIES { type = ATOM ; charge =1.0; id=5; mass =72.0 M_p ; }
+CLxCL SPECIES { type = ATOM ; charge =-1.0; id=2; mass =72.0 M_p ; }

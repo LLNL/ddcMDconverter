@@ -1,0 +1,104 @@
+martini MMFF
+{
+	resiParms=CHOL ;
+	atomTypeList=SP1 SC1 SC3 C1 ;
+	ljParms=SP1_SP1 SP1_SC1 SP1_SC3 SP1_C1 SC1_SC1 SC1_SC3 SC1_C1 SC3_SC3 SC3_C1 C1_C1 ;
+}
+
+SP1  MASSPARMS { atomType=SP1; atomTypeID=0; mass=77.22M_p ; }
+SC1  MASSPARMS { atomType=SC1; atomTypeID=1; mass=39.44M_p ; }
+SC3  MASSPARMS { atomType=SC3; atomTypeID=2; mass=38.69M_p ; }
+C1  MASSPARMS { atomType=C1; atomTypeID=3; mass=72.0M_p ; }
+
+CHOL RESIPARMS
+{
+	resID=0;
+	resType=0;
+	resName=CHOL;
+	isProtein=0;
+	numAtoms=8;
+	charge=0.0;
+	groupList=CHOL_g0;
+	bondList=CHOL_b0 ;
+	angleList=CHOL_a0 ;
+	dihedralList=CHOL_d0 ;
+	constraintList=CHOL_cl0 ;
+	exclusionList=CHOL_e0 CHOL_e1 CHOL_e2 CHOL_e3 CHOL_e4 CHOL_e5 CHOL_e6 CHOL_e7 CHOL_e8 CHOL_e9 CHOL_e10 CHOL_e11 CHOL_e12 CHOL_e13 CHOL_e14 CHOL_e15 CHOL_e16 CHOL_e17 CHOL_e18 CHOL_e19 CHOL_e20 CHOL_e21 ;
+	vsiteList=CHOL_vs0 CHOL_vs1 CHOL_vs2 ;
+	centerAtom=0;
+}
+
+CHOL_g0 GROUPPARMS{
+	groupID=0;
+	atomList=CHOL_ROH CHOL_R1 CHOL_R2 CHOL_R3 CHOL_R4 CHOL_R5 CHOL_C1 CHOL_C2 ;
+}
+
+CHOL_ROH ATOMPARMS{atomID=0; atomName=ROH; atomType=SP1; atomTypeID=0; charge=0.0; mass=77.22 M_p ; }
+CHOL_R1 ATOMPARMS{atomID=1; atomName=R1; atomType=SC1; atomTypeID=1; charge=0.0; mass=0.0 M_p ; }
+CHOL_R2 ATOMPARMS{atomID=2; atomName=R2; atomType=SC3; atomTypeID=2; charge=0.0; mass=38.69 M_p ; }
+CHOL_R3 ATOMPARMS{atomID=3; atomName=R3; atomType=SC1; atomTypeID=1; charge=0.0; mass=159.65 M_p ; }
+CHOL_R4 ATOMPARMS{atomID=4; atomName=R4; atomType=SC1; atomTypeID=1; charge=0.0; mass=0.0 M_p ; }
+CHOL_R5 ATOMPARMS{atomID=5; atomName=R5; atomType=SC1; atomTypeID=1; charge=0.0; mass=0.0 M_p ; }
+CHOL_C1 ATOMPARMS{atomID=6; atomName=C1; atomType=SC1; atomTypeID=1; charge=0.0; mass=39.44 M_p ; }
+CHOL_C2 ATOMPARMS{atomID=7; atomName=C2; atomType=C1; atomTypeID=3; charge=0.0; mass=72.0 M_p ; }
+
+CHOL_b0 BONDPARMS{atomI=6; atomTypeI=SC1; atomJ=7; atomTypeJ=C1; func=1; kb=625.0 kJ*mol^-1*nm^-2; b0=0.425 nm; }
+
+CHOL_a0 ANGLEPARMS{atomI=3; atomJ=6; atomK=7; func=2; ktheta=12.5 kJ*mol^-1; theta0=-1.0; }
+
+CHOL_d0 TORSPARMS{atomI=0; atomJ=2; atomK=3; atomL=6; func=2; kchi=25.0 kJ*mol^-1; delta=-3.1363566658338096;  n=1; }
+
+CHOL_cl0 CONSLISTPARMS{ constraintSubList=CHOL_cl0_c0 CHOL_cl0_c1 CHOL_cl0_c2 CHOL_cl0_c3 CHOL_cl0_c4 ;}
+CHOL_cl0_c0  CONSPARMS{atomI=0; atomTypeI=SP1; atomJ=2; atomTypeJ=SC3; func=1; r0=0.490399987 nm; }
+CHOL_cl0_c1  CONSPARMS{atomI=0; atomTypeI=SP1; atomJ=3; atomTypeJ=SC1; func=1; r0=0.601899981 nm; }
+CHOL_cl0_c2  CONSPARMS{atomI=2; atomTypeI=SC3; atomJ=3; atomTypeJ=SC1; func=1; r0=0.271899998 nm; }
+CHOL_cl0_c3  CONSPARMS{atomI=6; atomTypeI=SC1; atomJ=2; atomTypeJ=SC3; func=1; r0=0.723699987 nm; }
+CHOL_cl0_c4  CONSPARMS{atomI=6; atomTypeI=SC1; atomJ=3; atomTypeJ=SC1; func=1; r0=0.537599981 nm; }
+
+CHOL_C0  CONSTRAINT { type=bondLength; offsets=0 2; r0=0.490399987 nm; }
+CHOL_C1  CONSTRAINT { type=bondLength; offsets=0 3; r0=0.601899981 nm; }
+CHOL_C2  CONSTRAINT { type=bondLength; offsets=2 3; r0=0.271899998 nm; }
+CHOL_C3  CONSTRAINT { type=bondLength; offsets=6 2; r0=0.723699987 nm; }
+CHOL_C4  CONSTRAINT { type=bondLength; offsets=6 3; r0=0.537599981 nm; }
+
+CHOL_e0 EXCLUDEPARMS{atomI=3; atomTypeI=SC1; atomJ=4; atomTypeJ=SC1;}
+CHOL_e1 EXCLUDEPARMS{atomI=4; atomTypeI=SC1; atomJ=6; atomTypeJ=SC1;}
+CHOL_e2 EXCLUDEPARMS{atomI=0; atomTypeI=SP1; atomJ=2; atomTypeJ=SC3;}
+CHOL_e3 EXCLUDEPARMS{atomI=0; atomTypeI=SP1; atomJ=5; atomTypeJ=SC1;}
+CHOL_e4 EXCLUDEPARMS{atomI=1; atomTypeI=SC1; atomJ=6; atomTypeJ=SC1;}
+CHOL_e5 EXCLUDEPARMS{atomI=2; atomTypeI=SC3; atomJ=5; atomTypeJ=SC1;}
+CHOL_e6 EXCLUDEPARMS{atomI=1; atomTypeI=SC1; atomJ=3; atomTypeJ=SC1;}
+CHOL_e7 EXCLUDEPARMS{atomI=4; atomTypeI=SC1; atomJ=5; atomTypeJ=SC1;}
+CHOL_e8 EXCLUDEPARMS{atomI=5; atomTypeI=SC1; atomJ=6; atomTypeJ=SC1;}
+CHOL_e9 EXCLUDEPARMS{atomI=3; atomTypeI=SC1; atomJ=6; atomTypeJ=SC1;}
+CHOL_e10 EXCLUDEPARMS{atomI=0; atomTypeI=SP1; atomJ=1; atomTypeJ=SC1;}
+CHOL_e11 EXCLUDEPARMS{atomI=2; atomTypeI=SC3; atomJ=4; atomTypeJ=SC1;}
+CHOL_e12 EXCLUDEPARMS{atomI=1; atomTypeI=SC1; atomJ=2; atomTypeJ=SC3;}
+CHOL_e13 EXCLUDEPARMS{atomI=0; atomTypeI=SP1; atomJ=4; atomTypeJ=SC1;}
+CHOL_e14 EXCLUDEPARMS{atomI=1; atomTypeI=SC1; atomJ=5; atomTypeJ=SC1;}
+CHOL_e15 EXCLUDEPARMS{atomI=6; atomTypeI=SC1; atomJ=7; atomTypeJ=C1;}
+CHOL_e16 EXCLUDEPARMS{atomI=3; atomTypeI=SC1; atomJ=5; atomTypeJ=SC1;}
+CHOL_e17 EXCLUDEPARMS{atomI=0; atomTypeI=SP1; atomJ=3; atomTypeJ=SC1;}
+CHOL_e18 EXCLUDEPARMS{atomI=1; atomTypeI=SC1; atomJ=4; atomTypeJ=SC1;}
+CHOL_e19 EXCLUDEPARMS{atomI=0; atomTypeI=SP1; atomJ=6; atomTypeJ=SC1;}
+CHOL_e20 EXCLUDEPARMS{atomI=2; atomTypeI=SC3; atomJ=3; atomTypeJ=SC1;}
+CHOL_e21 EXCLUDEPARMS{atomI=2; atomTypeI=SC3; atomJ=6; atomTypeJ=SC1;}
+
+CHOL_vs0 VSITEPARMS{type=VSITE3; index=24; a=0.961300015; b=0.632000029; atom1=4; atomType1=SC1; atom2=3; atomType2=SC1; atom3=2; atomType3=SC3; atom4=6; atomType4=SC1; }
+CHOL_vs1 VSITEPARMS{type=VSITE3OUT; index=25; a=0.520699978; b=0.288199991; c=-0.08382400270000001; atom1=1; atomType1=SC1; atom2=2; atomType2=SC3; atom3=0; atomType3=SP1; atom4=3; atomType4=SC1; }
+CHOL_vs2 VSITEPARMS{type=VSITE3OUT; index=26; a=0.228699997; b=0.4111; c=0.115310001; atom1=5; atomType1=SC1; atom2=3; atomType2=SC1; atom3=2; atomType3=SC3; atom4=6; atomType4=SC1; }
+
+CHOL_VS0 CONSTRAINT{type=VSITE3; index=24; a=0.961300015; b=0.632000029;  offsets=4 3 2 6 ;}
+CHOL_VS1 CONSTRAINT{type=VSITE3OUT; index=25; a=0.520699978; b=0.288199991; c=-0.08382400270000001;  offsets=1 2 0 3 ;}
+CHOL_VS2 CONSTRAINT{type=VSITE3OUT; index=26; a=0.228699997; b=0.4111; c=0.115310001;  offsets=5 3 2 6 ;}
+
+SP1_SP1 LJPARMS{atomtypeI=SP1; indexI=0; atomtypeJ=SP1; indexJ=0; sigma=0.43 nm; eps=3.375 kJ*mol^-1;}
+SP1_SC1 LJPARMS{atomtypeI=SP1; indexI=0; atomtypeJ=SC1; indexJ=1; sigma=0.43 nm; eps=2.025 kJ*mol^-1;}
+SP1_SC3 LJPARMS{atomtypeI=SP1; indexI=0; atomtypeJ=SC3; indexJ=2; sigma=0.43 nm; eps=2.625 kJ*mol^-1;}
+SP1_C1 LJPARMS{atomtypeI=SP1; indexI=0; atomtypeJ=C1; indexJ=3; sigma=0.47 nm; eps=2.7 kJ*mol^-1;}
+SC1_SC1 LJPARMS{atomtypeI=SC1; indexI=1; atomtypeJ=SC1; indexJ=1; sigma=0.43 nm; eps=2.625 kJ*mol^-1;}
+SC1_SC3 LJPARMS{atomtypeI=SC1; indexI=1; atomtypeJ=SC3; indexJ=2; sigma=0.43 nm; eps=2.625 kJ*mol^-1;}
+SC1_C1 LJPARMS{atomtypeI=SC1; indexI=1; atomtypeJ=C1; indexJ=3; sigma=0.47 nm; eps=3.5 kJ*mol^-1;}
+SC3_SC3 LJPARMS{atomtypeI=SC3; indexI=2; atomtypeJ=SC3; indexJ=2; sigma=0.43 nm; eps=2.625 kJ*mol^-1;}
+SC3_C1 LJPARMS{atomtypeI=SC3; indexI=2; atomtypeJ=C1; indexJ=3; sigma=0.47 nm; eps=3.5 kJ*mol^-1;}
+C1_C1 LJPARMS{atomtypeI=C1; indexI=3; atomtypeJ=C1; indexJ=3; sigma=0.47 nm; eps=3.5 kJ*mol^-1;}

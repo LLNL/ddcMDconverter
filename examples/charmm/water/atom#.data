@@ -1,0 +1,15 @@
+particle FILEHEADER {type=MULTILINE; datatype=VARRECORDASCII; checksum=NONE;
+loop=0; time=0.000000;
+nfiles=1; nrecord=3; nfields=10;
+field_names=id class type group rx ry rz vx vy vz;
+field_types=u s s s f f f f f f;
+h=     24.0      0.00000000000000      0.00000000000000
+       0.00000000000000     24.0       0.00000000000000
+       0.00000000000000      0.00000000000000     24.0 ;
+groups = group ;
+types = ATOM ;
+} 
+
+             0 ATOM    TIP3xOH2 group   5.1600000000000e+00   8.8210000000000e+00   8.0400000000000e+00   0.0000000000000e+00   0.0000000000000e+00   0.0000000000000e+00
+             1 ATOM     TIP3xH1 group   5.2060000000000e+00   9.6830000000000e+00   7.6260000000000e+00   0.0000000000000e+00   0.0000000000000e+00   0.0000000000000e+00
+             2 ATOM     TIP3xH2 group   4.7000000000000e+00   8.2740000000000e+00   7.4040000000000e+00   0.0000000000000e+00   0.0000000000000e+00   0.0000000000000e+00

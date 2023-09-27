@@ -1,0 +1,81 @@
+2021-04-01 22:57:12,171 - root:init_logger:204 - DEBUG - Logging enabled: file (/p/gpfs1/helgi/mummi_root_20200728/sims-cg/test_RAS4A/RAS4A_RAF/createsims_logger.log)
+2021-04-01 22:57:12,171 - root:init_logger:238 - DEBUG - Enabled
+2021-04-01 22:57:12,171 - root:init_logger:239 - INFO - Enabled
+2021-04-01 22:57:12,171 - root:init_logger:240 - WARNING - Enabled
+2021-04-01 22:57:12,171 - root:init_logger:241 - ERROR - Enabled
+2021-04-01 22:57:12,171 - root:init_logger:242 - CRITICAL - Enabled
+2021-04-01 22:57:12,172 - mummi.transformations.createsim.createsims:main:1419 - INFO - Running createsims, options are:
+2021-04-01 22:57:12,172 - mummi.transformations.createsim.createsims:main:1420 - INFO - Namespace(fstype='taridx', gromacs='gmx', inpath='/p/gpfs1/bhatia4/pilot2/campaign1star/patches/', logfile='createsims_logger', loglevel=1, logpath='./', logstdout=True, mdrunopt=' -nt 96 -rdd 2.0 -ntomp 4 -dd 4 3 2', mpi='gmx mdrun', outlocal='./', outpath='', patch='create', simnum='RAS4A-RAF')
+2021-04-01 22:57:12,172 - mummi.transformations.createsim.createsims:main:1421 - INFO - GROMACS       = gmx
+2021-04-01 22:57:12,178 - mummi.transformations.createsim.createsims:main:1422 - INFO - GROMACS single precision path /usr/gapps/kras/spack6/opt/spack/linux-rhel7-power9le/gcc-7.3.1/gromacs-2019.6-5bbfaidl755223odzubaqqpilmenboey/bin/gmx
+2021-04-01 22:57:12,178 - mummi.transformations.createsim.createsims:main:1423 - INFO - mdrun_o       =  -nt 96 -rdd 2.0 -ntomp 4 -dd 4 3 2
+2021-04-01 22:57:12,178 - mummi.transformations.createsim.createsims:main:1424 - INFO - mdrun_mpi     = gmx mdrun
+2021-04-01 22:57:12,178 - mummi.transformations.createsim.createsims:main:1425 - INFO - init outpath  = 
+2021-04-01 22:57:12,179 - mummi.transformations.createsim.createsims:main:1426 - INFO - init outlocal = ./
+2021-04-01 22:57:12,579 - mummi.utils.utilities:sys_call:141 - INFO - Run command: pkill gmx_mpi*
+2021-04-01 22:57:12,580 - mummi.transformations.createsim.createsims:main:1439 - INFO - Using IO_Interface [<class 'mummi.interfaces.tar.IO_Tar'>] for all output
+2021-04-01 22:57:12,580 - mummi.transformations.createsim.createsims:main:1463 - INFO - Create CG patch based on create with name RAS4A-RAF
+2021-04-01 22:57:12,851 - mummi.transformations.createsim.particlesim:__init__:118 - INFO - Feedback AA to CG - no new .itp's found in /p/gpfs1/helgi/mummi_root_20200728/feedback-aa2cg use inital/default RAS-ONLY .itp - /g/g90/helgi/mummi_resources/martini/RAS_scfix-CYFpos
+2021-04-01 22:57:12,854 - mummi.transformations.createsim.particlesim:__init__:141 - INFO - Feedback AA to CG - no new .itp's found in /p/gpfs1/helgi/mummi_root_20200728/feedback-aa2cg use inital/default RAS-RAF .itp - /g/g90/helgi/mummi_resources/martini/RAS_RAF_TERNARY_scfix-CYFpos
+2021-04-01 22:57:12,854 - mummi.transformations.createsim.createsims:main:1480 - INFO - Output path not set for patch 'RAS4A-RAF', setting to '/p/gpfs1/helgi/mummi_root_20200728/sims-cg/RAS4A-RAF'
+2021-04-01 22:57:12,854 - mummi.transformations.createsim.createsims:main:1485 - INFO - final outpath = /p/gpfs1/helgi/mummi_root_20200728/sims-cg/RAS4A-RAF
+2021-04-01 22:57:12,854 - mummi.transformations.createsim.createsims:main:1486 - INFO - final outlocal = ./
+2021-04-01 22:57:12,886 - mummi.transformations.createsim.createsims:main:1507 - WARNING - ---> Sim /p/gpfs1/helgi/mummi_root_20200728/sims-cg/RAS4A-RAF folder didn't excist and was created - this is not expected within a MuMMI run
+2021-04-01 22:57:13,008 - mummi.utils.utilities:sys_call:141 - INFO - Run command: mkdir -p /p/gpfs1/helgi/mummi_root_20200728/sims-cg/RAS4A-RAF
+2021-04-01 22:57:13,009 - mummi.transformations.createsim.createsims:main:1510 - INFO - Creating PG Particle simulation...
+2021-04-01 22:57:13,011 - mummi.transformations.createsim.particlesim:create:214 - INFO - -> Particle simulation RAS4A-RAF has been created
+2021-04-01 22:57:13,013 - mummi.transformations.createsim.createsims:setup_cg_sim:44 - INFO - ---> Setup CG sim and run eq in dir ./
+2021-04-01 22:57:13,014 - mummi.transformations.createsim.createsims:setup_cg_sim:65 - INFO - ---> Manual protein alignment insane protein string =  -ras /g/g90/helgi/mummi_resources/martini/test_RAS4A/KRAS4A_RAF_shift.gro l 15 15 
+2021-04-01 22:57:13,014 - mummi.transformations.createsim.createsims:setup_cg_sim:70 - INFO - ---> System setup/EM try number 0
+2021-04-01 22:57:13,108 - mummi.utils.utilities:sys_call:141 - INFO - Run command: sed -ie 's/xPATHx/\/g\/g90\/helgi\/mummi_resources\/martini/g' system.top
+2021-04-01 22:57:13,200 - mummi.utils.utilities:sys_call:141 - INFO - Run command: sed -ie 's/YYY/\/g\/g90\/helgi\/mummi_resources\/martini\/RAS_scfix-CYFpos/g' system.top
+2021-04-01 22:57:13,291 - mummi.utils.utilities:sys_call:141 - INFO - Run command: sed -ie 's/ZZZ/\/g\/g90\/helgi\/mummi_resources\/martini\/RAS_RAF_TERNARY_scfix-CYFpos/g' system.top
+2021-04-01 22:57:13,381 - mummi.utils.utilities:sys_call:141 - INFO - Run command: sed -ie 's/WWW/\/g\/g90\/helgi\/mummi_resources\/martini\/RAS4A_scfix-CYFpos/g' system.top
+2021-04-01 22:57:13,472 - mummi.utils.utilities:sys_call:141 - INFO - Run command: sed -ie 's/XXX/\/g\/g90\/helgi\/mummi_resources\/martini\/RAS4A_RAF_scfix-CYFpos/g' system.top
+2021-04-01 22:57:15,991 - mummi.utils.utilities:sys_call:141 - INFO - Run command: python /g/g90/helgi/mummi_resources/martini/insane-ck.py -salt 0.15 -x 31 -y 31 -z 16 -charge -1 -pbc square -sol W -asym -118 -rand 0.095 -o lipids-water.gro -uf psimSubPatch_upper.pat -lf psimSubPatch_lower.pat  -ras /g/g90/helgi/mummi_resources/martini/test_RAS4A/KRAS4A_RAF_shift.gro l 15 15  2>&1 | tee -a system.top
+2021-04-01 22:57:16,128 - mummi.utils.utilities:sys_call:141 - INFO - Run command: cp system.top system-pull.top
+2021-04-01 22:57:16,220 - mummi.utils.utilities:sys_call:141 - INFO - Run command: sed -ie '0,/Protein          1/s//RAS4A_RAF_PULL   1/g' system-pull.top
+2021-04-01 22:57:16,313 - mummi.utils.utilities:sys_call:141 - INFO - Run command: sed -ie '0,/Protein          1/s//RAS4A_RAF        1/g' system.top
+2021-04-01 22:57:18,045 - mummi.utils.utilities:sys_call:141 - INFO - Run command: gmx grompp -c lipids-water.gro -r lipids-water.gro -f /g/g90/helgi/mummi_resources/martini/martini_v2.x_new-rf-em.mdp -p system-pull.top -o topol.tpr -maxwarn 5
+2021-04-01 22:57:33,719 - mummi.utils.utilities:sys_call:141 - INFO - Run command: gmx mdrun -ntmpi 20 -v -c lipids-water-em.gro >> mdrun-em.log 2>&1
+2021-04-01 22:57:34,814 - mummi.utils.utilities:sys_call:141 - INFO - Run command: echo 0 | gmx trjconv -f lipids-water-em.gro -o lipids-water-em.gro -pbc mol -s topol.tpr
+2021-04-01 22:57:38,470 - mummi.utils.utilities:sys_call:141 - INFO - Run command: gmx make_ndx -f lipids-water-em.gro -o index.ndx < index-selection.txt
+2021-04-01 22:57:38,567 - mummi.utils.utilities:sys_call:141 - INFO - Run command: cp /g/g90/helgi/mummi_resources/martini/martini_v2.x_new-rf-eq3-PULL.mdp .
+2021-04-01 22:57:39,909 - mummi.utils.utilities:sys_call:141 - INFO - Run command: gmx grompp -c lipids-water-em.gro -f /g/g90/helgi/mummi_resources/martini/martini_v2.x_new-rf-eq1.mdp  -p system-pull.top -o topol.tpr -maxwarn 5 -n index.ndx -r lipids-water-em.gro
+2021-04-01 22:57:54,805 - mummi.utils.utilities:sys_call:141 - INFO - Run command: gmx mdrun  -nt 96 -rdd 2.0 -ntomp 4 -dd 4 3 2  -c lipids-water-eq1.gro >> mdrun-eq1.log 2>&1 
+2021-04-01 22:57:56,201 - mummi.utils.utilities:sys_call:141 - INFO - Run command: gmx grompp -c lipids-water-eq1.gro -f /g/g90/helgi/mummi_resources/martini/martini_v2.x_new-rf-eq2.mdp  -p system-pull.top -o topol.tpr -maxwarn 5 -n index.ndx -r lipids-water-em.gro
+2021-04-01 22:58:49,303 - mummi.utils.utilities:sys_call:141 - INFO - Run command: gmx mdrun  -nt 96 -rdd 2.0 -ntomp 4 -dd 4 3 2  -c lipids-water-eq2.gro >> mdrun-eq2.log 2>&1
+2021-04-01 22:58:50,772 - mummi.utils.utilities:sys_call:141 - INFO - Run command: gmx grompp -c lipids-water-eq2.gro -f martini_v2.x_new-rf-eq3-PULL.mdp -p system-pull.top -o topol.tpr -maxwarn 5 -n index.ndx -r lipids-water-em.gro
+2021-04-01 23:16:09,772 - mummi.utils.utilities:sys_call:141 - INFO - Run command: gmx mdrun  -nt 96 -rdd 2.0 -ntomp 4 -dd 4 3 2  -c lipids-water-eq3.gro >> mdrun-eq3.log 2>&1
+2021-04-01 23:16:11,398 - mummi.utils.utilities:sys_call:141 - INFO - Run command: gmx grompp -c lipids-water-eq3.gro -f /g/g90/helgi/mummi_resources/martini/martini_v2.x_new-rf-eq4p.mdp -p system.top -o topol.tpr -maxwarn 5 -n index.ndx -r lipids-water-eq3.gro
+2021-04-01 23:17:05,422 - mummi.utils.utilities:sys_call:141 - INFO - Run command: gmx mdrun  -nt 96 -rdd 2.0 -ntomp 4 -dd 4 3 2  -c lipids-water-eq4p.gro >> mdrun-eq4p.log 2>&1
+2021-04-01 23:17:06,997 - mummi.utils.utilities:sys_call:141 - INFO - Run command: gmx grompp -c lipids-water-eq4p.gro -f /g/g90/helgi/mummi_resources/martini/martini_v2.x_new-rf-eq4.mdp -p system.top -o topol.tpr -maxwarn 5 -n index.ndx -r lipids-water-eq3.gro
+2021-04-01 23:21:40,344 - mummi.utils.utilities:sys_call:141 - INFO - Run command: gmx mdrun  -nt 96 -rdd 2.0 -ntomp 4 -dd 4 3 2  -c lipids-water-eq4.gro >> mdrun-eq4.log 2>&1
+2021-04-01 23:21:40,543 - mummi.utils.utilities:sys_call:141 - INFO - Run command: rm \#* step*.pdb || true
+2021-04-01 23:21:40,632 - mummi.utils.utilities:sys_call:141 - INFO - Run command: rm system.tope system-pull.tope state.cpt state_prev.cpt traj_comp.xtc traj.trr mdout.mdp md.log ener.edr || true
+2021-04-01 23:21:46,053 - mummi.utils.utilities:sys_call:141 - INFO - Run command: tar -czvf creatsims.tar.gz psimSubPatch_lower.pat psimSubPatch_upper.pat protein-*-rotate.gro protein-ALL.gro index-selection.txt lipids-water-em.gro lipids-water-eq1.gro lipids-water-eq2.gro lipids-water-eq3.gro lipids-water.gro martini_v2.x_new-rf-eq3-PULL.mdp mdrun-em.log mdrun-eq1.log mdrun-eq2.log mdrun-eq3.log mdrun-eq4.log pullf.xvg pullx.xvg system-pull.top lipid_counts.npz mdrun-eq4p.log lipids-water-eq4p.gro || true
+2021-04-01 23:21:46,146 - mummi.utils.utilities:sys_call:141 - INFO - Run command: rm psimSubPatch_lower.pat psimSubPatch_upper.pat protein-*-rotate.gro protein-ALL.gro index-selection.txt lipids-water-em.gro lipids-water-eq1.gro lipids-water-eq2.gro lipids-water-eq3.gro lipids-water.gro martini_v2.x_new-rf-eq3-PULL.mdp mdrun-em.log mdrun-eq1.log mdrun-eq2.log mdrun-eq3.log mdrun-eq4.log pullf.xvg pullx.xvg system-pull.top lipid_counts.npz mdrun-eq4p.log lipids-water-eq4p.gro || true
+2021-04-01 23:21:46,146 - mummi.transformations.createsim.createsims:main:1515 - INFO - Running conversion from GROMACS to ddcMD...
+2021-04-01 23:21:46,147 - mummi.transformations.createsim.createsims:prime_cg_sim:373 - INFO - ---> Setup CG production sim in dir ./
+2021-04-01 23:21:47,014 - mummi.utils.utilities:sys_call:141 - INFO - Run command: gmx editconf -f lipids-water-eq4.gro -o lipids-water-eq4.gro -translate 0 0 -0.5 
+2021-04-01 23:21:48,575 - mummi.utils.utilities:sys_call:141 - INFO - Run command: gmx grompp -c lipids-water-eq4.gro -r lipids-water-eq4.gro -f /g/g90/helgi/mummi_resources/martini/martini_v2.x_new-rf-prod.mdp -p system.top -o topol.tpr -maxwarn 5 -n index.ndx
+2021-04-01 23:21:49,781 - mummi.utils.utilities:sys_call:141 - INFO - Run command: gmx editconf -f lipids-water-eq4.gro -o lipids-water-eq4.pdb
+2021-04-01 23:21:49,874 - mummi.utils.utilities:sys_call:141 - INFO - Run command: mkdir snapshot.mem
+2021-04-01 23:21:49,970 - mummi.utils.utilities:sys_call:141 - INFO - Run command: cp lipids-water-eq4.pdb lipids-water-eq4-fix.pdb
+2021-04-01 23:21:50,975 - mummi.utils.utilities:sys_call:141 - INFO - Run command: sed -ie 's/MG+ ION/MG   MG/g' lipids-water-eq4-fix.pdb
+2021-04-01 23:21:51,985 - mummi.utils.utilities:sys_call:141 - INFO - Run command: sed -ie 's/NA+ ION/NA   NA/g' lipids-water-eq4-fix.pdb
+2021-04-01 23:21:52,994 - mummi.utils.utilities:sys_call:141 - INFO - Run command: sed -ie 's/CL- ION/CL   CL/g' lipids-water-eq4-fix.pdb
+2021-04-01 23:21:53,998 - mummi.utils.utilities:sys_call:141 - INFO - Run command: sed -ie 's/ZN+ ION/ZN   ZN/g' lipids-water-eq4-fix.pdb
+2021-04-01 23:21:54,091 - mummi.utils.utilities:sys_call:141 - INFO - Run command: sed -ie 's/NA+ /NA  /g' system.top
+2021-04-01 23:21:54,182 - mummi.utils.utilities:sys_call:141 - INFO - Run command: sed -ie 's/CL- /CL  /g' system.top
+2021-04-01 23:21:54,276 - mummi.utils.utilities:sys_call:141 - INFO - Run command: cp /g/g90/helgi/mummi_resources/ddcmd/object.data .
+2021-04-01 23:21:54,369 - mummi.utils.utilities:sys_call:141 - INFO - Run command: cp /g/g90/helgi/mummi_resources/ddcmd/resItpList .
+2021-04-01 23:21:54,462 - mummi.utils.utilities:sys_call:141 - INFO - Run command: cp /g/g90/helgi/mummi_resources/ddcmd/POPX_Martini_v2.0_lipid.itp .
+2021-04-01 23:21:54,557 - mummi.utils.utilities:sys_call:141 - INFO - Run command: cp /g/g90/helgi/mummi_resources/ddcmd/martini.data .
+2021-04-01 23:21:54,650 - mummi.utils.utilities:sys_call:141 - INFO - Run command: cp /g/g90/helgi/mummi_resources/ddcmd/molecule.data .
+2021-04-01 23:21:54,743 - mummi.utils.utilities:sys_call:141 - INFO - Run command: cp /g/g90/helgi/mummi_resources/ddcmd/ConsAtom.data .
+2021-04-01 23:21:56,403 - mummi.utils.utilities:sys_call:138 - DEBUG - Failed run: pdbmartini2obj -p lipids-water-eq4-fix.pdb -t system.top -m martini.data -f ConsAtom.data -o snapshot.mem/atoms#000000
+2021-04-01 23:21:56,404 - mummi.transformations.createsim.createsims:main:1548 - ERROR - ---> In creatsim finally but din't reach success - most likely a gromacs error/exit.
+2021-04-01 23:21:56,404 - mummi.transformations.createsim.createsims:main:1552 - INFO - ---> Copied form local to global - .//* /p/gpfs1/helgi/mummi_root_20200728/sims-cg/RAS4A-RAF/
+2021-04-01 23:21:56,405 - mummi.transformations.createsim.createsims:store_files:1353 - DEBUG - ---> Copy local ./ to global folder /p/gpfs1/helgi/mummi_root_20200728/sims-cg/RAS4A-RAF/failed_20210401-232156
+2021-04-01 23:21:56,527 - mummi.utils.utilities:sys_call:141 - INFO - Run command: cp -r .//* /p/gpfs1/helgi/mummi_root_20200728/sims-cg/RAS4A-RAF/failed_20210401-232156/

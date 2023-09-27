@@ -1,0 +1,7 @@
+simulate SIMULATE { loop=0; time=0.000000 ;}
+box BOX {
+h=     287.239         0.00000000000000      0.00000000000000
+       0.00000000000000      287.239         0.00000000000000
+       0.00000000000000      0.00000000000000     187.532  ;
+}
+collection COLLECTION { mode=VARRECORDASCII; size=135985; files=snapshot.mem/atoms#;}

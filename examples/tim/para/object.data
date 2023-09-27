@@ -1,0 +1,664 @@
+
+simulate SIMULATE
+{
+   type = MD;
+   system=system;
+   integrator=nglf;
+   deltaloop=100; 
+   maxloop=1000000;
+   dt=20;
+   printrate=10000000; // keep this the same or lower than writeCharmm
+   snapshotrate=0;
+   checkpointrate=100000000;
+   nLoopDigits=12;
+   //gidFormat=hex;
+   printinfo=printinfo;
+   heap=heap;
+   ddc = ddc;
+   //analysis = writeCharmm;
+   accelerator=accelerator;
+}
+
+accelerator ACCELERATOR
+{
+   type=CUDA;
+   maxPagesPerParticle = 1;
+}
+
+
+energyInfo ENERGYINFO{}
+heap HEAP { size = 1000 ;}
+
+// Update neighbortalbe and redomain - range 10-20
+ddc DDC { updateRate=20; }
+
+printinfo PRINTINFO
+{
+  PRESSURE=bar;
+  VOLUME = Ang^3;
+  TEMPERATURE = K;
+  ENERGY = kJ/mol;
+  TIME = ns;
+  printStress=0;
+  printMolecularPressure=1;
+}
+
+martini POTENTIAL
+{
+   type=MARTINI;
+   excludePotentialTerm=0;
+   use_transform=0;
+   cutoff=11.0 Angstrom;
+   rcoulomb=11.0 Angstrom; epsilon_r=15; epsilon_rf=-1;
+   function=lennardjones;
+   parmfile=martini.data;
+}
+
+restraint POTENTIAL { type=RESTRAINT; parmfile=restraint.data; }
+
+nglf INTEGRATOR { type=NGLFCONSTRAINTGPULANGEVIN; T=310K; P0 = 1.0 bar; beta = 3.0e-4/bar; tauBarostat = 1.0 ps;}
+
+system SYSTEM
+{
+   type = NORMAL;
+   potential = martini restraint ;
+   neighbor=nbr;
+   groups= group free ;
+   random = lcg64;
+   box = box;
+   collection=collection;
+   moleculeClass = moleculeClass;
+   // fix XXX - should be changed per simulation - XXX
+   nConstraints=5866;
+}
+
+// vcm TRANSFORM { type=SETVELOCITY; vcm=0 0 0;}
+
+box BOX { type=ORTHORHOMBIC; pbc=7; }
+
+nbr NEIGHBOR { type = NORMAL; deltaR=4.0000; minBoxSide=6; }
+
+group GROUP { type = LANGEVIN; Teq=310K; tau=1ps; useDefault=0;}
+free GROUP { type = LANGEVIN; Teq=310K; tau=1ps; useDefault=0;}
+//free   GROUP { type = FREE;  }
+
+lcg64 RANDOM {type = LCG64;randomizeSeed=1;}
+
+// Analysis - calculate pair correlcation function
+//martini ANALYSIS { type = PAIRCORRELATION; eval_rate=100; delta_r =0.05; length=40; outputrate=1000; }
+
+// Analysis - output COM of system
+//vcm ANALYSIS { type =  vcmWrite; outputrate=1000; }
+
+writeCharmm  ANALYSIS { type = subsetWrite; outputrate=10000000; format=binaryCharmm; }
+
+moleculeClass MOLECULECLASS { molecules =  KRASx POPXx CHOLx DIPEx DPSMx PAP6x PAPCx PAPSx POPEx POPCx POPSx Wx NAx CLx; }
+
+KRASx MOLECULE {ownershipSpecies = KRASxP0; species = KRASxP0 KRASxP1 KRASxP2 KRASxP3 KRASxP4 KRASxP5 KRASxP6 KRASxP7 KRASxP8 KRASxP9 KRASxP10 KRASxP11 KRASxP12 KRASxP13 KRASxP14 KRASxP15 KRASxP16 KRASxP17 KRASxP18 KRASxP19 KRASxP20 KRASxP21 KRASxP22 KRASxP23 KRASxP24 KRASxP25 KRASxP26 KRASxP27 KRASxP28 KRASxP29 KRASxP30 KRASxP31 KRASxP32 KRASxP33 KRASxP34 KRASxP35 KRASxP36 KRASxP37 KRASxP38 KRASxP39 KRASxP40 KRASxP41 KRASxP42 KRASxP43 KRASxP44 KRASxP45 KRASxP46 KRASxP47 KRASxP48 KRASxP49 KRASxP50 KRASxP51 KRASxP52 KRASxP53 KRASxP54 KRASxP55 KRASxP56 KRASxP57 KRASxP58 KRASxP59 KRASxP60 KRASxP61 KRASxP62 KRASxP63 KRASxP64 KRASxP65 KRASxP66 KRASxP67 KRASxP68 KRASxP69 KRASxP70 KRASxP71 KRASxP72 KRASxP73 KRASxP74 KRASxP75 KRASxP76 KRASxP77 KRASxP78 KRASxP79 KRASxP80 KRASxP81 KRASxP82 KRASxP83 KRASxP84 KRASxP85 KRASxP86 KRASxP87 KRASxP88 KRASxP89 KRASxP90 KRASxP91 KRASxP92 KRASxP93 KRASxP94 KRASxP95 KRASxP96 KRASxP97 KRASxP98 KRASxP99 KRASxP100 KRASxP101 KRASxP102 KRASxP103 KRASxP104 KRASxP105 KRASxP106 KRASxP107 KRASxP108 KRASxP109 KRASxP110 KRASxP111 KRASxP112 KRASxP113 KRASxP114 KRASxP115 KRASxP116 KRASxP117 KRASxP118 KRASxP119 KRASxP120 KRASxP121 KRASxP122 KRASxP123 KRASxP124 KRASxP125 KRASxP126 KRASxP127 KRASxP128 KRASxP129 KRASxP130 KRASxP131 KRASxP132 KRASxP133 KRASxP134 KRASxP135 KRASxP136 KRASxP137 KRASxP138 KRASxP139 KRASxP140 KRASxP141 KRASxP142 KRASxP143 KRASxP144 KRASxP145 KRASxP146 KRASxP147 KRASxP148 KRASxP149 KRASxP150 KRASxP151 KRASxP152 KRASxP153 KRASxP154 KRASxP155 KRASxP156 KRASxP157 KRASxP158 KRASxP159 KRASxP160 KRASxP161 KRASxP162 KRASxP163 KRASxP164 KRASxP165 KRASxP166 KRASxP167 KRASxP168 KRASxP169 KRASxP170 KRASxP171 KRASxP172 KRASxP173 KRASxP174 KRASxP175 KRASxP176 KRASxP177 KRASxP178 KRASxP179 KRASxP180 KRASxP181 KRASxP182 KRASxP183 KRASxP184 KRASxP185 KRASxP186 KRASxP187 KRASxP188 KRASxP189 KRASxP190 KRASxP191 KRASxP192 KRASxP193 KRASxP194 KRASxP195 KRASxP196 KRASxP197 KRASxP198 KRASxP199 KRASxP200 KRASxP201 KRASxP202 KRASxP203 KRASxP204 KRASxP205 KRASxP206 KRASxP207 KRASxP208 KRASxP209 KRASxP210 KRASxP211 KRASxP212 KRASxP213 KRASxP214 KRASxP215 KRASxP216 KRASxP217 KRASxP218 KRASxP219 KRASxP220 KRASxP221 KRASxP222 KRASxP223 KRASxP224 KRASxP225 KRASxP226 KRASxP227 KRASxP228 KRASxP229 KRASxP230 KRASxP231 KRASxP232 KRASxP233 KRASxP234 KRASxP235 KRASxP236 KRASxP237 KRASxP238 KRASxP239 KRASxP240 KRASxP241 KRASxP242 KRASxP243 KRASxP244 KRASxP245 KRASxP246 KRASxP247 KRASxP248 KRASxP249 KRASxP250 KRASxP251 KRASxP252 KRASxP253 KRASxP254 KRASxP255 KRASxP256 KRASxP257 KRASxP258 KRASxP259 KRASxP260 KRASxP261 KRASxP262 KRASxP263 KRASxP264 KRASxP265 KRASxP266 KRASxP267 KRASxP268 KRASxP269 KRASxP270 KRASxP271 KRASxP272 KRASxP273 KRASxP274 KRASxP275 KRASxP276 KRASxP277 KRASxP278 KRASxP279 KRASxP280 KRASxP281 KRASxP282 KRASxP283 KRASxP284 KRASxP285 KRASxP286 KRASxP287 KRASxP288 KRASxP289 KRASxP290 KRASxP291 KRASxP292 KRASxP293 KRASxP294 KRASxP295 KRASxP296 KRASxP297 KRASxP298 KRASxP299 KRASxP300 KRASxP301 KRASxP302 KRASxP303 KRASxP304 KRASxP305 KRASxP306 KRASxP307 KRASxP308 KRASxP309 KRASxP310 KRASxP311 KRASxP312 KRASxP313 KRASxP314 KRASxP315 KRASxP316 KRASxP317 KRASxP318 KRASxP319 KRASxP320 KRASxP321 KRASxP322 KRASxP323 KRASxP324 KRASxP325 KRASxP326 KRASxP327 KRASxP328 KRASxP329 KRASxP330 KRASxP331 KRASxP332 KRASxP333 KRASxP334 KRASxP335 KRASxP336 KRASxP337 KRASxP338 KRASxP339 KRASxP340 KRASxP341 KRASxP342 KRASxP343 KRASxP344 KRASxP345 KRASxP346 KRASxP347 KRASxP348 KRASxP349 KRASxP350 KRASxP351 KRASxP352 KRASxP353 KRASxP354 KRASxP355 KRASxP356 KRASxP357 KRASxP358 KRASxP359 KRASxP360 KRASxP361 KRASxP362 KRASxP363 KRASxP364 KRASxP365 KRASxP366 KRASxP367 KRASxP368 KRASxP369 KRASxP370 KRASxP371 KRASxP372 KRASxP373 KRASxP374 KRASxP375 KRASxP376 KRASxP377 KRASxP378 KRASxP379 KRASxP380 KRASxP381 KRASxP382 KRASxP383 KRASxP384 KRASxP385 KRASxP386 KRASxP387 KRASxP388 KRASxP389 KRASxP390 KRASxP391 KRASxP392 KRASxP393 KRASxP394 KRASxP395 KRASxP396 KRASxP397 KRASxP398 KRASxP399 KRASxP400 KRASxP401 KRASxP402 KRASxP403 KRASxP404 KRASxP405 KRASxP406 KRASxP407 KRASxP408 KRASxP409 KRASxP410 KRASxP411 KRASxP412 KRASxP413 KRASxP414 KRASxP415 KRASxP416 KRASxP417 KRASxP418 KRASxP419 KRASxP420 KRASxP421 KRASxP422 KRASxP423 KRASxP424 KRASxP425 KRASxP426 KRASxP427;}
+POPXx MOLECULE {ownershipSpecies = POPXxNC3; species = POPXxNC3 POPXxPO4 POPXxGL1 POPXxGL2 POPXxC1A POPXxD2A POPXxC3A POPXxC4A POPXxC1B POPXxC2B POPXxC3B POPXxC4B;}
+CHOLx MOLECULE {ownershipSpecies = CHOLxROH; species = CHOLxROH CHOLxR1 CHOLxR2 CHOLxR3 CHOLxR4 CHOLxR5 CHOLxC1 CHOLxC2;}
+DIPEx MOLECULE {ownershipSpecies = DIPExNH3; species = DIPExNH3 DIPExPO4 DIPExGL1 DIPExGL2 DIPExC1A DIPExD2A DIPExD3A DIPExC4A DIPExC1B DIPExD2B DIPExD3B DIPExC4B;}
+DPSMx MOLECULE {ownershipSpecies = DPSMxNC3; species = DPSMxNC3 DPSMxPO4 DPSMxAM1 DPSMxAM2 DPSMxT1A DPSMxC2A DPSMxC3A DPSMxC1B DPSMxC2B DPSMxC3B DPSMxC4B;}
+PAP6x MOLECULE {ownershipSpecies = PAP6xC1; species = PAP6xC1 PAP6xC2 PAP6xC3 PAP6xPO4 PAP6xP4 PAP6xP5 PAP6xGL1 PAP6xGL2 PAP6xD1A PAP6xD2A PAP6xD3A PAP6xD4A PAP6xC5A PAP6xC1B PAP6xC2B PAP6xC3B PAP6xC4B;}
+PAPCx MOLECULE {ownershipSpecies = PAPCxNC3; species = PAPCxNC3 PAPCxPO4 PAPCxGL1 PAPCxGL2 PAPCxD1A PAPCxD2A PAPCxD3A PAPCxD4A PAPCxC5A PAPCxC1B PAPCxC2B PAPCxC3B PAPCxC4B;}
+PAPSx MOLECULE {ownershipSpecies = PAPSxCNO; species = PAPSxCNO PAPSxPO4 PAPSxGL1 PAPSxGL2 PAPSxD1A PAPSxD2A PAPSxD3A PAPSxD4A PAPSxC5A PAPSxC1B PAPSxC2B PAPSxC3B PAPSxC4B;}
+POPEx MOLECULE {ownershipSpecies = POPExNH3; species = POPExNH3 POPExPO4 POPExGL1 POPExGL2 POPExC1A POPExD2A POPExC3A POPExC4A POPExC1B POPExC2B POPExC3B POPExC4B;}
+POPCx MOLECULE {ownershipSpecies = POPCxNC3; species = POPCxNC3 POPCxPO4 POPCxGL1 POPCxGL2 POPCxC1A POPCxD2A POPCxC3A POPCxC4A POPCxC1B POPCxC2B POPCxC3B POPCxC4B;}
+POPSx MOLECULE {ownershipSpecies = POPSxCNO; species = POPSxCNO POPSxPO4 POPSxGL1 POPSxGL2 POPSxC1A POPSxD2A POPSxC3A POPSxC4A POPSxC1B POPSxC2B POPSxC3B POPSxC4B;}
+Wx MOLECULE {ownershipSpecies = WxW; species = WxW;}
+NAx MOLECULE {ownershipSpecies = NAxNA; species = NAxNA;}
+CLx MOLECULE {ownershipSpecies = CLxCL; species = CLxCL;}
+
+KRASxP0 SPECIES { type = ATOM ; charge =0.0; id=13; mass =72.0 M_p ; }
+KRASxP1 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP2 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP3 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP4 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP5 SPECIES { type = ATOM ; charge =0.0; id=22; mass =45.0 M_p ; }
+KRASxP6 SPECIES { type = ATOM ; charge =0.0; id=22; mass =45.0 M_p ; }
+KRASxP7 SPECIES { type = ATOM ; charge =0.0; id=18; mass =45.0 M_p ; }
+KRASxP8 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP9 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP10 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP11 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP12 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP13 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP14 SPECIES { type = ATOM ; charge =0.0; id=26; mass =72.0 M_p ; }
+KRASxP15 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP16 SPECIES { type = ATOM ; charge =0.0; id=26; mass =72.0 M_p ; }
+KRASxP17 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP18 SPECIES { type = ATOM ; charge =0.0; id=26; mass =72.0 M_p ; }
+KRASxP19 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP20 SPECIES { type = ATOM ; charge =0.0; id=15; mass =72.0 M_p ; }
+KRASxP21 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP22 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP23 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP24 SPECIES { type = ATOM ; charge =0.0; id=26; mass =72.0 M_p ; }
+KRASxP25 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP26 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+KRASxP27 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP28 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP29 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+KRASxP30 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP31 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP32 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+KRASxP33 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP34 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP35 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP36 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP37 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP38 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+KRASxP39 SPECIES { type = ATOM ; charge =0.0; id=15; mass =72.0 M_p ; }
+KRASxP40 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+KRASxP41 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP42 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+KRASxP43 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP44 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+KRASxP45 SPECIES { type = ATOM ; charge =0.0; id=15; mass =72.0 M_p ; }
+KRASxP46 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP47 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP48 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP49 SPECIES { type = ATOM ; charge =0.0; id=22; mass =45.0 M_p ; }
+KRASxP50 SPECIES { type = ATOM ; charge =0.0; id=18; mass =45.0 M_p ; }
+KRASxP51 SPECIES { type = ATOM ; charge =0.0; id=18; mass =45.0 M_p ; }
+KRASxP52 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP53 SPECIES { type = ATOM ; charge =0.0; id=4; mass =45.0 M_p ; }
+KRASxP54 SPECIES { type = ATOM ; charge =0.0; id=4; mass =45.0 M_p ; }
+KRASxP55 SPECIES { type = ATOM ; charge =0.0; id=4; mass =45.0 M_p ; }
+KRASxP56 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP57 SPECIES { type = ATOM ; charge =0.0; id=26; mass =72.0 M_p ; }
+KRASxP58 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP59 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP60 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP61 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP62 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP63 SPECIES { type = ATOM ; charge =0.0; id=22; mass =45.0 M_p ; }
+KRASxP64 SPECIES { type = ATOM ; charge =0.0; id=22; mass =45.0 M_p ; }
+KRASxP65 SPECIES { type = ATOM ; charge =0.0; id=18; mass =45.0 M_p ; }
+KRASxP66 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP67 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP68 SPECIES { type = ATOM ; charge =0.0; id=15; mass =72.0 M_p ; }
+KRASxP69 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP70 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP71 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP72 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP73 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP74 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP75 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP76 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP77 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP78 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP79 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP80 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP81 SPECIES { type = ATOM ; charge =0.0; id=22; mass =45.0 M_p ; }
+KRASxP82 SPECIES { type = ATOM ; charge =0.0; id=22; mass =45.0 M_p ; }
+KRASxP83 SPECIES { type = ATOM ; charge =0.0; id=18; mass =45.0 M_p ; }
+KRASxP84 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP85 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP86 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP87 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP88 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP89 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP90 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP91 SPECIES { type = ATOM ; charge =0.0; id=15; mass =72.0 M_p ; }
+KRASxP92 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP93 SPECIES { type = ATOM ; charge =0.0; id=26; mass =72.0 M_p ; }
+KRASxP94 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP95 SPECIES { type = ATOM ; charge =0.0; id=26; mass =72.0 M_p ; }
+KRASxP96 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP97 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP98 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP99 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP100 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP101 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP102 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP103 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP104 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP105 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP106 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+KRASxP107 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP108 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP109 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP110 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP111 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP112 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP113 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP114 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP115 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP116 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP117 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP118 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP119 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP120 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP121 SPECIES { type = ATOM ; charge =0.0; id=15; mass =72.0 M_p ; }
+KRASxP122 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP123 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP124 SPECIES { type = ATOM ; charge =0.0; id=15; mass =72.0 M_p ; }
+KRASxP125 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP126 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP127 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP128 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP129 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP130 SPECIES { type = ATOM ; charge =0.0; id=22; mass =45.0 M_p ; }
+KRASxP131 SPECIES { type = ATOM ; charge =0.0; id=22; mass =45.0 M_p ; }
+KRASxP132 SPECIES { type = ATOM ; charge =0.0; id=18; mass =45.0 M_p ; }
+KRASxP133 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP134 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP135 SPECIES { type = ATOM ; charge =0.0; id=15; mass =72.0 M_p ; }
+KRASxP136 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP137 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+KRASxP138 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP139 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP140 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP141 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP142 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP143 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP144 SPECIES { type = ATOM ; charge =0.0; id=15; mass =72.0 M_p ; }
+KRASxP145 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP146 SPECIES { type = ATOM ; charge =0.0; id=22; mass =45.0 M_p ; }
+KRASxP147 SPECIES { type = ATOM ; charge =0.0; id=22; mass =45.0 M_p ; }
+KRASxP148 SPECIES { type = ATOM ; charge =0.0; id=18; mass =45.0 M_p ; }
+KRASxP149 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP150 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+KRASxP151 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP152 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP153 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP154 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP155 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP156 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP157 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP158 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP159 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP160 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP161 SPECIES { type = ATOM ; charge =0.0; id=4; mass =45.0 M_p ; }
+KRASxP162 SPECIES { type = ATOM ; charge =0.0; id=4; mass =45.0 M_p ; }
+KRASxP163 SPECIES { type = ATOM ; charge =0.0; id=4; mass =45.0 M_p ; }
+KRASxP164 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP165 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP166 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP167 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+KRASxP168 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP169 SPECIES { type = ATOM ; charge =0.0; id=26; mass =72.0 M_p ; }
+KRASxP170 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP171 SPECIES { type = ATOM ; charge =0.0; id=4; mass =45.0 M_p ; }
+KRASxP172 SPECIES { type = ATOM ; charge =0.0; id=4; mass =45.0 M_p ; }
+KRASxP173 SPECIES { type = ATOM ; charge =0.0; id=4; mass =45.0 M_p ; }
+KRASxP174 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP175 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP176 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP177 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP178 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP179 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP180 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP181 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+KRASxP182 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP183 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+KRASxP184 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP185 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP186 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+KRASxP187 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP188 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+KRASxP189 SPECIES { type = ATOM ; charge =0.0; id=4; mass =45.0 M_p ; }
+KRASxP190 SPECIES { type = ATOM ; charge =0.0; id=4; mass =45.0 M_p ; }
+KRASxP191 SPECIES { type = ATOM ; charge =0.0; id=4; mass =45.0 M_p ; }
+KRASxP192 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP193 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP194 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP195 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP196 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP197 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP198 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP199 SPECIES { type = ATOM ; charge =0.0; id=22; mass =45.0 M_p ; }
+KRASxP200 SPECIES { type = ATOM ; charge =0.0; id=18; mass =45.0 M_p ; }
+KRASxP201 SPECIES { type = ATOM ; charge =0.0; id=18; mass =45.0 M_p ; }
+KRASxP202 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP203 SPECIES { type = ATOM ; charge =0.0; id=22; mass =45.0 M_p ; }
+KRASxP204 SPECIES { type = ATOM ; charge =0.0; id=18; mass =45.0 M_p ; }
+KRASxP205 SPECIES { type = ATOM ; charge =0.0; id=18; mass =45.0 M_p ; }
+KRASxP206 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP207 SPECIES { type = ATOM ; charge =0.0; id=22; mass =45.0 M_p ; }
+KRASxP208 SPECIES { type = ATOM ; charge =0.0; id=22; mass =45.0 M_p ; }
+KRASxP209 SPECIES { type = ATOM ; charge =0.0; id=18; mass =45.0 M_p ; }
+KRASxP210 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP211 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP212 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP213 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP214 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP215 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP216 SPECIES { type = ATOM ; charge =0.0; id=15; mass =72.0 M_p ; }
+KRASxP217 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP218 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP219 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+KRASxP220 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP221 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP222 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+KRASxP223 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP224 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP225 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+KRASxP226 SPECIES { type = ATOM ; charge =0.0; id=26; mass =72.0 M_p ; }
+KRASxP227 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+KRASxP228 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP229 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP230 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP231 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP232 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP233 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP234 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP235 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP236 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP237 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP238 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP239 SPECIES { type = ATOM ; charge =0.0; id=26; mass =72.0 M_p ; }
+KRASxP240 SPECIES { type = ATOM ; charge =0.0; id=15; mass =72.0 M_p ; }
+KRASxP241 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP242 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP243 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+KRASxP244 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP245 SPECIES { type = ATOM ; charge =0.0; id=26; mass =72.0 M_p ; }
+KRASxP246 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP247 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP248 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP249 SPECIES { type = ATOM ; charge =0.0; id=26; mass =72.0 M_p ; }
+KRASxP250 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP251 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP252 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP253 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP254 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP255 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP256 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP257 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+KRASxP258 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP259 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP260 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP261 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP262 SPECIES { type = ATOM ; charge =0.0; id=15; mass =72.0 M_p ; }
+KRASxP263 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP264 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP265 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP266 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP267 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP268 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP269 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP270 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP271 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP272 SPECIES { type = ATOM ; charge =0.0; id=26; mass =72.0 M_p ; }
+KRASxP273 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP274 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP275 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+KRASxP276 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP277 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+KRASxP278 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP279 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP280 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+KRASxP281 SPECIES { type = ATOM ; charge =0.0; id=15; mass =72.0 M_p ; }
+KRASxP282 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP283 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP284 SPECIES { type = ATOM ; charge =0.0; id=15; mass =72.0 M_p ; }
+KRASxP285 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP286 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP287 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP288 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP289 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP290 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+KRASxP291 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP292 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP293 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+KRASxP294 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP295 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+KRASxP296 SPECIES { type = ATOM ; charge =0.0; id=22; mass =45.0 M_p ; }
+KRASxP297 SPECIES { type = ATOM ; charge =0.0; id=22; mass =45.0 M_p ; }
+KRASxP298 SPECIES { type = ATOM ; charge =0.0; id=18; mass =45.0 M_p ; }
+KRASxP299 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP300 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP301 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP302 SPECIES { type = ATOM ; charge =0.0; id=15; mass =72.0 M_p ; }
+KRASxP303 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP304 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP305 SPECIES { type = ATOM ; charge =0.0; id=4; mass =45.0 M_p ; }
+KRASxP306 SPECIES { type = ATOM ; charge =0.0; id=4; mass =45.0 M_p ; }
+KRASxP307 SPECIES { type = ATOM ; charge =0.0; id=4; mass =45.0 M_p ; }
+KRASxP308 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP309 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP310 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP311 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP312 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP313 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP314 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP315 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP316 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP317 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP318 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP319 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP320 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP321 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP322 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP323 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP324 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP325 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP326 SPECIES { type = ATOM ; charge =0.0; id=15; mass =72.0 M_p ; }
+KRASxP327 SPECIES { type = ATOM ; charge =0.0; id=17; mass =72.0 M_p ; }
+KRASxP328 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+KRASxP329 SPECIES { type = ATOM ; charge =0.0; id=26; mass =72.0 M_p ; }
+KRASxP330 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+KRASxP331 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP332 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }
+KRASxP333 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP334 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP335 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP336 SPECIES { type = ATOM ; charge =0.0; id=4; mass =45.0 M_p ; }
+KRASxP337 SPECIES { type = ATOM ; charge =0.0; id=4; mass =45.0 M_p ; }
+KRASxP338 SPECIES { type = ATOM ; charge =0.0; id=4; mass =45.0 M_p ; }
+KRASxP339 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP340 SPECIES { type = ATOM ; charge =0.0; id=22; mass =45.0 M_p ; }
+KRASxP341 SPECIES { type = ATOM ; charge =0.0; id=22; mass =45.0 M_p ; }
+KRASxP342 SPECIES { type = ATOM ; charge =0.0; id=18; mass =45.0 M_p ; }
+KRASxP343 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP344 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP345 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP346 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP347 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP348 SPECIES { type = ATOM ; charge =0.0; id=26; mass =72.0 M_p ; }
+KRASxP349 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP350 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP351 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP352 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP353 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP354 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP355 SPECIES { type = ATOM ; charge =0.0; id=27; mass =72.0 M_p ; }
+KRASxP356 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP357 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP358 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP359 SPECIES { type = ATOM ; charge =0.0; id=21; mass =72.0 M_p ; }
+KRASxP360 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP361 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP362 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+KRASxP363 SPECIES { type = ATOM ; charge =0.0; id=22; mass =45.0 M_p ; }
+KRASxP364 SPECIES { type = ATOM ; charge =0.0; id=18; mass =45.0 M_p ; }
+KRASxP365 SPECIES { type = ATOM ; charge =0.0; id=18; mass =45.0 M_p ; }
+KRASxP366 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+KRASxP367 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP368 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP369 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+KRASxP370 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP371 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+KRASxP372 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP373 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP374 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP375 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+KRASxP376 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP377 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP378 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP379 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP380 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP381 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP382 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+KRASxP383 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP384 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP385 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP386 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP387 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP388 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP389 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP390 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP391 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP392 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP393 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP394 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP395 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP396 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP397 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP398 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP399 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP400 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP401 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP402 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP403 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP404 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP405 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP406 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP407 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP408 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+KRASxP409 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+KRASxP410 SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+KRASxP411 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+KRASxP412 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+KRASxP413 SPECIES { type = ATOM ; charge =0.0; id=10; mass =72.0 M_p ; }
+KRASxP414 SPECIES { type = ATOM ; charge =0.0; id=24; mass =45.0 M_p ; }
+KRASxP415 SPECIES { type = ATOM ; charge =0.0; id=8; mass =72.0 M_p ; }
+KRASxP416 SPECIES { type = ATOM ; charge =0.0; id=24; mass =45.0 M_p ; }
+KRASxP417 SPECIES { type = ATOM ; charge =0.0; id=24; mass =45.0 M_p ; }
+KRASxP418 SPECIES { type = ATOM ; charge =-2.0; id=0; mass =72.0 M_p ; }
+KRASxP419 SPECIES { type = ATOM ; charge =-1.0; id=0; mass =72.0 M_p ; }
+KRASxP420 SPECIES { type = ATOM ; charge =-1.0; id=0; mass =72.0 M_p ; }
+KRASxP421 SPECIES { type = ATOM ; charge =0.0; id=5; mass =45.0 M_p ; }
+KRASxP422 SPECIES { type = ATOM ; charge =0.0; id=25; mass =45.0 M_p ; }
+KRASxP423 SPECIES { type = ATOM ; charge =0.0; id=6; mass =45.0 M_p ; }
+KRASxP424 SPECIES { type = ATOM ; charge =0.0; id=12; mass =45.0 M_p ; }
+KRASxP425 SPECIES { type = ATOM ; charge =0.0; id=1; mass =45.0 M_p ; }
+KRASxP426 SPECIES { type = ATOM ; charge =0.0; id=28; mass =45.0 M_p ; }
+KRASxP427 SPECIES { type = ATOM ; charge =2.0; id=20; mass =72.0 M_p ; }
+POPXxNC3 SPECIES { type = ATOM ; charge =1.0; id=0; mass =72.0 M_p ; }
+POPXxPO4 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+POPXxGL1 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+POPXxGL2 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+POPXxC1A SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPXxD2A SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+POPXxC3A SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPXxC4A SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPXxC1B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPXxC2B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPXxC3B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPXxC4B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+CHOLxROH SPECIES { type = ATOM ; charge =0.0; id=18; mass =45.0 M_p ; }
+CHOLxR1 SPECIES { type = ATOM ; charge =0.0; id=23; mass =45.0 M_p ; }
+CHOLxR2 SPECIES { type = ATOM ; charge =0.0; id=24; mass =45.0 M_p ; }
+CHOLxR3 SPECIES { type = ATOM ; charge =0.0; id=23; mass =45.0 M_p ; }
+CHOLxR4 SPECIES { type = ATOM ; charge =0.0; id=23; mass =45.0 M_p ; }
+CHOLxR5 SPECIES { type = ATOM ; charge =0.0; id=23; mass =45.0 M_p ; }
+CHOLxC1 SPECIES { type = ATOM ; charge =0.0; id=23; mass =45.0 M_p ; }
+CHOLxC2 SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+DIPExNH3 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+DIPExPO4 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+DIPExGL1 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+DIPExGL2 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+DIPExC1A SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+DIPExD2A SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+DIPExD3A SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+DIPExC4A SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+DIPExC1B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+DIPExD2B SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+DIPExD3B SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+DIPExC4B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+DPSMxNC3 SPECIES { type = ATOM ; charge =1.0; id=0; mass =72.0 M_p ; }
+DPSMxPO4 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+DPSMxAM1 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+DPSMxAM2 SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+DPSMxT1A SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+DPSMxC2A SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+DPSMxC3A SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+DPSMxC1B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+DPSMxC2B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+DPSMxC3B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+DPSMxC4B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+PAP6xC1 SPECIES { type = ATOM ; charge =0.0; id=14; mass =72.0 M_p ; }
+PAP6xC2 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+PAP6xC3 SPECIES { type = ATOM ; charge =0.0; id=15; mass =72.0 M_p ; }
+PAP6xPO4 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+PAP6xP4 SPECIES { type = ATOM ; charge =-2.0; id=19; mass =72.0 M_p ; }
+PAP6xP5 SPECIES { type = ATOM ; charge =-2.0; id=19; mass =72.0 M_p ; }
+PAP6xGL1 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+PAP6xGL2 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+PAP6xD1A SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+PAP6xD2A SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+PAP6xD3A SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+PAP6xD4A SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+PAP6xC5A SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+PAP6xC1B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+PAP6xC2B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+PAP6xC3B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+PAP6xC4B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+PAPCxNC3 SPECIES { type = ATOM ; charge =1.0; id=0; mass =72.0 M_p ; }
+PAPCxPO4 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+PAPCxGL1 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+PAPCxGL2 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+PAPCxD1A SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+PAPCxD2A SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+PAPCxD3A SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+PAPCxD4A SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+PAPCxC5A SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+PAPCxC1B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+PAPCxC2B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+PAPCxC3B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+PAPCxC4B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+PAPSxCNO SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+PAPSxPO4 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+PAPSxGL1 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+PAPSxGL2 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+PAPSxD1A SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+PAPSxD2A SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+PAPSxD3A SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+PAPSxD4A SPECIES { type = ATOM ; charge =0.0; id=11; mass =72.0 M_p ; }
+PAPSxC5A SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+PAPSxC1B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+PAPSxC2B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+PAPSxC3B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+PAPSxC4B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPExNH3 SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+POPExPO4 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+POPExGL1 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+POPExGL2 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+POPExC1A SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPExD2A SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+POPExC3A SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPExC4A SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPExC1B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPExC2B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPExC3B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPExC4B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPCxNC3 SPECIES { type = ATOM ; charge =1.0; id=0; mass =72.0 M_p ; }
+POPCxPO4 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+POPCxGL1 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+POPCxGL2 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+POPCxC1A SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPCxD2A SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+POPCxC3A SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPCxC4A SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPCxC1B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPCxC2B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPCxC3B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPCxC4B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPSxCNO SPECIES { type = ATOM ; charge =0.0; id=16; mass =72.0 M_p ; }
+POPSxPO4 SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }
+POPSxGL1 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+POPSxGL2 SPECIES { type = ATOM ; charge =0.0; id=2; mass =72.0 M_p ; }
+POPSxC1A SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPSxD2A SPECIES { type = ATOM ; charge =0.0; id=7; mass =72.0 M_p ; }
+POPSxC3A SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPSxC4A SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPSxC1B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPSxC2B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPSxC3B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+POPSxC4B SPECIES { type = ATOM ; charge =0.0; id=9; mass =72.0 M_p ; }
+WxW SPECIES { type = ATOM ; charge =0.0; id=15; mass =72.0 M_p ; }
+NAxNA SPECIES { type = ATOM ; charge =1.0; id=20; mass =72.0 M_p ; }
+CLxCL SPECIES { type = ATOM ; charge =-1.0; id=19; mass =72.0 M_p ; }

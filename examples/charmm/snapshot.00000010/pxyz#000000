@@ -1,0 +1,14 @@
+pxyz FILEHEADER {type=MULTILINE; datatype=FIXRECORDASCII; checksum=NONE; create_time=Thu Sep 14 10:52:08 2017; run_id=0x59bac1c3;
+code_version=ddcMD-peloton-debug rexported (Sep 14 2017 10:50:22); srcpath=/g/g92/zhang30/.netbeans/remote/syrah.llnl.gov/soifon.llnl.gov-MacOSX-x86_64/Users/zhang30/NetBeansProjects/ddcmd/src;
+loop=10; time=1.000000;
+nfiles=1; nrecord=1; lrec=96; nfields=6; endian_key=875770417;
+field_names=id rx ry rz nlocal nremote;
+field_types=u f f f u u;
+field_units=1 Angstrom Angstrom Angstrom 1 1;
+h=    24.00000000000000      0.00000000000000      0.00000000000000
+       0.00000000000000     24.00000000000000      0.00000000000000
+       0.00000000000000      0.00000000000000     24.00000000000000;
+}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+
+     0      0.0000000000000      0.0000000000000      0.0000000000000       77        0        

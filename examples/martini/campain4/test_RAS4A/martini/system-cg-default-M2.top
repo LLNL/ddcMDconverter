@@ -1,0 +1,28 @@
+; Include forcefield parameters
+; The actual location of these files might be different on your computer!
+#include "xPATHx/martini_v2.1-dna.itp"
+#include "xPATHx/martini_v2.0_ions.itp"
+#include "xPATHx/martini_v2.0_POPC_02.itp"
+#include "xPATHx/martini_v2.0_PAPC_01.itp"
+#include "xPATHx/martini_v2.0_CHOL_01-fix.itp"
+#include "xPATHx/martini_v2.0_POPE_02.itp"
+#include "xPATHx/martini_v2.0_DIPE_01.itp"
+#include "xPATHx/martini_v2.0_DPSM_01.itp"
+#include "xPATHx/martini_v2.0_PAPS_01.itp"
+#include "xPATHx/martini_v2.0_PAP6_02.itp"
+#include "xPATHx/martini_v2.0_POPX.itp"
+#include "YYY.itp"
+#include "YYY-PULL.itp"
+#include "ZZZ.itp"
+#include "ZZZ-PULL.itp"
+#include "WWW.itp"
+#include "WWW-PULL.itp"
+#include "XXX.itp"
+#include "XXX-PULL.itp"
+
+[ system ]
+; name
+lipids-sim
+
+[ molecules ]
+; name  number

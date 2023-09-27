@@ -1,0 +1,53 @@
+system SYSTEM
+{species =
+         GLYxN 
+        GLYxHN 
+        GLYxCA 
+       GLYxHA1 
+       GLYxHA2 
+         GLYxC 
+         GLYxO 
+         GLYnN 
+       GLYnHT1 
+       GLYnHT2 
+       GLYnHT3 
+        GLYnCA 
+       GLYnHA1 
+       GLYnHA2 
+         GLYnC 
+         GLYnO 
+         GLYcN 
+        GLYcHN 
+        GLYcCA 
+       GLYcHA1 
+       GLYcHA2 
+         GLYcC 
+       GLYcOT1 
+       GLYcOT2 
+   ;
+}
+
+      GLYxN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     GLYxHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     GLYxCA SPECIES { type = ATOM ; charge = -0.020000 ; mass = 12.011000 M_p ; }
+    GLYxHA1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    GLYxHA2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+      GLYxC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      GLYxO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      GLYnN SPECIES { type = ATOM ; charge = -0.300000 ; mass = 14.007000 M_p ; }
+    GLYnHT1 SPECIES { type = ATOM ; charge = 0.330000 ; mass = 1.008000 M_p ; }
+    GLYnHT2 SPECIES { type = ATOM ; charge = 0.330000 ; mass = 1.008000 M_p ; }
+    GLYnHT3 SPECIES { type = ATOM ; charge = 0.330000 ; mass = 1.008000 M_p ; }
+     GLYnCA SPECIES { type = ATOM ; charge = 0.130000 ; mass = 12.011000 M_p ; }
+    GLYnHA1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    GLYnHA2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+      GLYnC SPECIES { type = ATOM ; charge = 0.510000 ; mass = 12.011000 M_p ; }
+      GLYnO SPECIES { type = ATOM ; charge = -0.510000 ; mass = 15.999000 M_p ; }
+      GLYcN SPECIES { type = ATOM ; charge = -0.470000 ; mass = 14.007000 M_p ; }
+     GLYcHN SPECIES { type = ATOM ; charge = 0.310000 ; mass = 1.008000 M_p ; }
+     GLYcCA SPECIES { type = ATOM ; charge = -0.020000 ; mass = 12.011000 M_p ; }
+    GLYcHA1 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+    GLYcHA2 SPECIES { type = ATOM ; charge = 0.090000 ; mass = 1.008000 M_p ; }
+      GLYcC SPECIES { type = ATOM ; charge = 0.340000 ; mass = 12.011000 M_p ; }
+    GLYcOT1 SPECIES { type = ATOM ; charge = -0.670000 ; mass = 15.999000 M_p ; }
+    GLYcOT2 SPECIES { type = ATOM ; charge = -0.670000 ; mass = 15.999000 M_p ; }

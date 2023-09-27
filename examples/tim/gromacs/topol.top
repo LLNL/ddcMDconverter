@@ -1,0 +1,42 @@
+#include "martini_v2.1-dna.itp"
+#include "martini_v2.0_ions.itp"
+#include "martini_v2.0_POPC_02.itp"
+#include "martini_v2.0_PAPC_01.itp"
+#include "martini_v2.0_CHOL_01-fix.itp"
+#include "martini_v2.0_POPE_02.itp"
+#include "martini_v2.0_DIPE_01.itp"
+#include "martini_v2.0_DPSM_01.itp"
+#include "martini_v2.0_PAPS_01.itp"
+#include "martini_v2.0_PAP6_02.itp"
+#include "martini_v2.0_POPX.itp"
+#include "GPCR_inactive.itp"
+
+
+
+[ system ]
+; name
+Protein in INSANE! Membrane UpperLeaflet>CHOL:POPC:PAPC:POPE:DIPE:DPSM:PAPS:PAP6=28.0:13.9:7.5:5.4:16.1:10.8:16.1:2.2 LowerLeaflet>CHOL:POPX:PAPC:POPE:DIPE:DPSM:PAPS:PAP6=28.0:13.9:7.5:5.4:16.1:10.8:16.1:2.2
+
+[ molecules ]
+; name  number
+GPCR_IA        1
+CHOL           750
+POPC           372
+PAPC           201
+POPE           144
+DIPE           431
+DPSM           289
+PAPS           431
+PAP6            59
+CHOL           750
+POPX           372
+PAPC           201
+POPE           144
+DIPE           431
+DPSM           289
+PAPS           431
+PAP6            59
+W           117542
+WF           13060
+NA           2102
+CL            774

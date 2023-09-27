@@ -1,0 +1,11 @@
+cmdLine    =/usr/gapps/kras/sierra/ddcmd-gpu8/bin/ddcMD-sierra -o object.data molecule.data 
+version    =ddcMD-sierra rde1498c7 [Wed Oct 28 21:54:39 2020 -0700] (Compiled on Apr  2 2021 16:01:10)
+git_version=de1498c7 [Wed Oct 28 21:54:39 2020 -0700]
+srcpath    =/usr/gapps/kras/sierra/ddcmd-gpu8/src
+cflags     =-DWITH_MPI -DWITH_PIO -D_GNU_SOURCE -Wall -Wextra -Wno-unused-parameter -Wno-unknown-pragmas -I /usr/tce/packages/cuda/cuda-10.1.105
+ldflags    =-lstdc++ -lm -lc /usr/tcetmp/packages/fftw/fftw-3.3.5-xl-beta-2017.04.11/lib/libfftw3.a -L /usr/tce/packages/xl/xl-beta-2018.06.01/lib/ -L /usr/tce/packages/cuda/cuda-10.1.105
+compiletime=Apr  2 2021 16:01:10
+target     =ddcMD-sierra
+executable =/usr/gapps/kras/sierra/ddcmd-gpu8/bin/ddcMD-sierra
+devlpmtSrc =
+ 

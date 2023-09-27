@@ -1,0 +1,12 @@
+moleculeClass MOLECULECLASS { molecules =  CHOLx; }
+
+CHOLx MOLECULE {ownershipSpecies = CHOLxROH; species = CHOLxROH CHOLxR1 CHOLxR2 CHOLxR3 CHOLxR4 CHOLxR5 CHOLxC1 CHOLxC2;}
+
+CHOLxROH SPECIES { type = ATOM ; charge =0.0; id=0; mass =77.22 M_p ; }
+CHOLxR1 SPECIES { type = ATOM ; charge =0.0; id=1; mass =0.0 M_p ; }
+CHOLxR2 SPECIES { type = ATOM ; charge =0.0; id=2; mass =38.69 M_p ; }
+CHOLxR3 SPECIES { type = ATOM ; charge =0.0; id=1; mass =159.65 M_p ; }
+CHOLxR4 SPECIES { type = ATOM ; charge =0.0; id=1; mass =0.0 M_p ; }
+CHOLxR5 SPECIES { type = ATOM ; charge =0.0; id=1; mass =0.0 M_p ; }
+CHOLxC1 SPECIES { type = ATOM ; charge =0.0; id=1; mass =39.44 M_p ; }
+CHOLxC2 SPECIES { type = ATOM ; charge =0.0; id=3; mass =72.0 M_p ; }

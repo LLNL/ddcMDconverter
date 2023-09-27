@@ -1,0 +1,12 @@
+;;;;;; ZN ION
+;
+; Warning: this is only a ghost particule for backmapping pourposes
+
+[moleculetype]
+; molname   nrexcl
+  ZN2       1
+
+[atoms]
+;id     type    resnr   residu  atom    cgnr    charge
+ 1  ICZ     1   ION     ZN2     1    0
+

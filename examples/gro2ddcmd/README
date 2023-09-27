@@ -1,0 +1,31 @@
+This folder contains a complete example to convert PROTEIN-MEM-WAT system from GROMACS to ddcMD
+
+1. run1-para.sh
+
+use martini2obj to convert the GROMACS itp files to ddcMD paramter files: martini.data molecule.data ConsAtom.data
+all the GROMACS itp files and associated input files are in the para directory.
+Note that: The “[ position_restraints ]” section in itp files has been removed because the ITP parser cannot parse it correctly. 
+
+
+2. run2-coor.sh
+
+use pdbmartini2obj to convert PDB file and top file in the gromacs directory to the ddcMD coordinates files: atoms#000000 and the restart files.
+use restraint to generate the restraint.data (for POPX) require in ddcMD calculation.
+organize the ddcMD files so it can be use for ddcMD simulation.
+
+3. run3-ddcmd.sh
+run the ddcMD simulation. 
+
+Make sure the following inputs are presented:
+
+martini.data 
+
+object.data molecule.data 
+
+restraint.data 
+
+restart - symbolic link file
+
+snapshot.mem
+    atoms#000000  
+    restart

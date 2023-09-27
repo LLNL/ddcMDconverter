@@ -1,0 +1,121 @@
+Run cretsims for patch  struct , in local dir  using inpath 
+Init
+Thu Apr  1 22:45:53 PDT 2021
+CODE_ROOT = /g/g90/helgi/mummi
+> Script directory set to (/g/g90/helgi/mummi/setup)
+> Config file loaded from (/g/g90/helgi/.mummi/config.env)
+> Host Env file loaded from (/g/g90/helgi/mummi/setup/specs/mummi/lassen.env.sh)
+> Host Spack file loaded from (/g/g90/helgi/mummi/setup/spack/lassen.spack.sh)
+> Thu Apr 1 22:45:53 PDT 2021
+
+Lmod is automatically replacing "xl/2021.03.11" with "gcc/7.3.1".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) spectrum-mpi/rolling-release
+
+> Setup to run MuMMI in (/p/gpfs1/helgi/mummi_root_20200728)
+> Setting up spack (/usr/gapps/kras/spack6)
+> Activated spack (/usr/gapps/kras/spack6/bin/spack)
+> Loading virtual environment (venv = mummi-lassen)
+> Loading flux environment (lassen)
+> Loading MPI module.
+
+The following have been reloaded with a version change:
+  1) spectrum-mpi/rolling-release => spectrum-mpi/2019.06.24-flux
+
+> Setting up Flux aliases
+> Loading Flux environment complete.
+> Loading mummi environment (arch = linux-rhel7-power9le)
+> Setting up virtual environment python path (/g/g90/helgi/.venvs/mummi-lassen/lib/python3.7/site-packages)
+Begin
+Thu Apr  1 22:48:24 PDT 2021
+/p/gpfs1/helgi/mummi_root_20200728/sims-cg/test_RAS4A/RAS4A
+End
+Thu Apr  1 23:13:39 PDT 2021
+logout
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@lassen710>
+Subject: Job 2395372: <creatsims_sub.sh> in cluster <lassen> Done
+
+Job <creatsims_sub.sh> was submitted from host <lassen709> by user <helgi> in cluster <lassen> at Thu Apr  1 22:45:46 2021
+Job was executed on host(s) <1*lassen710>, in queue <pdebug>, as user <helgi> in cluster <lassen> at Thu Apr  1 22:45:48 2021
+                            <40*lassen31>
+</g/g90/helgi> was used as the home directory.
+</p/gpfs1/helgi/mummi_root_20200728/sims-cg/test_RAS4A/RAS4A> was used as the working directory.
+Started at Thu Apr  1 22:45:48 2021
+Terminated at Thu Apr  1 23:13:58 2021
+Results reported at Thu Apr  1 23:13:58 2021
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+
+echo "Run cretsims for patch $1 struct $2, in local dir $3 using inpath $4"
+echo "Init"
+date
+
+CODE_ROOT=/g/g90/helgi/mummi
+echo "CODE_ROOT = $CODE_ROOT"
+source $CODE_ROOT/setup/setup.env.sh
+
+echo "Begin"
+date
+
+pwd
+
+#jsrun -n 1 --bind=none -c 24 -a 1 python $CODE_ROOT/mummi/transformations/createsim/createsims_RAS_RAF_hack.py \
+#  --gromacs gmx --loglevel 1 --fstype taridx \
+#  --logpath ./ -c --mpi "gmx mdrun" \
+#  --patch 'pfpatch_000000000300' --mdrunopt " -nt 96 -rdd 2.0 -ntomp 4 -dd 4 3 2" \
+#  --inpath '/p/gpfs1/bhatia4/pilot2/campaign3/macro_patches_from_sr4' --outpath ./ --simnum test2 >> creatsims_out_test2.out 2>&1
+
+# Used for RAS-RAF patches
+#jsrun -n 1 --bind=none -c 24 -a 1 python $CODE_ROOT/mummi/transformations/createsim/createsims_RAS_RAF_hack.py \
+#  --gromacs gmx --loglevel 1 --fstype taridx \
+#  --logpath ./ -c --mpi "gmx mdrun" \
+#  --patch $1 --mdrunopt " -nt 96 -rdd 2.0 -ntomp 4 -dd 4 3 2" \
+#  --inpath '/p/gpfs1/bhatia4/pilot2/campaign1star/patches/' --outpath ./ --simnum $2 >> creatsims_${1}_${2}.out  2>&1
+
+# Used for RAS only patches
+#jsrun -n 1 --bind=none -c 24 -a 1 python $CODE_ROOT/mummi/transformations/createsim/createsims.py \
+#  --gromacs gmx --loglevel 1 --fstype taridx \
+#  --logpath ./ -c --mpi "gmx mdrun" \
+#  --patch $1 --mdrunopt " -nt 96 -rdd 2.0 -ntomp 4 -dd 4 3 2" --outlocal "${3}" \
+#  --inpath '/p/gpfs1/bhatia4/pilot2/campaign1star/patches/' --simnum "${2}" >> creatsims_${1}_${2}.out  2>&1
+
+# Run creatsims
+
+# TEMP intry point is not working on summit - change back when fixed
+#jsrun -n 1 --bind=none -c 24 -a 1 python /gpfs/alpine/lrn005/scratch/helgi/mummi/mummi/transformations/createsim/createsims.py \
+jsrun -n 1 --bind=none -c 24 -a 1 createsim \
+  --gromacs gmx --loglevel 1 --fstype taridx \
+  --logpath ./ -c --mpi "gmx mdrun" \
+  --patch "create" --mdrunopt " -nt 96 -rdd 2.0 -ntomp 4 -dd 4 3 2" --outlocal ./ \
+  --inpath '/p/gpfs1/bhatia4/pilot2/campaign1star/patches/' --simnum "RAS4A-ONLY" >> creatsims.out  2>&1
+
+echo "End"
+date
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.61 sec.
+    Max Memory :                                 57 MB
+    Average Memory :                             56.80 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   1426 MB
+    Max Processes :                              4
+    Max Threads :                                27
+    Run time :                                   1689 sec.
+    Turnaround time :                            1692 sec.
+
+The output (if any) is above this job summary.
+

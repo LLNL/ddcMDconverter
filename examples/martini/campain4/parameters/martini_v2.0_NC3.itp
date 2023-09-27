@@ -1,0 +1,10 @@
+;;;;;; CHOLINE ION
+
+[moleculetype]
+; molname   nrexcl
+  NC3+      1
+
+[atoms]
+;id     type    resnr   residu  atom    cgnr    charge
+ 1  Q0  1   ION     NC3     1   1.0
+

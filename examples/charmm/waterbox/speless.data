@@ -1,0 +1,11 @@
+system SYSTEM
+{species =
+      TIP3xOH2 
+       TIP3xH1 
+       TIP3xH2 
+   ;
+}
+
+   TIP3xOH2 SPECIES { type = ATOM ; charge = -0.834000 ; mass = 15.999400 M_p ; }
+    TIP3xH1 SPECIES { type = ATOM ; charge = 0.417000 ; mass = 1.008000 M_p ; }
+    TIP3xH2 SPECIES { type = ATOM ; charge = 0.417000 ; mass = 1.008000 M_p ; }

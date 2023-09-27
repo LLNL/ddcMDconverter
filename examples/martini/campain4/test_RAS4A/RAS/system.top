@@ -1,0 +1,51 @@
+; Include forcefield parameters
+; The actual location of these files might be different on your computer!
+#include "/g/g90/helgi/mummi_resources/martini/martini_v2.1-dna.itp"
+#include "/g/g90/helgi/mummi_resources/martini/martini_v2.0_ions.itp"
+#include "/g/g90/helgi/mummi_resources/martini/martini_v2.0_POPC_02.itp"
+#include "/g/g90/helgi/mummi_resources/martini/martini_v2.0_PAPC_01.itp"
+#include "/g/g90/helgi/mummi_resources/martini/martini_v2.0_CHOL_01-fix.itp"
+#include "/g/g90/helgi/mummi_resources/martini/martini_v2.0_POPE_02.itp"
+#include "/g/g90/helgi/mummi_resources/martini/martini_v2.0_DIPE_01.itp"
+#include "/g/g90/helgi/mummi_resources/martini/martini_v2.0_DPSM_01.itp"
+#include "/g/g90/helgi/mummi_resources/martini/martini_v2.0_PAPS_01.itp"
+#include "/g/g90/helgi/mummi_resources/martini/martini_v2.0_PAP6_02.itp"
+#include "/g/g90/helgi/mummi_resources/martini/martini_v2.0_POPX.itp"
+#include "/g/g90/helgi/mummi_resources/martini/RAS_scfix-CYFpos.itp"
+#include "/g/g90/helgi/mummi_resources/martini/RAS_scfix-CYFpos-PULL.itp"
+#include "/g/g90/helgi/mummi_resources/martini/RAS_RAF_TERNARY_scfix-CYFpos.itp"
+#include "/g/g90/helgi/mummi_resources/martini/RAS_RAF_TERNARY_scfix-CYFpos-PULL.itp"
+#include "/g/g90/helgi/mummi_resources/martini/RAS4A_scfix-CYFpos.itp"
+#include "/g/g90/helgi/mummi_resources/martini/RAS4A_scfix-CYFpos-PULL.itp"
+#include "/g/g90/helgi/mummi_resources/martini/RAS4A_RAF_scfix-CYFpos.itp"
+#include "/g/g90/helgi/mummi_resources/martini/RAS4A_RAF_scfix-CYFpos-PULL.itp"
+
+[ system ]
+; name
+lipids-sim
+
+[ molecules ]
+; name  number
+; X: 31.000 (40 lipids) Y: 31.000 (40 lipids)
+; 1600 lipids in upper leaflet, 1599 lipids in lower leaflet
+; Charge of protein: 2.000000
+; Charge of membrane: -371.000000
+; Total charge: -369.000000
+POPX           389
+PAPC           194
+POPE            33
+DIPE            97
+DPSM           387
+CHOL           500
+POPC           206
+PAPC           111
+POPE            79
+DIPE           238
+DPSM           159
+PAPS           239
+PAP6            33
+CHOL           416
+RAS              1
+W            99116
+NA            1466
+CL            1095

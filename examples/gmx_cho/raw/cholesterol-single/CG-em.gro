@@ -1,0 +1,11 @@
+INSANE! Membrane UpperLeaflet>POPC:CHOL=7.0:3.0 LowerLeaflet>POPC:CHOL=7.0:3.0
+    8
+    1CHOL   ROH    1   7.374   3.568   9.247
+    1CHOL    R1    2   7.264   3.598   8.988
+    1CHOL    R2    3   7.389   3.743   8.789
+    1CHOL    R3    4   7.362   3.512   8.648
+    1CHOL    R4    5   7.370   3.724   8.445
+    1CHOL    R5    6   7.217   3.570   8.466
+    1CHOL    C1    7   7.334   3.496   8.111
+    1CHOL    C2    8   7.287   3.423   7.720
+  10.00000  10.00000  10.00000
