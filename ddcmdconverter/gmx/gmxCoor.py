@@ -65,8 +65,9 @@ class GroCoors(Coordinates):
             line = f.readline()
             numAtoms = int(line)
             lines_gen = islice(f, numAtoms)
-            hasVelocity = len(line) > 67
+
             for line in lines_gen:
+                hasVelocity = len(line) > 67
                 #idx = int(line[15:20]) - 1
                 count=count+1
                 idx = count
